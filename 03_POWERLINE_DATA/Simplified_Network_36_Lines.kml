@@ -1,0 +1,1378 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>Simplified_Network_36_Lines.kml</name>
+	<Style id="inline">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline0">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline1">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline2">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline3">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline4">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline5">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline6">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline7">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline8">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline9">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline10">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline11">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline12">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline13">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="inline14">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline1</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline9</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="inline15">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline47</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline79</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="inline16">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline17">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline18">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="inline19">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline31</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline84</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="inline20">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline27</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline51</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="inline21">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline22">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="inline23">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline43</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline60</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="inline24">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline18</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline13</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="inline25">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="inline26">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline5</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline90</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="inline27">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline28">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="inline29">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline50</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline77</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="inline30">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline31">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="inline32">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline22</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline81</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="inline33">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="inline34">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline86</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline12</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="inline35">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline36">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline37">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="inline38">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline2</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline17</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="inline39">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline40">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="inline41">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline53</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline4</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="inline42">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline70</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline63</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="inline43">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="inline44">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline8</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline21</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="inline45">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline104</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline99</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="inline46">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline47">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline48">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="inline49">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline68</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline75</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="inline50">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline51">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="inline52">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline56</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline69</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="inline53">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline54">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="inline55">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline40</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline28</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="inline56">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline57">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline58">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="inline59">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline25</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="inline60">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="inline61">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline64</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline58</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="inline62">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline30</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline16</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="inline63">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline64">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="inline65">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline94</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline33</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="inline66">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="inline67">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline35</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline80</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="inline68">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline69">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline70">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="inline71">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline6</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline3</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="inline72">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="inline73">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline82</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline46</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="inline74">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline11</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline0</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="inline75">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline76">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline77">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline78">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline79">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline80">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline81">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline82">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="inline83">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline106</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline37</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="inline84">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline85">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline86">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="inline87">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline85</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline93</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="inline88">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="inline89">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline57</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline88</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="inline90">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline91">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="inline92">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline91</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline72</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="inline93">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline94">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="inline95">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline66</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline39</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="inline96">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline76</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline10</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="inline97">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline7</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline105</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="inline98">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline103</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline36</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="inline99">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>3</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="inline100">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline101</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline48</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="inline101">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="inline102">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline54</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline78</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="inline103">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline104">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>3</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline105">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline106">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Folder>
+		<name>GIC</name>
+		<open>1</open>
+		<Placemark>
+			<name>Line 1</name>
+			<styleUrl>#inline44</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-116.9761943174571,56.27501474647396,0 -116.6395681864232,56.27601454417314,0 -116.4345348001078,56.26951479260752,0 -116.0738966569674,56.26430348152475,0 -115.8210965162441,56.25173038395978,0 -115.7731359786727,56.25289933626748,0 -115.6511096866596,56.23936234916291,0 -115.6330937527771,56.24748875779829,0 -115.5133672441039,56.24429043135581,0 -115.5030900430031,56.25225851289265,0 -115.3699463290837,56.25305298484459,0 -115.3496560190396,56.24647685749139,0 -115.2525580803325,56.24561000659541,0 -115.236990562939,56.25008706720403,0 -115.2040823732035,56.24711079472939,0 -114.7982343201215,56.24789047972926,0 -114.7289947473064,56.20614000566744,0 -114.7231365502046,56.1957515634787,0 -114.6930169108023,56.18917737392395,0 -114.2713035096659,56.18754005418899,0 -114.1775171823894,56.21880626742715,0 -113.9465755414235,56.21683096114,0 -113.882208697077,56.21259271791575,0 -113.7732446929705,56.21111129945452,0 -113.3368652980225,56.21886672491382,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>Line 2</name>
+			<styleUrl>#inline45</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-116.9739546966493,56.27430897173306,0 -116.9620532298671,56.25822038121875,0 -116.8567947412378,56.18625528313022,0 -116.8019967790495,56.16307182360529,0 -116.8045493540272,55.97056339202692,0 -116.8036302851473,55.70723309858759,0 -116.8599339938115,55.68452560866746,0 -116.8617975391702,55.65410297095839,0 -116.883770756879,55.62990539362491,0 -116.8831424875949,55.60103677470305,0 -116.9879759528516,55.52980489552048,0 -116.9983618084193,55.51021122969052,0 -116.9895369529871,55.445258627035,0 -116.97655946987,55.41674912843405,0 -116.9888448240029,55.3992769928778,0 -116.9832429180911,55.3370677166879,0 -117.0309774563279,55.27441215861116,0 -117.0774718407161,55.216279224746,0 -117.116271367063,55.19610974135522,0 -117.1217491143113,55.14892101083127,0 -117.085967715016,55.10160884653504,0 -117.0888599397339,55.01865853294583,0 -117.1420247226147,54.9537028236487,0 -117.1617572598119,54.94210150762252,0 -117.2017764187204,54.94327701987859,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>Line 3</name>
+			<styleUrl>#inline96</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-117.2058044040986,54.94030069352738,0 -117.1883221102207,54.92228427766689,0 -117.1933835338408,54.83595729839385,0 -117.1758010474159,54.82455088211942,0 -117.0575214423912,54.82676102286091,0 -116.6323770788567,54.6859594462068,0 -116.4469105762567,54.67861986369992,0 -116.3749971237245,54.69103590871735,0 -116.281204628728,54.70161859850288,0 -116.1087882539922,54.69923823100191,0 -115.7513067282418,54.62625994127129,0 -115.5701471002119,54.62713325718845,0 -115.5642498219103,54.61245051099111,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>Line 4</name>
+			<styleUrl>#inline15</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-115.5604596363113,54.61345259392409,0 -115.4160544084832,54.61659591927008,0 -115.3567602951885,54.63043705635789,0 -115.2315016610772,54.68664432098504,0 -115.0504887861212,54.806564367354,0 -114.9110375505304,54.92181209815771,0 -114.7754802657843,55.02218125138844,0 -114.6855171566297,55.12084247429723,0 -114.6436284544578,55.1675013487752,0 -114.5896470363325,55.19357902994611,0 -114.5641264490259,55.22252469718291,0 -114.5645159334763,55.25594543791935,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>Line 5</name>
+			<styleUrl>#inline20</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-114.5658872609723,55.25675113955132,0 -114.5778339467731,55.26569721360532,0 -114.5637805526617,55.2857046812631,0 -114.3084545890171,55.55576670501019,0 -114.0951202662323,55.77640765850391,0 -113.9754594195858,55.88568027349056,0 -113.8358290438682,55.94099737619645,0 -113.7089211951648,56.00819086973372,0 -113.6058317284904,56.0917770331224,0 -113.511059715431,56.13331093549134,0 -113.3291858483017,56.21622792010879,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>Line 6</name>
+			<styleUrl>#inline29</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-113.331100229507,56.2184334940936,0 -113.1267989635734,56.30215214939078,0 -112.8363702337819,56.46813465361989,0 -112.7761668923184,56.50909340064693,0 -112.3876368675933,56.61225936975251,0 -111.8483232051382,56.93054122643247,0 -111.6798517876527,56.92868186372255,0 -111.5750858351307,56.96054476270837,0 -111.570842195936,56.98784092991928,0 -111.540301515866,56.9794027907842,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>Line 7</name>
+			<styleUrl>#inline71</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-111.5321989319623,56.97724682595183,0 -111.5006337116117,56.93870591561483,0 -111.4729331095728,56.93730254344185,0 -111.4661816165422,56.79871655314372,0 -111.4985673591805,56.79028933160949,0 -111.5002034038908,56.76740647794614,0 -111.4830216320338,56.68508490380513,0 -111.4060348311408,56.61357685651536,0 -111.2879084702863,56.56779390634215,0 -111.0458258665454,56.47758218822813,0 -111.0137977205028,56.42552725888216,0 -111.0238005727374,56.38551486826941,0 -110.9169394814811,56.28377298009404,0 -110.9234142864693,55.83072264391662,0 -111.125829395709,55.70462434749624,0 -111.287121983941,55.49387465006092,0 -111.319021024624,55.47550348336888,0 -111.3847148733457,55.32656750365131,0 -111.391521689739,55.25830502456488,0 -111.5976205854946,55.1222030114542,0 -111.6454010362121,55.04571638303403,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>Line 8</name>
+			<styleUrl>#inline97</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-111.7201199171137,56.92861562690672,0 -111.7314330057664,56.82099449955442,0 -111.7420749133949,56.79166584227551,0 -111.7454738371475,56.76228248402288,0 -111.7682026801224,56.72613043671947,0 -111.8045129076204,56.63910606482537,0 -111.8116260235855,56.61853190034157,0 -111.8191034541083,56.59185520215804,0 -111.810160641011,56.57261316757843,0 -111.7978990113938,56.56164083101665,0 -111.7813856676424,56.4599790394498,0 -111.7589446593902,56.36454385575331,0 -111.731115962043,56.3296219451347,0 -111.7377203139736,56.29543124746469,0 -111.7219676522468,56.21365138685472,0 -111.7434100898646,56.17127924168513,0 -111.8282992316857,56.11416027330559,0 -111.9009542468711,56.0656800703888,0 -111.9335419553106,56.02103019219017,0 -112.1260405258694,55.87771478069905,0 -112.1658559751422,55.84592623573144,0 -112.1905160096087,55.80442014543226,0 -112.2030212669237,55.75333040669794,0 -112.1910441524322,55.71564509608105,0 -112.1177259576375,55.64161731880228,0 -112.1198170251189,55.577085922,0 -112.1598462041219,55.56191303890874,0 -112.1604655866838,55.50038566861969,0 -112.1640406723876,55.45880499215404,0 -112.1129474925371,55.29351467681111,0 -112.1186993435889,55.26513625981897,0 -112.090853053497,55.21715592804875,0 -112.0728138640942,55.18631075676015,0 -112.0059586171378,55.09152003685652,0 -112.0012094197173,55.07798403030278,0 -111.927903006886,55.07514876474683,0 -111.9218064201974,55.06071557479059,0 -111.8207663600651,55.05709845103203,0 -111.7699748487538,55.04965199191624,0 -111.7006884233152,55.04826052349105,0 -111.6552131989114,55.04488019952267,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>Line 9</name>
+			<styleUrl>#inline32</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-111.6481590491486,55.04348737553824,0 -111.6908333722073,55.00556445044634,0 -111.6887441162442,54.88711469429642,0 -111.6996973776657,54.84532147348904,0 -111.7101139429298,54.78997851690371,0 -111.7050318539494,54.65330482583867,0 -111.7485002858987,54.59459262080876,0 -111.7343225930489,54.55938699384907,0 -111.747287115773,54.50476999753937,0 -111.746293683641,54.4547096307449,0 -111.7516948649972,54.41110267746368,0 -111.6328807381394,54.34844182561939,0 -111.6417235221137,54.25581820850856,0 -111.7124678544703,54.2539170761635,0 -111.7113641598377,54.22465787164661,0 -111.94080542034,54.22418583564227,0 -111.9803117527375,54.20089808798221,0 -112.1392799469482,54.19353524422171,0 -112.1614815710338,54.12007936648564,0 -112.2423276059979,54.08368772282834,0 -112.3736334228489,54.03767392562838,0 -112.368871564139,53.95333568435949,0 -112.7925743926679,53.95252247746423,0 -112.7850592244424,53.85444164977038,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>Line 10</name>
+			<styleUrl>#inline73</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-112.7933168259962,53.84804446223401,0 -112.7209612194321,53.84784334474128,0 -112.7108173864914,53.85212403155683,0 -112.6583873376928,53.85287915792915,0 -112.4424394992104,53.85487911296963,0 -112.4401878649586,53.82316678530792,0 -112.3952365659813,53.82394450051191,0 -112.391302450635,53.72452675248627,0 -112.3730541538005,53.71540911019137,0 -112.3736578683693,53.65071919731345,0 -112.2280359705871,53.64968151402049,0 -112.2278046038448,53.36530231908666,0 -112.2081118352174,53.36495638262183,0 -112.2058282652618,53.28700106074828,0 -112.1344084822607,53.28639220704255,0 -112.1378344405562,53.17016353145864,0 -112.1624777792698,53.16767203368275,0 -112.1597480234085,53.00374721702617,0 -112.1206943196213,53.0030253112693,0 -112.1205653175234,52.67379957607053,0 -112.100711860661,52.65867993552783,0 -112.1064034978678,52.59487284301994,0 -112.1536319799064,52.59353896224336,0 -112.148238968543,52.48401224744745,0 -112.1244446333143,52.47690511737571,0 -112.1063748298457,52.4765818624832,0 -112.0999891722473,52.46032241732027,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>Line 11</name>
+			<styleUrl>#inline67</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-114.5616529155908,55.25471919220759,0 -114.4829213803464,55.17034266601677,0 -114.4635793109069,55.11524532322203,0 -114.4616194617609,54.95202594094704,0 -114.4747832108513,54.88022683068269,0 -114.4641271747776,54.84469111547682,0 -114.5331617420158,54.63187845652322,0 -114.5312310103348,54.55134477108806,0 -114.5009005732145,54.4399805171127,0 -114.4798568847601,54.41575654823781,0 -114.48416338585,54.39240388402381,0 -114.4890886178702,54.21261580000276,0 -114.4815926971807,54.18759777157758,0 -114.4823596693795,54.05111647629388,0 -114.4897811580729,53.83063324458138,0 -114.4921054466936,53.76367873217843,0 -114.4653706392625,53.72533840038146,0 -114.4516864903044,53.5700109565571,0 -114.4250133231956,53.48360567364327,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>Line 12</name>
+			<styleUrl>#inline61</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-115.5644763861044,54.61451148594294,0 -115.5875489391189,54.60069907152124,0 -115.5853760263083,54.55387047551206,0 -115.585971053309,54.44148149387944,0 -115.6688591510161,54.32866941626665,0 -115.6854633526612,54.327194959975,0 -115.7011547461873,54.29619744767595,0 -115.690038565244,54.28627987333931,0 -115.6937780079921,54.27019712956081,0 -115.6099979456007,54.18077261714851,0 -115.5698831246101,54.17023202062384,0 -115.5694934303588,54.08271860286988,0 -115.570364088931,54.05072080847792,0 -115.5371470004419,54.04132690441485,0 -115.3513231009556,53.87635580742518,0 -115.28803545322,53.8508935129845,0 -115.1182699830277,53.71141052254418,0 -115.0939899726496,53.69741368636392,0 -115.000699307925,53.62150018524988,0 -114.9632181643963,53.59843835935905,0 -114.8905473957358,53.52359880061078,0 -114.8603556347172,53.50598368011278,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>Line 13</name>
+			<styleUrl>#inline87</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-114.8614085017505,53.50519808226659,0 -115.0005687020602,53.50623440427113,0 -115.0062977100299,53.50220570257074,0 -115.0307576429713,53.50539197004576,0 -115.2498090061832,53.50428923141539,0 -115.2672586855682,53.51193163025085,0 -115.376240085178,53.51239367227725,0 -115.4261616663674,53.52801964894412,0 -115.4780378349114,53.52669186807083,0 -115.5097339211435,53.5349888445834,0 -116.0630621689964,53.53315729537698,0 -116.1790083011396,53.53187584574714,0 -116.2157450141807,53.52578963255502,0 -116.3553136444713,53.5264270086337,0 -116.3783662472509,53.50108137600719,0 -116.5125408926476,53.51362354228688,0 -116.5504525916405,53.51589286446018,0 -116.6016960649294,53.51590413091056,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>Line 14</name>
+			<styleUrl>#inline62</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-112.7913078140334,53.85369146127719,0 -112.8910312485672,53.85377336673412,0 -112.8962653346122,53.85832537755969,0 -112.9002973773496,53.8550265663749,0 -112.9901433008726,53.85368802520279,0 -113.0062668885248,53.84655967166952,0 -113.016958197097,53.83368144668181,0 -113.0638118799736,53.83159586665921,0 -113.0631233668098,53.81076745780253,0 -113.1039498666265,53.81208194173975,0 -113.1137596365711,53.78269858074177,0 -113.1622181169137,53.77964675073316,0 -113.1995946064558,53.74543855281382,0 -113.2620869714399,53.69415619581082,0 -113.2732428369953,53.6605305913024,0 -113.3098145484211,53.65908419859932,0 -113.3688036954062,53.62759592811155,0 -113.3351000292439,53.58071844235533,0 -113.3453945176716,53.52984143640501,0 -113.337225334415,53.51252766292085,0 -113.332171988079,53.48749485493706,0 -113.3326947808419,53.46336764103125,0 -113.3431189912782,53.44792958118033,0 -113.3665774023986,53.43518354398577,0 -113.4056562596264,53.43287677572685,0 -113.4447870715112,53.43281316735823,0 -113.4578653781946,53.43391105942295,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>Line 15</name>
+			<styleUrl>#inline95</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-113.4589725994976,53.43350740767496,0 -113.4806320240102,53.43259737818596,0 -113.501787281138,53.43204061875025,0 -113.5091668289033,53.43695796034003,0 -113.5613791629255,53.43237220922057,0 -113.5739448880836,53.42933847144695,0 -113.5966251444074,53.44028784641182,0 -113.6051546297907,53.45569285116145,0 -113.6184618081578,53.46064735966687,0 -114.0013936545992,53.46071855081028,0 -114.0142434706601,53.46457720513018,0 -114.0294796701035,53.46112013272379,0 -114.0770147548116,53.46015376242565,0 -114.0904581795972,53.46260988186306,0 -114.10508837459,53.46088823657762,0 -114.2606465576213,53.4609678222381,0 -114.2781866643745,53.48356498501709,0 -114.3830647049031,53.48325789049802,0 -114.4206967324099,53.4831474829201,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>Line 16</name>
+			<styleUrl>#inline102</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-114.426571926087,53.48277817412287,0 -114.4954942166054,53.48444387113435,0 -114.524743240814,53.48474692596349,0 -114.549475586147,53.50766815357795,0 -114.5530049435102,53.51009645327892,0 -114.5828214206148,53.51377612022439,0 -114.6325961398195,53.52577071253174,0 -114.6542795849719,53.52053806501158,0 -114.6618018647048,53.51423882691692,0 -114.6592076240353,53.51066777897024,0 -114.6396897572723,53.50645973469974,0 -114.6379133848912,53.49816464602949,0 -114.69349680231,53.49768767569681,0 -114.7125984355594,53.50483565836888,0 -114.8570436190011,53.50521090843124,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>Line 17</name>
+			<styleUrl>#inline98</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-114.4262568996458,53.48089640416696,0 -114.4527418227307,53.46969373796458,0 -114.445787647171,53.4533081330737,0 -114.4320856311078,53.45337768258006,0 -114.4300999416119,53.43408055739229,0 -114.4173366086792,53.43236132066882,0 -114.3947679611683,53.39905947718515,0 -114.432934530825,53.38252502002001,0 -114.4283220363472,53.36264943348529,0 -114.4289610596026,53.07722945619805,0 -114.3754333965312,53.04803625884504,0 -114.3781447095222,53.02602005391498,0 -114.3762588591496,52.91451940315446,0 -114.3737326942603,52.6791636848051,0 -114.3745375798173,52.63314416907409,0 -114.3730849760748,52.43258642752998,0 -114.3339639829219,52.40354589040253,0 -114.3338873225443,52.33310381517383,0 -114.2986126356502,52.30108085812913,0 -114.2976293971911,52.26674078477361,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>Line 18</name>
+			<styleUrl>#inline83</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-114.300483923149,52.26673689083465,0 -114.3242957147368,52.29003321218011,0 -114.3719089789748,52.31681544818587,0 -114.4367227712748,52.34001462250627,0 -114.5187976054043,52.37361466479315,0 -114.6843428788048,52.43485279227436,0 -114.7475366056903,52.4630957275573,0 -114.8421630301117,52.50852340718065,0 -114.8952564569312,52.52959383440938,0 -115.0311424892353,52.61862064165287,0 -115.0567263023476,52.63027354200312,0 -115.1819470301503,52.71667225727334,0 -115.2048811137878,52.74186312020499,0 -115.2062740969815,52.7613195449938,0 -115.309141036156,52.89245390442363,0 -115.3551851728828,52.91781539378475,0 -115.3755016197812,52.91291460398687,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>Line 19</name>
+			<styleUrl>#inline24</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-113.4709158090212,53.43194458951103,0 -113.466734580536,53.36509920378944,0 -113.4945618057082,53.30099289558947,0 -113.488391348251,53.28993141281835,0 -113.4879841852919,53.02188960753947,0 -113.4857072125549,52.72871653277502,0 -113.6835249849274,52.40529396406686,0 -113.7327767229279,52.32240425371104,0 -113.7299240285004,52.23892949728872,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>Line 20</name>
+			<styleUrl>#inline89</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-114.2877852042095,52.25754899361002,0 -113.9228352233772,52.25415560136589,0 -113.8641166633664,52.23653435935434,0 -113.7292090228154,52.24084394208507,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>Line 21</name>
+			<styleUrl>#inline92</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-113.7275881095253,52.23712686490623,0 -113.5086562153163,52.23596931291794,0 -113.2347497017974,52.38512793494718,0 -113.0258926433109,52.38358988177799,0 -113.0047291464279,52.3982093221371,0 -112.6220986874188,52.39659848233642,0 -112.5973639242971,52.42641536519962,0 -112.2825892837663,52.42554621125559,0 -112.2128067445614,52.45943009001027,0 -112.1281956191797,52.46506798589307,0 -112.0981702673672,52.46013489143122,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>Line 22</name>
+			<styleUrl>#inline34</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-112.0970886479428,52.46077603941529,0 -111.9972658134575,52.42802612193968,0 -111.8852204366939,52.42718132922021,0 -111.8464109125433,52.42969070604435,0 -111.7965263596871,52.42450444990192,0 -111.7138840636082,52.42656593553722,0 -111.6707810944898,52.42636014134432,0 -110.8692814756682,52.42432663021708,0 -110.8592762499322,52.43597242968662,0 -110.7941744423807,52.43571188297565,0 -110.7693788130314,52.41988250781169,0 -110.6195774499363,52.42016761450427,0 -110.5827125250864,52.40873827336725,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>Line 23</name>
+			<styleUrl>#inline49</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-112.0424748601506,52.44247095716575,0 -112.0443763330174,52.37675543341737,0 -111.8534149758983,52.37620696005544,0 -111.8522554323146,52.33988700639048,0 -111.8365391536714,52.32033346848644,0 -111.8347739927115,52.05681764714397,0 -111.8467492362513,52.04653999852209,0 -111.8377198112764,52.04091377456654,0 -111.8388280569833,51.6208136230423,0 -111.8349754530502,51.4298103375882,0 -111.7992507434602,51.41559775081012,0 -111.7950969939425,51.3476900408171,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>Line 24</name>
+			<styleUrl>#inline42</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-110.5944599412269,52.40396992084447,0 -110.5923871781751,52.31024455868588,0 -110.5866626391671,52.31038474015286,0 -110.5878931351175,52.22875890602505,0 -110.6118430356899,52.21364725948595,0 -110.6115615845948,52.16662328930578,0 -110.6117124011113,52.11334725111681,0 -110.5738365728803,52.0969660935609,0 -110.5757364101468,52.00502574724268,0 -110.6123316280609,52.00426044417713,0 -110.6118635063116,51.99127687770768,0 -110.6028944340007,51.9882152179087,0 -110.6071067110093,51.98106656420522,0 -110.6063220908406,51.91002175610465,0 -110.6189144514136,51.90110911078573,0 -110.6183253833821,51.81613498367868,0 -110.6673286839943,51.81544338139814,0 -110.6672741394384,51.77210133230284,0 -110.6540543548244,51.77135649171968,0 -110.6536646068234,51.70023040715121,0 -110.6292980256714,51.69916221334275,0 -110.6311897048772,51.61850103075838,0 -110.6250137815696,51.61928417143216,0 -110.6253164697615,51.47110035612526,0 -110.6013174476963,51.46019593710917,0 -110.5562432287252,51.46002699228305,0 -110.5567027033779,51.4051210995694,0 -110.5667877551459,51.40544814504972,0 -110.566001041473,51.40889557483721,0 -110.603012474338,51.40816847408319,0 -110.6046153823182,51.39464093228407,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>Line 25</name>
+			<styleUrl>#inline14</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-110.6025926593775,51.39466596524257,0 -110.7663809636219,51.39477101412059,0 -110.8013517888247,51.37963471655625,0 -111.3046440352667,51.37923394311198,0 -111.3415544672452,51.36359963475199,0 -111.7529189228468,51.36519796004912,0 -111.7551835573945,51.3504731102709,0 -111.7982432029168,51.35050724053986,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>Line 26</name>
+			<styleUrl>#inline59</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-111.793153419682,51.35048072345385,0 -111.7916477583126,51.00895411214855,0 -111.9258628741522,50.87411976526523,0 -111.9485145036909,50.82069805381476,0 -111.9360947538825,50.78923764489915,0 -111.9521922658642,50.74895939797198,0 -111.9699845153788,50.69416778161057,0 -111.9923219449174,50.62744586015263,0 -112.0019375821897,50.59469172435888,0 -111.9774837635429,50.58471315888836,0 -111.9815191010366,50.56387954284368,0 -111.9988323227864,50.5566380757252,0 -112.0247964691556,50.55588407263654,0 -112.0213693983826,50.54441855960363,0 -112.0182230083294,50.52726547249905,0 -111.9934946884627,50.52360598152033,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>Line 27</name>
+			<styleUrl>#inline41</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-111.9220181335797,50.87452940066589,0 -111.8991950732526,50.87057853074638,0 -111.8387451691789,50.8285519568309,0 -111.8420941058027,50.79951224407552,0 -111.7824106649341,50.79826407215079,0 -111.7607265222869,50.77452228260685,0 -111.7124347870587,50.78333103640317,0 -111.6889218068075,50.77640931298598,0 -111.6190957998912,50.77368964832517,0 -111.599047815082,50.76745823488822,0 -111.5727099010156,50.73362340828976,0 -111.5703150659761,50.70042353167758,0 -110.2939768752511,50.71312241151551,0 -110.2712350191511,50.69575724937985,0 -110.2462911683943,50.68186356541011,0 -110.111232391793,50.67700317911855,0 -110.1081387165369,50.65798176235413,0 -110.0308097727347,50.65986002893496,0 -110.0198857293548,50.67604357891442,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>Line 28</name>
+			<styleUrl>#inline65</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-111.9947830671584,50.5236954498781,0 -111.9074690039966,50.52584021783225,0 -111.905353042601,50.50714675265748,0 -111.8959245167139,50.49665793700814,0 -111.8606206505291,50.49297144202508,0 -111.7535046474932,50.48915540719785,0 -111.6444287216451,50.47785190476949,0 -111.6370059773495,50.48603524290408,0 -111.5850286658456,50.47646215027538,0 -111.5824915346295,50.45379214316946,0 -111.4405345960018,50.37461376347071,0 -111.4208526569827,50.368705864493,0 -111.4062530585893,50.35555448754365,0 -111.3209105356178,50.30512608612704,0 -111.2539833307003,50.26850821338109,0 -111.1501374029617,50.22143551770653,0 -110.767758546522,50.22063133758178,0 -110.7364672567895,50.18719360105882,0 -110.6288522836802,50.18628533411599,0 -110.5817310270423,50.17495765996232,0 -110.5705731414719,50.17063820204569,0 -110.5427182277474,50.17756628970064,0 -110.5205411016716,50.17236080267575,0 -110.482462258973,50.17554339943825,0 -110.4827138076067,49.9835914742349,0 -110.4890550677795,49.97815696626139,0 -110.5059889080796,49.96234588934983,0 -110.5029604696959,49.92921796064564,0 -110.5173744629809,49.93018579571102,0 -110.5161001981265,49.9031108031362,0 -110.5291448931102,49.90158499013961,0 -110.5293115190749,49.87366675442787,0 -110.5216514957742,49.87341258612661,0 -110.5205569106923,49.83723402308804,0 -110.5586035904407,49.83507661082179,0 -110.5593111736077,49.79994440006674,0 -110.6086403096068,49.80024195941237,0 -110.6130781539491,49.79399282208078,0 -110.7063804799878,49.79371604109991,0 -110.7031786442061,49.78676172421196,0 -110.7732358651462,49.78712930821018,0 -110.7733428135394,49.74415438042917,0 -110.7819567827124,49.74002621046802,0 -110.7825683103486,49.73317839312963,0 -110.7991138092127,49.71705929844651,0 -110.7948396565847,49.70425389847997,0 -110.9524990413105,49.70460238844556,0 -110.9499199278286,49.69815892593068,0 -111.0362045187187,49.69773494623696,0 -111.053022852561,49.69823509688847,0 -111.0534410311013,49.69187556689623,0 -111.126911952905,49.69099987572089,0 -111.1248417299771,49.65468407894404,0 -111.1658189716325,49.65339976702008,0 -111.1678546246474,49.61135329627898,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>Line 29</name>
+			<styleUrl>#inline74</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-111.9952966318006,50.52401158893366,0 -111.9961806873593,50.51712652061882,0 -112.0092963634838,50.50962894299662,0 -112.0327991325238,50.51528485699552,0 -112.347197185365,50.51394330028178,0 -112.3545164741177,50.52128316003295,0 -112.7565186679534,50.51973072383745,0 -112.7665795069821,50.52325086296618,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>Line 30</name>
+			<styleUrl>#inline26</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-112.7693874835285,50.52294255553912,0 -112.7683190520897,50.39015241566097,0 -112.7635868939718,50.38377750659376,0 -112.7648505422141,50.22062533723145,0 -112.7095058485209,50.18094666147032,0 -112.7230867805553,50.16464693866199,0 -112.7229278021334,49.96988887930904,0 -112.7206124824674,49.94813450874886,0 -112.7199378047821,49.84314369177535,0 -112.7328686031646,49.82917071892349,0 -112.7462028029437,49.83019240042611,0 -112.7724797038461,49.81760983701461,0 -112.771840724604,49.8044376837983,0 -112.7871880292304,49.79525084548888,0 -112.8194994660213,49.77488485325621,0 -112.8235706360162,49.75948334300557,0 -112.8351385133768,49.74892319657221,0 -112.8364606527746,49.728755535722,0 -112.8542237244272,49.72827782003183,0 -112.8776686135113,49.71233517247087,0 -112.910731006845,49.72057092629443,0 -112.9125662214848,49.71299171120444,0 -112.9569060722138,49.71287077751865,0 -112.9822067524661,49.70721557914266,0 -112.993933906418,49.70939579887277,0 -112.9975373316546,49.71464043226085,0 -113.0405634502075,49.71384633256174,0 -113.119725227034,49.6760610257301,0 -113.1633964733509,49.67683292016278,0 -113.1776181777805,49.66965531418115,0 -113.2070022476765,49.6703184297799,0 -113.2077451279977,49.64099678827998,0 -113.2789764045043,49.63991931676895,0 -113.2872094311932,49.64476364175684,0 -113.2934217031519,49.64445482893792,0 -113.299838553464,49.64048024534043,0 -113.4904263035069,49.64035186770526,0 -113.5224074755144,49.64130840665744,0 -113.536530233875,49.63958558173476,0 -113.5534557018981,49.63897654495494,0 -113.5782772925313,49.64025847810327,0 -113.5866840894091,49.64360469818297,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>Line 31</name>
+			<styleUrl>#inline55</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-113.8469423071056,52.23475791458264,0 -113.8517599391575,52.1139660242111,0 -113.8555521890128,52.08540375458086,0 -113.847685801318,52.06323081596154,0 -113.8487729822346,51.97054086004834,0 -113.8419022101566,51.96483344597033,0 -113.8396655159574,51.65964263105181,0 -113.8413853227967,51.6125437247641,0 -113.8373687808986,51.56758448016692,0 -113.839241124156,51.4943588505017,0 -113.8374581734324,51.45871943563126,0 -113.8408218204805,51.27072260001464,0 -113.8306190167575,51.26776286264543,0 -113.8329316864875,51.06452215261585,0 -113.8322510147819,51.02186024171166,0 -113.8842455899512,51.02487652119959,0 -113.8892654714415,50.95556298826924,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>Line 32</name>
+			<styleUrl>#inline23</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-114.2867279868441,52.25723356014631,0 -114.2739792897657,52.24505736590256,0 -114.2740601547247,52.14736158026274,0 -114.2741549619933,52.09296688798693,0 -114.2755869002765,52.04006082962898,0 -114.2828416135401,52.03966131737789,0 -114.2716809317242,52.01490733436037,0 -114.2750056863561,51.99949709932878,0 -114.2718628447239,51.89969868343081,0 -114.2764419611891,51.88421225411437,0 -114.2712216597124,51.86961961940987,0 -114.2717826006267,51.63134922492009,0 -114.2691278200825,51.49751224171471,0 -114.2604756750364,51.48933488728137,0 -114.2616456555235,51.4166932999335,0 -114.2583604768173,51.41379568443607,0 -114.2597470143663,51.28877751884588,0 -114.256851077848,51.28293944435395,0 -114.2567748246774,51.1836258835466,0 -114.2585825189103,51.17953650668771,0 -114.2578866894849,51.169153031695,0 -114.2580163742722,51.10309147199587,0 -114.2572535547847,51.08826678113653,0 -114.2581244182913,51.07433564022774,0 -114.2197658215588,51.05223776249021,0 -114.1674257243994,51.05238680583992,0 -114.1645224045733,51.05062630138446,0 -114.1646244563761,51.01820003409163,0 -114.167415065176,51.00991971076821,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>Line 33</name>
+			<styleUrl>#inline52</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-112.7677050257282,50.52267337513388,0 -112.8449371577713,50.57198444277643,0 -112.8418832803062,50.60291155314836,0 -113.3866077187271,50.6035082668636,0 -113.38471576804,50.77776444499025,0 -113.452127904381,50.77828078868714,0 -113.4520397227849,50.78575537431821,0 -113.6189189732257,50.78212607536037,0 -113.6196136278949,50.90234343732703,0 -113.612974816322,50.91449012956888,0 -113.6235015591134,50.92741210354138,0 -113.6208316074974,50.95987976422644,0 -113.7196592648119,50.95976855298685,0 -113.744744594878,50.95735894892947,0 -113.750107783614,50.96330251375014,0 -113.8880350356429,50.95413846506996,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>Line 34</name>
+			<styleUrl>#inline38</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-113.8843906944338,50.95389331866156,0 -113.8847203487363,50.92221015337575,0 -113.8935189712644,50.9214601962728,0 -113.8980755280892,50.8430709740263,0 -113.8997057478866,50.80317433378644,0 -113.8936735763606,50.78183503124048,0 -113.896600521553,50.61587401191338,0 -113.850730993582,50.59433193286814,0 -113.8283480134016,50.59106766469156,0 -113.8272701043766,50.57984408910063,0 -113.7876592676015,50.55834043334531,0 -113.6299484530822,50.46982843236596,0 -113.6267268089664,50.33899652516421,0 -113.6304689981343,50.27277661250441,0 -113.62797196106,50.18521970724598,0 -113.6086781021291,50.15985386778454,0 -113.6030014961041,50.09944699653676,0 -113.6044945715912,50.06969063178131,0 -113.6059612906992,49.97323925682475,0 -113.6068583955126,49.91833513596643,0 -113.590431622648,49.84355753975608,0 -113.5869083956557,49.75877950003341,0 -113.5880715809689,49.64354293741524,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>Line 35</name>
+			<styleUrl>#inline100</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-113.7938268179146,50.55964050256916,0 -113.7889337626823,50.51689621535191,0 -113.792332596754,50.49328881995235,0 -113.7925353162029,50.41277252130065,0 -114.0578808154661,50.41217368608138,0 -114.0833245378589,50.39746089566111,0 -114.1383492052211,50.38388725830031,0 -114.2288024006161,50.29532402068538,0 -114.2347158199973,50.27047400290864,0 -114.23105935182,50.2489871589509,0 -114.2342576278968,50.18936476339986,0 -114.2308501795129,50.1737054870926,0 -114.2330467989835,50.1175401372622,0 -114.2070609067874,50.07871524979711,0 -114.2019377108363,50.02871184202413,0 -114.1946699745648,49.95518199024801,0 -114.1714772425965,49.93441673256758,0 -114.1769814814251,49.82669939223238,0 -114.2162739243792,49.80760289644439,0 -114.2180019830006,49.75619660595952,0 -114.2290618614368,49.7281780685582,0 -114.2622192065661,49.69664527122793,0 -114.318384007346,49.66366872509284,0 -114.3222246624201,49.64821775767599,0 -114.3532381237222,49.61624391178214,0 -114.3658149528755,49.61570241518205,0 -114.384559901753,49.63781758883046,0 -114.3903923005698,49.65701357410141,0 -114.4108843454669,49.66655033787715,0 -114.4380627503105,49.65215526391979,0 -114.4973584052723,49.6564164318815,0 -114.6039398963337,49.65493029765674,0 -114.6290178793654,49.65406184533424,0 -114.6356288805963,49.645899265141,0 -114.663046937235,49.64439123736288,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>Line 36</name>
+			<styleUrl>#inline19</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-114.2582425388232,51.14331594491054,0 -114.2778498076929,51.15287486443528,0 -114.302322374082,51.16632551548656,0 -114.3555071706555,51.17576436337474,0 -114.4115817013162,51.19598646738515,0 -114.4380114058299,51.19633267614867,0 -114.4447843949663,51.19162695474984,0 -114.4740083530109,51.19192481323065,0 -114.4874159665826,51.19955962014765,0 -114.558283823862,51.22997373265082,0 -114.5827475242605,51.22634040129614,0 -114.6592858738747,51.22400065647727,0 -114.6620327726665,51.22866113964826,0 -114.6639688339313,51.23789363050511,0 -114.6777538125949,51.25377323472706,0 -114.6867004954201,51.25362226940701,0 -114.6950245123323,51.25185415364031,0 -114.7072480600218,51.2563794190264,0 -114.7137564684538,51.26291151106221,0 -114.7391323969685,51.26538030697708,0 -114.7593562586571,51.27089322159351,0 -114.7849045726342,51.28142891373054,0 -114.8044554603684,51.28925264837856,0 -114.8514507538707,51.28316602384208,0 -114.8877702204934,51.27935456300742,0 -114.926438312878,51.28130466982604,0 -114.9460180051453,51.30053174926616,0 -114.9673105954615,51.3368306567838,0 -114.9862754039698,51.36435888231435,0 -115.0236369649475,51.40246310314484,0 -115.0362645623333,51.44980376019316,0 -115.0767392698182,51.48180645833165,0 -115.0756016733149,51.505601279891,0 -115.1045300435838,51.54004133491019,0 -115.1777812906184,51.60026910187895,0 -115.1887712919486,51.61304253499758,0 -115.2040637439469,51.61097391722352,0 -115.2244235016878,51.6208425733855,0 -115.2476230884753,51.62573033626505,0 -115.2356256715816,51.64456883151372,0 -115.2719832419487,51.65176845206822,0 -115.2873582992054,51.65768781286756,0 -115.3477024703467,51.7101356146145,0 -115.382781569838,51.76592372887731,0 -115.4198995497682,51.84056239840275,0 -115.4719318623501,51.91318518447863,0 -115.4630941766089,51.95637245755611,0 -115.4085176167918,51.98999436359364,0 -115.4788159619504,52.00506552336063,0 -115.4842902638938,52.02374052112604,0 -115.5951211087074,52.04971551337891,0 -115.6937879500992,52.06594367308199,0 -115.709469872892,52.12485187586327,0 -115.7504121372337,52.16142290937436,0 -115.8234360177543,52.19685983037753,0 -115.8911999780092,52.2275988521196,0 -115.888593952872,52.25415962833754,0 -115.9454762239143,52.27675394130169,0 -116.036856565908,52.30793716733846,0 -116.0806570054125,52.36033837720676,0 -116.1024930723695,52.39267245478285,0 -116.1731772432992,52.39682215267723,0 -116.2230761534849,52.37766248453016,0 -116.2707280002295,52.35165638435645,0 -116.3000875264042,52.36979135112522,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+	</Folder>
+</Document>
+</kml>

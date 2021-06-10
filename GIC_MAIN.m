@@ -137,7 +137,6 @@ for rotidx = 1:length(s.rotmag)
     %Data located in 05_MT_IMPEDANCE folder
     [d,in,indzones] = load_assign_impedance(zn,'AB_BC_MT_DATA_512_sites.mat');
     d.Z(abs(real(d.Z(:)))>10^5)=NaN;
-    d.Z = 1.2*d.Z;
 
     [a,zn,fwd] = calc_Z_trich(d,zn,in);
 

@@ -18,7 +18,7 @@ for i = length(magfile):-1:1
     if strcmp(magfile{i}(end-2:end),'sec')
         b(i) = load_IAGA_site(magfile{i}(1:3),magfile,times);
         
-    elseif strcmp(magfile{1}(end-2:end),'F01')
+    elseif strcmp(magfile{i}(end-2:end),'F01')
         b(i) = load_CARISMA_site(magfile{i}(9:12),magfile,times);
         
     else

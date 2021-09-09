@@ -23,6 +23,12 @@ function [d,in,indzones] = load_assign_impedance(zn,mtfile)
 val = load(mtfile);
 d = val.d;
 
+% plot_lim = [47.5 61 -125.5 -109];
+% provinces = shaperead('province.shp','UseGeoCoords',true);
+% states = shaperead('usastatehi','UseGeoCoords',true);
+% initialize_map(plot_lim,zn,provinces,states,101,true)
+% textm(Clat*1.005,Clon,txt,'HorizontalAlignment','center')
+
 
 %Find which sites are in each zone polygon
 nb = length(zn);
@@ -56,33 +62,40 @@ for i = 1:length(ind)
     in(ind(i),id) = true;
     
     %For debugging purposes to check sites are being assigned correctly
-%     geoshow(d.loc(ind(i),1),d.loc(ind(i),2),'displaytype','point','marker','o','markerfacecolor','red','markeredgecolor','black','markersize',8)
-%     geoshow(Clat(id),Clon(id),'displaytype','point','marker','o','markerfacecolor','yellow','markeredgecolor','black','markersize',8) 
+     %geoshow(d.loc(ind(i),1),d.loc(ind(i),2),'displaytype','point','marker','o','markerfacecolor','red','markeredgecolor','black','markersize',4)
+     %geoshow(Clat(id),Clon(id),'displaytype','point','marker','o','markerfacecolor','yellow','markeredgecolor','black','markersize',4) 
+     %plotm([Clat(id) d.loc(ind(i),1)],[Clon(id) d.loc(ind(i),2)],'-y','LineWidth',2) 
 end
 
 %There are some points for which this algorithm doesn't work. I could've
 %made it more sophisticated by using e.g. line segment calculations and
 %line intersections, but I just left it as is. There are 7 sites which are
 %assigned to the wrong zone. Here I assign the logical mask manually:
-in(ind(4),8) = false; in(ind(4),21) = true; %id = 21;
-in(ind(12),19) = false; in(ind(12),23) = true; %id = 23;
-in(ind(15),16) = false; in(ind(15),23) = true; %id = 23;
-in(ind(19),7) = false; in(ind(19),11) = true; %id = 11;
-in(ind(20),7) = false; in(ind(20),11) = true; %id = 11;
-in(ind(21),3) = false; in(ind(21),11) = true; %id = 11;
-in(ind(22),7) = false; in(ind(22),11) = true; %id = 11;
+in(ind(4),1) = false; in(ind(4),13) = true; %id = 21;
+            %in(ind(12),19) = false; in(ind(12),23) = true; %id = 23;
+            %in(ind(15),16) = false; in(ind(15),23) = true; %id = 23;
+in(ind(19),3) = false; in(ind(19),4) = true; %id = 11;
+in(ind(20),3) = false; in(ind(20),4) = true; %id = 11;
+in(ind(21),3) = false; in(ind(21),4) = true; %id = 11;
+in(ind(22),3) = false; in(ind(22),4) = true; %id = 11;
 
 
 %Site NAB875 is in the polygon labelled "Zone 2" but in the original
 %Trichtchenko report, this polygon is not given a zone # or resistivity
 %model.
-in(450,2) = false; in(450,1) = true; %513 Site Cedar data has NAB875 at index 451
+in(450,15) = false; in(450,7) = true; %513 Site Cedar data has NAB875 at index 451
 
+%%
 %For debugging purposes, you can uncomment and check each zone to ensure
 %that points are in the right spots
-%zo = 7;
-%geoshow(d.loc(in(:,zo),1),d.loc(in(:,zo),2),'displaytype','point','marker','o','markerfacecolor','yellow','markeredgecolor','black','markersize',4)
-
+% zo = 24;
+% plot_lim = [47.5 61 -125.5 -109];
+% provinces = shaperead('province.shp','UseGeoCoords',true);
+% states = shaperead('usastatehi','UseGeoCoords',true);
+% initialize_map(plot_lim,zn,provinces,states,101,true)
+% textm(Clat*1.005,Clon,txt,'HorizontalAlignment','center')
+% geoshow(d.loc(in(:,zo),1),d.loc(in(:,zo),2),'displaytype','point','marker','o','markerfacecolor','yellow','markeredgecolor','black','markersize',4)
+%%
 indzones = find(~all(in==0));
 
 %For debugging purposes

@@ -1,0 +1,13 @@
+provinces.txt, line, -k, 1
+states.txt, line, -k, 1
+
+#
+Put other files after the "#" if you don't want to plot them
+
+Format for Fill:
+[file_name], [type], [line_type], [line_width], [fill_color], [fill transparency]
+Example:
+Lakes_Map.txt, fill, -k, 1, b, 0.5
+
+
+

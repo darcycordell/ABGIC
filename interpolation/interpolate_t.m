@@ -48,8 +48,8 @@ for j = 1:1:N
     Vyq = Fy_int(lon,lat);
     yint(:,:,t_ind) = Vyq;
     
-    if rem(j,3600)==1
-        disp(['Time Step: ',num2str(j),'; ',datestr(a(1).times(j))])
+    if rem(t_ind,3600)==1
+        disp(['Time Step: ',num2str(t_ind),'; ',datestr(a(1).times(t_ind))])
     end
        
     t_ind = t_ind+1;

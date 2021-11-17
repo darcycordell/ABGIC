@@ -23,7 +23,7 @@ end
 %refScale = 3000; %good scaling for 0.1 Hz
 refScale = 2000; %good scaling for figure at 0.01 Hz
 %refScale = 700; %good scaling for figure at 0.001 Hz
-quivermc(Clat(indzones)',Clon(indzones)',1000*real(Ey1D(1,ind))',1000*real(Ex1D(1,ind))','color','r','reference',refScale,'arrowstyle','tail','linewidth',2);
+quivermc(Clat(indzones)',Clon(indzones)',1000*real(Ey1D(fidx,ind))',1000*real(Ex1D(fidx,ind))','color','r','reference',refScale,'arrowstyle','tail','linewidth',2);
 
 quivermc(60.5,-118.5,5*refScale,0,'color','k','reference',refScale,'arrowstyle','tail','linewidth',3,'linestyle','filled');
 textm(60.8,-117.5,[num2str(5*refScale),' V/km'],'HorizontalAlignment','center')
@@ -47,7 +47,7 @@ plotm(56.234,-117.289,'sk','MarkerFaceColor','b','MarkerSize',10); %peace river
 % Figure 1b: Map of zones, ABT175 and SAB060 locations, and 3-D impedance
 initialize_map(plot_lim,zn,provinces,states,102,true)
 %Plot direction of E field for each zone
-quivermc(d.loc(:,1),d.loc(:,2),1000*real(Ey3D(1,:))',1000*real(Ex3D(1,:))','color','r','reference',refScale,'arrowstyle','tail','linewidth',2);
+quivermc(d.loc(:,1),d.loc(:,2),1000*real(Ey3D(fidx,:))',1000*real(Ex3D(fidx,:))','color','r','reference',refScale,'arrowstyle','tail','linewidth',2);
 plotm(d.loc(:,1),d.loc(:,2),'.k')
 
 plotm(d.loc(rep,1),d.loc(rep,2),'sk','MarkerSize',10,'MarkerFaceColor','y')

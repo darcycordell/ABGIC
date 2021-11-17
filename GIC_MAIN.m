@@ -257,7 +257,10 @@ if ~noifft.flag
     disp('*******************CALCULATE LINE INTEGRAL VOLTAGE******************')
     tic
 
-    tind = 28000:29800; %13:45 to 14:15 UT
+    tind = 27901:29700; %13:45 to 14:15 UT
+    
+    tind = [23801:24200, 25201:25800, 27901:29700];
+    tind = [23801:30600];
     %tind = 28943; %This is the maximum difference in GIC in restricted range
                     %used in the paper
 

@@ -64,13 +64,17 @@ for sidx = 1:nlines %Loop through lines
         % Resources:
         %       https://www.mathworks.com/matlabcentral/answers/441416-numerical-calculation-of-line-integral-over-a-vector-field
         %       https://ocw.mit.edu/ans7870/18/18.013a/textbook/HTML/chapter25/section04.html
-        gic3d(tidx,sidx) = abs(nansum(diff(x).*(exnn3d(1:end-1)+exnn3d(2:end))/2+diff(y).*(eynn3d(1:end-1)+eynn3d(2:end))/2));
+        gic3d(tidx,sidx) = 3+abs(nansum(diff(x).*(exnn3d(1:end-1)+exnn3d(2:end))/2+diff(y).*(eynn3d(1:end-1)+eynn3d(2:end))/2));
 
         gic1d(tidx,sidx) = abs(nansum(diff(x).*(exnn1d(1:end-1)+exnn1d(2:end))/2+diff(y).*(eynn1d(1:end-1)+eynn1d(2:end))/2));
+        
+        if rem(tidx,60)==0
+            disp(['Minute #',num2str(tidx/60),' Complete'])
+        end
 
     end
 
-    disp(['Transmission Line #',num2str(sidx),' of ',num2str(nlines),' Completed'])
+    disp(['Transmission Line #',num2str(sidx),' of ',num2str(nlines),' Completed...........................'])
 
 end
 

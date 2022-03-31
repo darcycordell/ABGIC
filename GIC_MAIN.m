@@ -26,9 +26,9 @@ full_time = tic;
 
 
 %Other user-defined inputs. The defaults are those used in the paper
-s.freq = 0.01; % Hz frequency of synthetic signal
-s.mag = 1000; % nT magnitude of synthetic sinusoidal signal
-s.len = 5000; % Length of synthetic signal (number of samples)
+s.freq = 0.01; % Hz frequency of synthetic signal (0.01 Hz default)
+s.mag = 1000; % nT magnitude of synthetic sinusoidal signal (1000 nT default)
+s.len = 5000; % Length of synthetic signal (number of samples) (5000 default)
 
 %Mapping and Interpolation Limits
 %lim = [45 64 -136 -92]; % lat, lon limits to interpolate

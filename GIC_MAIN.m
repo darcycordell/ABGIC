@@ -73,7 +73,7 @@ disp('***************LOAD MAGNETIC OBSERVATORY TIME DOMAIN DATA*************')
 %Data located in 04_MAG_DATA folder
 [b] = load_mag_data(s);
 
-
+%%
 disp('...converting observatory data to frequency domain')
 ns = length(b);
 %Convert mag sites to the frequency domain.
@@ -210,7 +210,7 @@ for rotidx = 1:length(s.rotmag)
     toc
 
 end
-
+%%
 if ~noifft.flag
     %% CALCULATE e(t)
     %
@@ -257,14 +257,16 @@ if ~noifft.flag
     disp('*******************CALCULATE LINE INTEGRAL VOLTAGE******************')
     tic
 
-    tind = 27901:29700; %13:45 to 14:15 UT
+    tind = find(b(1).times==datetime('2012-03-09 00:00:00')):find(b(1).times==datetime('2012-03-09 23:59:59')); %13:45 to 14:15 is tind = 27901:29700;
     
-    tind = [23801:24200, 25201:25800, 27901:29700];
-    tind = [23801:30600];
-    %tind = 28943; %This is the maximum difference in GIC in restricted range
-                    %used in the paper
+    %tind = find(b(1).times==datetime('2017-09-08 14:02:22')); %tind = 28943; %This is the maximum difference in GIC in restricted range
+                                                       %used in the paper
+    linid = 1:length(lines);
+    linid = 6:8;
+    linid = 32;
+                                                       
 
-    [gic1d,gic3d] = calc_line_integral(lines,tind,d,ex3d,ey3d,ex1d,ey1d,LAT,LON,'nearest');
+    [gic1d,gic3d] = calc_line_integral({lines{linid}},tind,d,ex3d,ey3d,ex1d,ey1d,LAT,LON,'nearest');
     toc
     %%
     %This results in GIC calculations which have "peak" values at different

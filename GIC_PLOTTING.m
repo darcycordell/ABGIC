@@ -197,7 +197,11 @@ end
 %above. In particular, the difference between the 3-D and 1-D models is
 %greatest at this time step on the transmission line from Fort McMurray to
 %Leismer and also the hypothetical line from Calgary to Nordegg.
-tidx = 28943;
+
+
+%tidx = find(b(1).times==datetime('2017-09-08 14:02:22')); %tidx = 28943
+
+tidx = find(b(1).times==datetime('2017-09-08 14:02:22')); 
 
 %Plot every 3rd interpolated grid point for visualization purposes
 spidx = 1:3:ygrid*xgrid;
@@ -256,11 +260,14 @@ end
 %% Figure 7:  Geoelectric time series for representative sites ABT175, SAB060 and ABT272
 % This can be used to plot the geoelectric time series for any site by
 % changing the "is" variable
-is = rep(3); %Use rep(1) for ABT175, rep(2) for SAB060, and rep(3) for ABT272
+is = rep(2); %Use rep(1) for ABT175, rep(2) for SAB060, and rep(3) for ABT272
 
 %I plot a slightly more restricted range from 12:00 to 15:00 UT to show the
 %peak of the storm more clearly
-tidx = 21601:32401;
+%tidx = find(b(1).times==datetime('2017-09-08 12:00:00')):find(b(1).times==datetime('2017-09-08 15:00:00')); %12:00 to 15:00 UT  tidx = 21601:32401;
+   
+tidx = find(b(1).times==datetime('2012-03-09 00:00:00')):find(b(1).times==datetime('2012-03-09 23:59:59'));
+%tidx = 1:b(1).nt;
 
 ccx= corrcoef(ex1d(tidx,is),ex3d(tidx,is));
 ccy= corrcoef(ey1d(tidx,is),ey3d(tidx,is));
@@ -485,4 +492,86 @@ caxis([flr cel])
 % Supplementary Figure 12 was produced using another set of scripts not
 % included here. The models and forward data are included in the forward model
 % file. It is relatively easy to load the model and plot slices. 
+
+%% Other Figures (Not In Paper): Line Voltage as a function of time for a particular line
+% Plot of line voltage as a function of time for a single line
+
+linid = 3;
+
+ccx= corrcoef(gic1d(:,linid),gic3d(:,linid));
+
+figure(1000);
+subplot(2,1,1);
+plot(b(1).times(tind)-hours(7),gic1d(:,linid),'-b'); hold on
+plot(b(1).times(tind)-hours(7),gic3d(:,linid),'-r');
+ylabel('Line Voltage (V)'); grid on
+title(['Line Voltage Time Series for Line #',num2str(linid+5),'. Correlation Coefficient = ',num2str(ccx(2))]);
+datetick('x','HH')
+xlabel('Time (MST)')
+set(gca,'XLim',[datetime(2012,03,09,0,0,0)-hours(7),datetime(2012,03,09,23,59,59)-hours(7)])
+plot([datetime(2012,03,09,2,25,0) datetime(2012,03,09,2,25,0)],[0 max(get(gca,'YLim'))],':k','LineWidth',2)
+plot([datetime(2012,03,09,2,25,0) datetime(2012,03,09,2,25,0)],[0 max(get(gca,'YLim'))],':k','LineWidth',2)
+manual_legend('1D','-b','3D','-r');
+
+subplot(2,1,2);
+plot(b(1).times(tind)-hours(7),(gic3d(:,linid)-gic1d(:,linid)),'-k'); hold on
+ylabel('3D - 1D Voltage (V)')
+grid on
+datetick('x','HH')
+xlabel('Time (MST)')
+set(gca,'XLim',[datetime(2012,03,09,0,0,0)-hours(7),datetime(2012,03,09,23,59,59)-hours(7)])
+
+
+%%
+
+%Plot raw magnetometer sites
+plot_lim = [45 70 -142 -90];
+initialize_map(plot_lim,zn,provinces,states,1,false)
+
+plotm([b(:).lat],[b(:).lon],'.k','MarkerSize',20)
+
+scale = [zeros(1,19) -2 0 0];
+scalelat = [ones(1,20)*0.6 -0.6 0.6];
+for i = 1:length(b)
+    textm(b(i).lat+scalelat(i),b(i).lon+scale(i),b(i).site,'HorizontalAlignment','center')
+end
+
+
+
+
+% Plot magnetic field time series at a particular location
+
+tidx = 1:b(1).nt;
+bid = 10;
+
+figure(700);
+plot(b(bid).times(tidx),b(bid).x(tidx)-nanmean(b(bid).x(tidx)),'-b'); hold on
+plot(b(bid).times(tidx),b(bid).y(tidx)-nanmean(b(bid).y(tidx)),'-r');
+ylabel('B (nT)'); grid on
+title(['B Time Series for ',b(bid).site])
+legend('Bx','By')
+
+%%
+% Plot raw transmission lines
+plot_lim = [47.5 61 -120.5 -109];
+
+%Supplementary Figure 7a: 1-D Impedance
+initialize_map(plot_lim,zn,provinces,states,1001,true)
+%textm(Clat*1.005,Clon,txt,'HorizontalAlignment','center')
+
+for i = 1:length(lines)
+    lat = lines{i}(1,:);
+    lon = lines{i}(2,:);
+    plotm(lat(1),lon(1),'.k','MarkerSize',12)
+    plotm(lat(end),lon(end),'.k','MarkerSize',12)
+    plotm(lat,lon,'-k','LineWidth',2)
+    
+    textm(mean(lat)*1.002,mean(lon),num2str(i),'HorizontalAlignment','center')
+end
+
+plotm(53.5461,-113.4938,'sk','MarkerFaceColor','b','MarkerSize',10) %edmonton
+plotm(51.0477,-114.0719,'sk','MarkerFaceColor','b','MarkerSize',10) %calgary
+plotm(56.726, -111.379,'sk','MarkerFaceColor','b','MarkerSize',10); %fort mac
+plotm(56.234,-117.289,'sk','MarkerFaceColor','b','MarkerSize',10); %peace river
+
 

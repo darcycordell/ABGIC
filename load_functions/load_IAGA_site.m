@@ -10,8 +10,8 @@ function b = load_IAGA_site(sites,magfile,times)
 % NRCAN Data:
 
 % USGS Data (API): 
-%       Sitka: https://geomag.usgs.gov/ws/edge/?id=SIT&starttime=2017-09-08T00:00:00Z&endtime=2017-09-08T23:59:59Z&sampling_period=1
-%       Newport: https://geomag.usgs.gov/ws/edge/?id=NEW&starttime=2017-09-08T00:00:00Z&endtime=2017-09-08T23:59:59Z&sampling_period=1
+%       Sitka: https://geomag.usgs.gov/ws/data/?id=SIT&starttime=2017-09-08T00:00:00Z&endtime=2017-09-08T23:59:59Z&sampling_period=1&type=variation
+%       Newport: https://geomag.usgs.gov/ws/data/?id=NEW&starttime=2017-09-08T00:00:00Z&endtime=2017-09-08T23:59:59Z&sampling_period=1&type=variation
 
 %%
 

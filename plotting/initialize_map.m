@@ -5,6 +5,7 @@ fig=figure(fignum);
 clf
 set(fig,'Position',[0.1*screensize(3) 0*screensize(4) 0.35*screensize(3) screensize(4)])
 worldmap([plot_lim(1) plot_lim(2)],[plot_lim(3) plot_lim(4)]);
+setm(gca,'FontSize',14)
 %%
 if plot_zone
     %Load and Plot AB Zones

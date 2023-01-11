@@ -39,7 +39,12 @@ gic1d = zeros(length(tind),length(lines)); gic3d = zeros(size(gic1d));
 origlon =(max(d.loc(:,2))-min(d.loc(:,2)))/2+min(d.loc(:,2));
 origlat = (max(d.loc(:,1))-min(d.loc(:,1)))/2+min(d.loc(:,1));
 nlines = size(lines,2);
+
 for sidx = 1:nlines %Loop through lines
+    
+    g3d = zeros(length(tind),1);
+    g1d = zeros(length(tind),1);
+    
     %Line vertices in longitute (rx) and latitude (ry)
     rx = lines{sidx}(1,:);
     ry = lines{sidx}(2,:);
@@ -47,16 +52,45 @@ for sidx = 1:nlines %Loop through lines
     % Two methods: Tested both and it doesn't change the results at all.
     %[y,x] = geo2utm(ry,rx,ry(round(length(ry)/2)),rx(round(length(rx)/2))); convert using the transmission line segment midpoint as a reference
     [y,x] = geo2utm(ry,rx,origlon,origlat); %convert using the full dataset midpoint as an origin
+    tic
     
-    for tidx = 1:length(tind) %Loop through each time step
+    %Interpolate transmission line values and convert to V/m
+    % Here I use scatteredInterpolant to generate 4 functions for ex1d,
+    % ey1d, ex3d, and ey3d. Once I have the interpolant function, then I
+    % enter the loop and just replace the function values since d.loc never
+    % changes. This is faster than e.g. gridding on every time step.
 
-        %Interpolate transmission line values and convert to V/m
-        exnn3d = griddata(d.loc(:,1),d.loc(:,2),ex3d(tind(tidx),:),rx,ry,method); 
-        eynn3d = griddata(d.loc(:,1),d.loc(:,2),ey3d(tind(tidx),:),rx,ry,method);
+    Fex3d = scatteredInterpolant(d.loc(:,1),d.loc(:,2),ex3d(tind(1),:).',method);
+    exnn3d = Fex3d(rx,ry);
+    
+    Fey3d = scatteredInterpolant(d.loc(:,1),d.loc(:,2),ey3d(tind(1),:).',method);
+    eynn3d = Fey3d(rx,ry);
+    
+    g3d(1) = abs(nansum(abs(diff(x)).*(exnn3d(1:end-1)+exnn3d(2:end))/2+abs(diff(y)).*(eynn3d(1:end-1)+eynn3d(2:end))/2));
 
-        exnn1d = griddata(LAT(:),LON(:),ex1d(tind(tidx),:),rx,ry,method);
-        eynn1d = griddata(LAT(:),LON(:),ey1d(tind(tidx),:),rx,ry,method);
-       
+    Fex1d = scatteredInterpolant(LAT(:),LON(:),ex1d(tind(1),:).',method);
+    exnn1d = Fex1d(rx,ry);
+    
+    Fey1d = scatteredInterpolant(LAT(:),LON(:),ey1d(tind(1),:).',method);
+    eynn1d = Fey1d(rx,ry);
+    
+    g1d(1) = abs(nansum(abs(diff(x)).*(exnn1d(1:end-1)+exnn1d(2:end))/2+abs(diff(y)).*(eynn1d(1:end-1)+eynn1d(2:end))/2));
+    
+    for tidx = 2:length(tind) %Loop through each time step
+
+        Fex3d.Values = ex3d(tind(tidx),:).';
+        exnn3d = Fex3d(rx,ry);
+        
+        Fey3d.Values = ey3d(tind(tidx),:).';
+        eynn3d = Fey3d(rx,ry);
+        
+        Fex1d.Values = ex1d(tind(tidx),:).';
+        exnn1d = Fex1d(rx,ry);
+        
+        Fey1d.Values = ey1d(tind(tidx),:).';
+        eynn1d = Fey1d(rx,ry);
+        
+        
         %Perform line integral (x and y are in meters, e is in V/m)
         %Take the absolute value because we do not care so much about
         %whether GIC is positive or negative but only the absolute
@@ -64,16 +98,19 @@ for sidx = 1:nlines %Loop through lines
         % Resources:
         %       https://www.mathworks.com/matlabcentral/answers/441416-numerical-calculation-of-line-integral-over-a-vector-field
         %       https://ocw.mit.edu/ans7870/18/18.013a/textbook/HTML/chapter25/section04.html
-        gic3d(tidx,sidx) = abs(nansum(diff(x).*(exnn3d(1:end-1)+exnn3d(2:end))/2+diff(y).*(eynn3d(1:end-1)+eynn3d(2:end))/2));
+        g3d(tidx) = (nansum(abs(diff(x)).*(exnn3d(1:end-1)+exnn3d(2:end))/2+abs(diff(y)).*(eynn3d(1:end-1)+eynn3d(2:end))/2));
 
-        gic1d(tidx,sidx) = abs(nansum(diff(x).*(exnn1d(1:end-1)+exnn1d(2:end))/2+diff(y).*(eynn1d(1:end-1)+eynn1d(2:end))/2));
+        g1d(tidx) = (nansum(abs(diff(x)).*(exnn1d(1:end-1)+exnn1d(2:end))/2+abs(diff(y)).*(eynn1d(1:end-1)+eynn1d(2:end))/2));
         
-        if rem(tidx,60)==0
-            disp(['Minute #',num2str(tidx/60),' Complete'])
+        if rem(tidx,3600)==0
+            disp(['Hour #',num2str(tidx/3600),' Complete'])
         end
 
     end
-
+    
+    gic3d(:,sidx) = g3d;
+    gic1d(:,sidx) = g1d;
+toc
     disp(['Transmission Line #',num2str(sidx),' of ',num2str(nlines),' Completed...........................'])
 
 end

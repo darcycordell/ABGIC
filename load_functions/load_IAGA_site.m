@@ -1,4 +1,4 @@
-function b = load_IAGA_site(sites,magfile,times)
+function b = load_IAGA_site(sites,magfile)
 % Input is name of IAGA format geomagnetic field data
 % Output:
 %   B fields are in nT (Bx,By,Bz)
@@ -48,6 +48,15 @@ for i = 1:length(magfile)
         Bx = cell2mat(C(4)); % Ignore conversion for now
         By = cell2mat(C(5));
         Bz = cell2mat(C(6));
+        
+        %Very slow
+        %timetable = cell2table(C{1});
+        %times_all = datetime(timetable.Var1,'InputFormat','yyyyMMddHHmmss');
+        
+        %Faster but assumes no gaps...
+        t1 = datetime([C{1}{1},'-',C{2}{1}],'InputFormat','yyyy-MM-dd-HH:mm:ss.sss');
+        t2 = datetime([C{1}{end},'-',C{2}{end}],'InputFormat','yyyy-MM-dd-HH:mm:ss.SSS');
+        times = t1:seconds:t2;
 
         N = 1:length(Bx);
         
@@ -63,29 +72,18 @@ for i = 1:length(magfile)
         Bx_all = [Bx_all; Bx];
         By_all = [By_all; By];
         Bz_all = [Bz_all; Bz];
-        times_all = [times_all; times];
+        times_all = [times_all times];
         
     end
 
 end
-%21601 = 6 am onwards;   
-tstart = 21601; tend = 86400;
-Bx_all = Bx_all(tstart:tend);
-By_all = By_all(tstart:tend);
-Bz_all = Bz_all(tstart:tend);
 
-times_all = times_all(tstart:tend);
 
 %Remove "bad" spikes where the derivative is >0.05
 indx = find((Bx_all(1:end-1)-Bx_all(2:end))./Bx_all(1:end-1)>0.05);
 indy = find((By_all(1:end-1)-By_all(2:end))./By_all(1:end-1)>0.05);
 ind = unique([indx; indy]);
 
-%Meanook site has a large chunk of "bad" data from 15:09 to 15:14 UT which
-%is not a "spike" so is missed by the above derivative method.
-if strcmp(site,'MEA') 
-    ind = [ind; [54580:54860]'-tstart];
-end
 
 %Remove bad points and interpolate
 if ~isempty(ind)

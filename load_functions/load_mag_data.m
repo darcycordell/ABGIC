@@ -9,21 +9,35 @@ if ~iscell(magfile)
 end
 cd(magpath);
 
-t1 = datetime(2017,9,8,0,0,0);
-t2 = datetime(2017,9,8,23,59,59);
-times = t1:seconds(1):t2;
-
 tic
+siteNames = {''};
 for i = length(magfile):-1:1
-    if strcmp(magfile{i}(end-2:end),'sec')
-        b(i) = load_IAGA_site(magfile{i}(1:3),magfile,times);
-        
-    elseif strcmp(magfile{i}(end-2:end),'F01')
-        b(i) = load_CARISMA_site(magfile{i}(9:12),magfile,times);
-        
-    else
-        disp([magfile{i},' is an unknown file format'])  
-    end
+      
+        if strcmp(magfile{i}(end-2:end),'sec')
+
+            if ~any(strcmpi(siteNames,magfile{i}(1:3))) %check if the site has already been loaded
+    
+                b(i) = load_IAGA_site(magfile{i}(1:3),magfile);
+                
+                siteNames = [{b(:).site}];
+                
+            end
+
+
+        elseif strcmp(magfile{i}(end-2:end),'F01')
+            
+            if ~any(strcmpi(siteNames,magfile{i}(9:12))) %check if the site has already been loaded
+
+                b(i) = load_CARISMA_site(magfile{i}(9:12),magfile);
+                siteNames = [{b(:).site}];
+            
+            end
+
+
+        else
+            disp([magfile{i},' is an unknown file format'])  
+        end
+    
     
 end
  

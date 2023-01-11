@@ -1,4 +1,4 @@
-function [b] = load_CARISMA_site(sites,magfile,times)
+function [b] = load_CARISMA_site(sites,magfile)
 % Input is name of CARISMA format geomagnetic field data
 % Output:
 %   B fields are in nT (Bx,By,Bz)
@@ -34,25 +34,26 @@ for i = 1:length(magfile)
         By = cell2mat(C(3));
         Bz = cell2mat(C(4));
 
+        %Very slow
+        %timetable = cell2table(C{1});
+        %times_all = datetime(timetable.Var1,'InputFormat','yyyyMMddHHmmss');
+        
+        %Faster but assumes no gaps...
+        t1 = datetime(C{1}(1),'InputFormat','yyyyMMddHHmmss');
+        t2 = datetime(C{1}(end),'InputFormat','yyyyMMddHHmmss');
+        times = t1:seconds:t2;
 
         N = 1:length(Bx);
         
         Bx_all = [Bx_all; Bx];
         By_all = [By_all; By];
         Bz_all = [Bz_all; Bz];
-        times_all = [times_all; times];
+        times_all = [times_all times];
         
     end
 
 end
 
-%21601 = 6 am onwards;    
-tstart = 21601; tend = 86400;
-Bx_all = Bx_all(tstart:tend);
-By_all = By_all(tstart:tend);
-Bz_all = Bz_all(tstart:tend);
-
-times_all = times_all(tstart:tend);
 
 %Remove bad points and interpolate
 ind = unique([find(Bx_all>=99999.9); find(By_all>=99999.9); find(Bz_all>=99999.9)]);

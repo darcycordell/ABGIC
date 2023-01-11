@@ -1,4 +1,4 @@
-function lines = load_powerlines(kmlfile)
+function [lines,line_name] = load_powerlines(kmlfile)
 %
 % Function which loads power transmission lines from a Google Earth KML
 % file. The file (kmlfile) must be on path or in current directory.
@@ -14,12 +14,18 @@ fid = fopen(kmlfile);
 
 nlon = 0;
 nlat = 0;
-count = 1;
+count = 1; counter = 1;
 while 1
     
     tline = fgetl(fid);
     if ~ischar(tline); break; end
     tline = strtrim(tline);
+    
+    if strcmp(tline(1:6),'<name>')
+        name = strsplit(tline,{'>','<'});
+        line_name{counter} = name{3};
+        counter = counter+1;
+    end
     
     if strcmp(tline,'<coordinates>')
         tline = fgetl(fid);
@@ -40,6 +46,8 @@ end
 
 fclose(fid);
 
+segLength = 50; %For 2021 GIC paper, I use 5000 m.
+
 %Resample the transmission line segments into 5 km segments.
 for i = 1:length(line)
     
@@ -49,13 +57,15 @@ for i = 1:length(line)
     %Get line segments of original transmission line
     step = [0; distance(path(1:end-1,1),path(1:end-1,2),path(2:end,1),path(2:end,2),referenceEllipsoid('earth'))];
     
-    %Re-sample each segment into multiple 5 km segments.
+    %Re-sample each segment into multiple segLength segments.
     lineseglength = cumsum(step);
-    Vq = linspace(0,lineseglength(end), round(lineseglength(end)/5000));
+    Vq = linspace(0,lineseglength(end), round(lineseglength(end)/segLength));
     interpline = interp1(lineseglength, path, Vq);
     
-    %New line with vertices spaced very 5 km.
+    %New line with vertices spaced every segLength meters.
     lines{i} = interpline';
 
 
 end
+
+line_name(1:2) = [];

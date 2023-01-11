@@ -57,9 +57,9 @@ states = shaperead('usastatehi','UseGeoCoords',true);
 
 %>240 kV poswer line network
 %   Located in 03_POWERLINE_DATA folder
-%lines = load_powerlines('Simplified_Network_36_Lines.kml');
+lines = load_powerlines('Simplified_Network_36_Lines.kml');
 
-[lines, lineName, line_lengths, voltage, resistance] = post_process_lines;
+%[lines, lineName, line_lengths, voltage, resistance] = post_process_lines;
 
 
 % Load Time-Domain Mag Data b_s(t) and Convert to Frequency Domain B_s(omega)
@@ -263,7 +263,7 @@ for rotidx = 1:length(s.rotmag)
     toc
 
 end
-%%
+
 if ~noifft.flag
     % CALCULATE e(t)
     %
@@ -343,13 +343,13 @@ if ~noifft.flag
 
     % Peak Difference in GIC magnitude over **restricted interval** (near the
     % peak magnitude)
-    [val, ~] = ind2sub(size(dgic(900:end-700,:)),find(dgic(900:end-700,:)==max(max(dgic(900:end-700,:)))));
-    subindx = val+900-1; %index for dgic matrix
+    [val, ~] = ind2sub(size(dgic(:,:)),find(dgic(:,:)==max(max(dgic(:,:)))));
+    subindx = val; %index for dgic matrix
     tidx = tind(1)+subindx-1; %time index
-    b(1).times(tidx) 
+    b(1).times(tidx); 
 
-    tidx = 28943;
-    subindx = tidx+1-tind(1);
+%     tidx = 28943;
+%     subindx = tidx+1-tind(1);
 
     %Supplementary Table 1
     excel_table = [gic1d(subindx,:)' gic3d(subindx,:)' dgic(subindx,:)' dgic(subindx,:)'./gic1d(subindx,:)' gtzero'];

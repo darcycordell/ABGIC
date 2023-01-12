@@ -51,7 +51,7 @@ for sidx = 1:nlines %Loop through lines
     %Convert lat long to metres (UTM). Note: y = easting; x = northing 
     % Two methods: Tested both and it doesn't change the results at all.
     %[y,x] = geo2utm(ry,rx,ry(round(length(ry)/2)),rx(round(length(rx)/2))); convert using the transmission line segment midpoint as a reference
-    [y,x] = geo2utm(ry,rx,origlon,origlat); %convert using the full dataset midpoint as an origin
+    [y,x] = geo2utm(ry,rx,origlon,origlat); %convert using the full dataset midpoint as an origin (x = northing, y = easting)
     tic
     
     %Interpolate transmission line values and convert to V/m
@@ -66,7 +66,7 @@ for sidx = 1:nlines %Loop through lines
     Fey3d = scatteredInterpolant(d.loc(:,1),d.loc(:,2),ey3d(tind(1),:).',method);
     eynn3d = Fey3d(rx,ry);
     
-    g3d(1) = abs(nansum(abs(diff(x)).*(exnn3d(1:end-1)+exnn3d(2:end))/2+abs(diff(y)).*(eynn3d(1:end-1)+eynn3d(2:end))/2));
+    g3d(1) = (nansum((diff(x)).*(exnn3d(1:end-1)+exnn3d(2:end))/2+(diff(y)).*(eynn3d(1:end-1)+eynn3d(2:end))/2));
 
     Fex1d = scatteredInterpolant(LAT(:),LON(:),ex1d(tind(1),:).',method);
     exnn1d = Fex1d(rx,ry);
@@ -74,7 +74,7 @@ for sidx = 1:nlines %Loop through lines
     Fey1d = scatteredInterpolant(LAT(:),LON(:),ey1d(tind(1),:).',method);
     eynn1d = Fey1d(rx,ry);
     
-    g1d(1) = abs(nansum(abs(diff(x)).*(exnn1d(1:end-1)+exnn1d(2:end))/2+abs(diff(y)).*(eynn1d(1:end-1)+eynn1d(2:end))/2));
+    g1d(1) = (nansum((diff(x)).*(exnn1d(1:end-1)+exnn1d(2:end))/2+(diff(y)).*(eynn1d(1:end-1)+eynn1d(2:end))/2));
     
     for tidx = 2:length(tind) %Loop through each time step
 
@@ -92,15 +92,12 @@ for sidx = 1:nlines %Loop through lines
         
         
         %Perform line integral (x and y are in meters, e is in V/m)
-        %Take the absolute value because we do not care so much about
-        %whether GIC is positive or negative but only the absolute
-        %difference between methods
         % Resources:
         %       https://www.mathworks.com/matlabcentral/answers/441416-numerical-calculation-of-line-integral-over-a-vector-field
         %       https://ocw.mit.edu/ans7870/18/18.013a/textbook/HTML/chapter25/section04.html
-        g3d(tidx) = (nansum(abs(diff(x)).*(exnn3d(1:end-1)+exnn3d(2:end))/2+abs(diff(y)).*(eynn3d(1:end-1)+eynn3d(2:end))/2));
+        g3d(tidx) = (nansum((diff(x)).*(exnn3d(1:end-1)+exnn3d(2:end))/2+(diff(y)).*(eynn3d(1:end-1)+eynn3d(2:end))/2));
 
-        g1d(tidx) = (nansum(abs(diff(x)).*(exnn1d(1:end-1)+exnn1d(2:end))/2+abs(diff(y)).*(eynn1d(1:end-1)+eynn1d(2:end))/2));
+        g1d(tidx) = (nansum((diff(x)).*(exnn1d(1:end-1)+exnn1d(2:end))/2+(diff(y)).*(eynn1d(1:end-1)+eynn1d(2:end))/2));
         
         if rem(tidx,3600)==0
             disp(['Hour #',num2str(tidx/3600),' Complete'])

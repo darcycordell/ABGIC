@@ -1,4 +1,4 @@
-function b = load_IAGA_site(sites,magfile,times)
+function b = load_IAGA_site(sites,magfile,sample_rate)
 % Input is name of IAGA format geomagnetic field data
 % Output:
 %   B fields are in nT (Bx,By,Bz)
@@ -48,6 +48,24 @@ for i = 1:length(magfile)
         Bx = cell2mat(C(4)); % Ignore conversion for now
         By = cell2mat(C(5));
         Bz = cell2mat(C(6));
+        
+        %Very slow
+        %timetable = cell2table(C{1});
+        %times_all = datetime(timetable.Var1,'InputFormat','yyyyMMddHHmmss');
+        
+        %Faster but assumes no gaps...
+        t1 = datetime([C{1}{1},'-',C{2}{1}],'InputFormat','yyyy-MM-dd-HH:mm:ss.sss');
+        t2 = datetime([C{1}{end},'-',C{2}{end}],'InputFormat','yyyy-MM-dd-HH:mm:ss.SSS');
+        
+        if sample_rate == 1
+            times = t1:seconds:t2;
+        elseif sample_rate == 1/60
+            times = t1:minutes:t2;
+        elseif sample_rate ==1/3600
+            times = t1:hours:t2;
+        else
+            error('Your magnetic data sample rate needs to be either second (1 Hz), minute (1/60 Hz), or hour (1/3600 Hz)')
+        end
 
         N = 1:length(Bx);
         
@@ -63,44 +81,12 @@ for i = 1:length(magfile)
         Bx_all = [Bx_all; Bx];
         By_all = [By_all; By];
         Bz_all = [Bz_all; Bz];
-        times_all = [times_all; times];
+        times_all = [times_all times];
         
     end
 
 end
-%21601 = 6 am onwards;   
-tstart = 21601; tend = 86400;
-Bx_all = Bx_all(tstart:tend);
-By_all = By_all(tstart:tend);
-Bz_all = Bz_all(tstart:tend);
 
-times_all = times_all(tstart:tend);
-
-%Remove "bad" spikes where the derivative is >0.05
-indx = find((Bx_all(1:end-1)-Bx_all(2:end))./Bx_all(1:end-1)>0.05);
-indy = find((By_all(1:end-1)-By_all(2:end))./By_all(1:end-1)>0.05);
-ind = unique([indx; indy]);
-
-%Meanook site has a large chunk of "bad" data from 15:09 to 15:14 UT which
-%is not a "spike" so is missed by the above derivative method.
-if strcmp(site,'MEA') 
-    ind = [ind; [54580:54860]'-tstart];
-end
-
-%Remove bad points and interpolate
-if ~isempty(ind)
-    disp([upper(sites),': despiked ',num2str(length(ind)),' bad points'])
-    
-    Bx_all(ind) = NaN; 
-    By_all(ind) = NaN; 
-    Bz_all(ind) = NaN;
-    
-    %Interpolate NaNs
-    Bx_all = inpaint_nans(Bx_all);
-    By_all = inpaint_nans(By_all);
-    Bz_all = inpaint_nans(Bz_all);
-    
-end
 
 %Set b structure
 b.x = Bx_all;
@@ -111,3 +97,5 @@ b.lat = lat;
 b.lon = lon;
 b.site = upper(sites);
 b.nt = length(b.x);
+
+

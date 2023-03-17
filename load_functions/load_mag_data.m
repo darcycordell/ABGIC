@@ -1,5 +1,14 @@
-function [b] = load_mag_data(s)
+function [b] = load_mag_data(varargin)
 curdir = pwd;
+
+if isempty(varargin)
+    s.flag = false;
+elseif length(varargin)==1
+    s = varargin{1};
+else
+    error('load_mag_data: Too many input argument')
+end
+
 
 [magfile, magpath]=uigetfile({'*'},'Choose Mag Files','MultiSelect','on');
 if ~iscell(magfile)
@@ -9,6 +18,10 @@ if ~iscell(magfile)
 end
 cd(magpath);
 
+if ischar(magfile)
+    magfile = {magfile};
+end
+
 tic
 siteNames = {''};
 for i = length(magfile):-1:1
@@ -17,7 +30,8 @@ for i = length(magfile):-1:1
 
             if ~any(strcmpi(siteNames,magfile{i}(1:3))) %check if the site has already been loaded
     
-                b(i) = load_IAGA_site(magfile{i}(1:3),magfile);
+                sample_rate = 1; %sample rate in Hz
+                b(i) = load_IAGA_site(magfile{i}(1:3),magfile,sample_rate);
                 
                 siteNames = [{b(:).site}];
                 
@@ -31,6 +45,17 @@ for i = length(magfile):-1:1
                 b(i) = load_CARISMA_site(magfile{i}(9:12),magfile);
                 siteNames = [{b(:).site}];
             
+            end
+            
+        elseif strcmp(magfile{i}(end-2:end),'min') %IAGA format per minute
+            
+            if ~any(strcmpi(siteNames,magfile{i}(1:3))) %check if the site has already been loaded
+    
+                sample_rate = 1/60; %sample rate in Hz
+                b(i) = load_IAGA_site(magfile{i}(1:3),magfile,sample_rate);
+                
+                siteNames = [{b(:).site}];
+                
             end
 
 

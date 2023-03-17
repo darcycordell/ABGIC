@@ -1,4 +1,4 @@
-function b = load_IAGA_site(sites,magfile)
+function b = load_IAGA_site(sites,magfile,sample_rate)
 % Input is name of IAGA format geomagnetic field data
 % Output:
 %   B fields are in nT (Bx,By,Bz)
@@ -56,7 +56,16 @@ for i = 1:length(magfile)
         %Faster but assumes no gaps...
         t1 = datetime([C{1}{1},'-',C{2}{1}],'InputFormat','yyyy-MM-dd-HH:mm:ss.sss');
         t2 = datetime([C{1}{end},'-',C{2}{end}],'InputFormat','yyyy-MM-dd-HH:mm:ss.SSS');
-        times = t1:seconds:t2;
+        
+        if sample_rate == 1
+            times = t1:seconds:t2;
+        elseif sample_rate == 1/60
+            times = t1:minutes:t2;
+        elseif sample_rate ==1/3600
+            times = t1:hours:t2;
+        else
+            error('Your magnetic data sample rate needs to be either second (1 Hz), minute (1/60 Hz), or hour (1/3600 Hz)')
+        end
 
         N = 1:length(Bx);
         
@@ -79,27 +88,6 @@ for i = 1:length(magfile)
 end
 
 
-%Remove "bad" spikes where the derivative is >0.05
-indx = find((Bx_all(1:end-1)-Bx_all(2:end))./Bx_all(1:end-1)>0.05);
-indy = find((By_all(1:end-1)-By_all(2:end))./By_all(1:end-1)>0.05);
-ind = unique([indx; indy]);
-
-
-%Remove bad points and interpolate
-if ~isempty(ind)
-    disp([upper(sites),': despiked ',num2str(length(ind)),' bad points'])
-    
-    Bx_all(ind) = NaN; 
-    By_all(ind) = NaN; 
-    Bz_all(ind) = NaN;
-    
-    %Interpolate NaNs
-    Bx_all = inpaint_nans(Bx_all);
-    By_all = inpaint_nans(By_all);
-    Bz_all = inpaint_nans(Bz_all);
-    
-end
-
 %Set b structure
 b.x = Bx_all;
 b.y = By_all;
@@ -109,3 +97,5 @@ b.lat = lat;
 b.lon = lon;
 b.site = upper(sites);
 b.nt = length(b.x);
+
+

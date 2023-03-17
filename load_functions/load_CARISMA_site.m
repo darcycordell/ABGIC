@@ -45,6 +45,15 @@ for i = 1:length(magfile)
 
         N = 1:length(Bx);
         
+        %Remove missing data. IAGA data seem to have missing data set with
+        %99999. 
+        Bx(Bx==99999)=NaN; %Set missing data to NaN
+        Bx = resample(Bx,N); %Remove missing data using linear interpolation
+        By(By==99999)=NaN;
+        By = resample(By,N);
+        Bz(Bz==99999)=NaN;
+        Bz = resample(Bz,N);
+        
         Bx_all = [Bx_all; Bx];
         By_all = [By_all; By];
         Bz_all = [Bz_all; Bz];
@@ -54,27 +63,12 @@ for i = 1:length(magfile)
 
 end
 
-
-%Remove bad points and interpolate
-ind = unique([find(Bx_all>=99999.9); find(By_all>=99999.9); find(Bz_all>=99999.9)]);
-if ~isempty(ind)
-    disp([upper(sites),': despiked ',num2str(length(ind)),' bad points'])
-
-    Bx_all(ind) = NaN;
-    By_all(ind) = NaN;
-    Bz_all(ind) = NaN;
-    
-    %Interpolate NaNs
-    Bx_all = inpaint_nans(Bx_all);
-    By_all = inpaint_nans(By_all);
-    Bz_all = inpaint_nans(Bz_all);
-    
-end
+[times_all, indsort] = sort(times_all);
 
 %Set b structure
-b.x = Bx_all;
-b.y = By_all;
-b.z = Bz_all;
+b.x = Bx_all(indsort);
+b.y = By_all(indsort);
+b.z = Bz_all(indsort);
 b.times = times_all;
 b.lat = lat;
 b.lon = lon;

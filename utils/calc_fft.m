@@ -1,4 +1,4 @@
-function [X,Y,f] = calc_fft(xt,yt,fs,pad)
+function [X,Y,f,fAxis] = calc_fft(xt,yt,fs,pad)
 %Calculate fft for x and y vector data
 %
 % Inputs:
@@ -13,6 +13,9 @@ function [X,Y,f] = calc_fft(xt,yt,fs,pad)
 %       f = vector of frequencies
 
 % add padding to beginning and end of time series
+%xt = cat(1,ones(pad,1).*xt(1),xt,ones(pad,1).*xt(end));%-nanmean(xt);
+%yt = cat(1,ones(pad,1).*yt(1),yt,ones(pad,1).*yt(end));%-nanmean(yt);
+
 xt = cat(1,ones(pad,1).*xt(1),xt,ones(pad,1).*xt(end));%-nanmean(xt);
 yt = cat(1,ones(pad,1).*yt(1),yt,ones(pad,1).*yt(end));%-nanmean(yt);
 
@@ -21,5 +24,17 @@ L = length(yt); % number of samples to fft
 X = fft(xt); % fft Bx
 Y = fft(yt); % fft By
 
-f = fs*(0:(L/2))/L;
+% f = fs*(0:(L/2))/L;
+%% 
+df = fs/L;
+fAxis = (0:df:(fs-df)) - (fs-mod(L,2)*df)/2;
+
+
+%f = linspace(0,fs,L/2)-(fs/2);
+
+if mod(L,2)==0
+   f = fAxis((L/2)+1:end);
+else
+   f = fAxis((L+1)/2:end);
+end
 

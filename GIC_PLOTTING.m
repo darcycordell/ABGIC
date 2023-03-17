@@ -7,9 +7,14 @@
 fidx = nearestpoint(0.01,f);
 plot_lim = [47.5 61 -120.5 -109];
 
+plot_zone = false;m
+
 %Figure 1a: 1-D Impedance
-initialize_map(plot_lim,zn,provinces,states,101,true)
-textm(Clat*1.005,Clon,txt,'HorizontalAlignment','center')
+initialize_map(plot_lim,zn,provinces,states,101,plot_zone)
+
+if plot_zone
+    textm(Clat*1.005,Clon,txt,'HorizontalAlignment','center')
+end
 
 count = 1; ind = [];
 for i = 1:nb
@@ -19,24 +24,27 @@ for i = 1:nb
         count = count+1;
     end
 end
+ind = ind(1:14);
 
 %refScale = 3000; %good scaling for 0.1 Hz
 refScale = 2000; %good scaling for figure at 0.01 Hz
 %refScale = 700; %good scaling for figure at 0.001 Hz
+refScale = 0.5;
 quivermc(Clat(indzones)',Clon(indzones)',1000*real(Ey1D(fidx,ind))',1000*real(Ex1D(fidx,ind))','color','r','reference',refScale,'arrowstyle','tail','linewidth',2);
 
 quivermc(60.5,-118.5,5*refScale,0,'color','k','reference',refScale,'arrowstyle','tail','linewidth',3,'linestyle','filled');
 textm(60.8,-117.5,[num2str(5*refScale),' V/km'],'HorizontalAlignment','center')
 title([num2str(f(fidx)),' Hz'])
 
+firstpointlat = cellfun(@(x)x(1,1),lines);
+lastpointlat = cellfun(@(x)x(1,end),lines);
+firstpointlon = cellfun(@(x)x(2,1),lines);
+lastpointlon = cellfun(@(x)x(2,end),lines);
 
-for i = 1:length(lines)
-    lat = lines{i}(1,:);
-    lon = lines{i}(2,:);
-    plotm(lat(1),lon(1),'.k','MarkerSize',12)
-    plotm(lat(end),lon(end),'.k','MarkerSize',12)
-    plotm(lat,lon,'-k','LineWidth',2)
-end
+cellfun(@(x)plotm(x(1,:),x(2,:),'-k','LineWidth',2), lines);
+
+plotm(firstpointlat,firstpointlon,'.k','MarkerSize',12)
+plotm(lastpointlat,lastpointlon,'.k','MarkerSize',12)
 
 plotm(53.5461,-113.4938,'sk','MarkerFaceColor','b','MarkerSize',10) %edmonton
 plotm(51.0477,-114.0719,'sk','MarkerFaceColor','b','MarkerSize',10) %calgary
@@ -45,7 +53,7 @@ plotm(56.234,-117.289,'sk','MarkerFaceColor','b','MarkerSize',10); %peace river
 %plotm(49.698,-112.839,'sk','MarkerFaceColor','b','MarkerSize',10); %lethbridge
 
 % Figure 1b: Map of zones, ABT175 and SAB060 locations, and 3-D impedance
-initialize_map(plot_lim,zn,provinces,states,102,true)
+initialize_map(plot_lim,zn,provinces,states,102,plot_zone)
 %Plot direction of E field for each zone
 quivermc(d.loc(:,1),d.loc(:,2),1000*real(Ey3D(fidx,:))',1000*real(Ex3D(fidx,:))','color','r','reference',refScale,'arrowstyle','tail','linewidth',2);
 plotm(d.loc(:,1),d.loc(:,2),'.k')
@@ -138,6 +146,7 @@ fidx = nearestpoint(0.010106,f);
 refScale = 5; %Scaling for figure at 0.01 Hz in mV/km
 %refScale = 0.3; %Scaling for figure at 0.1 Hz
 %refScale = 60; %Scaling for figure at 0.001 Hz
+refScale = 5;
 
 plot_lim = [47.5 61 -120.5 -109];
 
@@ -199,9 +208,11 @@ end
 %Leismer and also the hypothetical line from Calgary to Nordegg.
 
 
-%tidx = find(b(1).times==datetime('2017-09-08 14:02:22')); %tidx = 28943
+tidx = find(b(1).times==datetime('2017-09-08 14:02:22')); %tidx = 28943
 
-tidx = find(b(1).times==datetime('2017-09-08 14:02:22')); 
+tidx = find(b(1).times==datetime('1989-03-14 01:18:00')); 
+
+%tidx = find(b(1).times==datetime('2021-10-12 10:49:50'));
 
 %Plot every 3rd interpolated grid point for visualization purposes
 spidx = 1:3:ygrid*xgrid;
@@ -211,7 +222,7 @@ initialize_map(plot_lim,zn,provinces,states,501,true)
 textm(Clat*1.005,Clon,txt,'HorizontalAlignment','center')
 
 refScale = 0.2; %good scaling for figure at specified time step
-%refScale = 1000*mean([sqrt(real(ey3d(tidx,:)).^2+ real(ex3d(tidx,:)).^2) sqrt(real(ey1d(tidx,:)).^2+ real(ex1d(tidx,:)).^2)]);
+refScale = 1000*mean([sqrt(real(ey3d(tidx,:)).^2+ real(ex3d(tidx,:)).^2) sqrt(real(ey1d(tidx,:)).^2+ real(ex1d(tidx,:)).^2)]);
 quivermc(LAT(spidx)',LON(spidx)',1000*real(ey1d(tidx,spidx))',1000*real(ex1d(tidx,spidx))','color','r','reference',refScale,'arrowstyle','tail','linewidth',2);
 plotm(LAT(spidx),LON(spidx),'.k')
 
@@ -220,7 +231,7 @@ textm(60.8,-117.5,[num2str(5*refScale),' V/km'],'HorizontalAlignment','center')
 title(['E Field (1-D) @ ',char(b(1).times(tidx))])
 
 %Figure 5b: 3-D Impedance
-initialize_map(plot_lim,zn,provinces,states,502,true)
+initialize_map(plot_lim,zn,provinces,states,502,false)
 textm(Clat*1.005,Clon,txt,'HorizontalAlignment','center')
 quivermc(d.loc(:,1),d.loc(:,2),1000*real(ey3d(tidx,:))',1000*real(ex3d(tidx,:))','color','r','reference',refScale,'arrowstyle','tail','linewidth',2);
 plotm(d.loc(:,1),d.loc(:,2),'.k')
@@ -260,35 +271,42 @@ end
 %% Figure 7:  Geoelectric time series for representative sites ABT175, SAB060 and ABT272
 % This can be used to plot the geoelectric time series for any site by
 % changing the "is" variable
-is = rep(2); %Use rep(1) for ABT175, rep(2) for SAB060, and rep(3) for ABT272
+is = rep(3); %Use rep(1) for ABT175, rep(2) for SAB060, and rep(3) for ABT272
+%is = 119;
+
+maxe3d = max(sqrt(ex3d.^2+ey3d.^2),[],1)*1000;
 
 %I plot a slightly more restricted range from 12:00 to 15:00 UT to show the
 %peak of the storm more clearly
 %tidx = find(b(1).times==datetime('2017-09-08 12:00:00')):find(b(1).times==datetime('2017-09-08 15:00:00')); %12:00 to 15:00 UT  tidx = 21601:32401;
    
-tidx = find(b(1).times==datetime('2012-03-09 00:00:00')):find(b(1).times==datetime('2012-03-09 23:59:59'));
-%tidx = 1:b(1).nt;
+%tidx = find(b(1).times==datetime('2017-09-08 13:00:00')):find(b(1).times==datetime('2017-09-08 13:20:00'));
+tidx = 1:b(1).nt;
 
-ccx= corrcoef(ex1d(tidx,is),ex3d(tidx,is));
-ccy= corrcoef(ey1d(tidx,is),ey3d(tidx,is));
+[~,zone_idx] = min(distance(a.loc(is,1),a.loc(is,2),LAT(:),LON(:)));
+
+ccx= corrcoef(ex1d(tidx,zone_idx),ex3d(tidx,is));
+ccy= corrcoef(ey1d(tidx,zone_idx),ey3d(tidx,is));
 
 figure(700);
 subplot(3,1,1);
-plot(b(1).times(tidx),1000*ex1d(tidx,is),'-b'); hold on
+plot(b(1).times(tidx),1000*ex1d(tidx,zone_idx),'-b'); hold on
 plot(b(1).times(tidx),1000*ex3d(tidx,is),'-r');
 ylabel('E (V/km)'); grid on
 title(['E_x Time Series for ',d.site{is},'. Correlation Coefficient = ',num2str(ccx(2))]);
 legend('1D','3D')
 
 subplot(3,1,2);
-plot(b(1).times(tidx),1000*ey1d(tidx,is),'-b'); hold on
+plot(b(1).times(tidx),1000*ey1d(tidx,zone_idx),'-b'); hold on
 plot(b(1).times(tidx),1000*ey3d(tidx,is),'-r');
 ylabel('E (V/km)'); grid on
 title(['E_y Time Series for ',d.site{is},'. Correlation Coefficient = ',num2str(ccy(2))])
 
 subplot(3,1,3);
-plot(b(1).times(tidx),1000*(ex3d(tidx,is)-ex1d(tidx,is)),'-k'); hold on
+plot(b(1).times(tidx),1000*(ex3d(tidx,is)-ex1d(tidx,zone_idx)),'-k'); hold on
+plot(b(1).times(tidx),1000*(ey3d(tidx,is)-ey1d(tidx,zone_idx)),'-g'); hold on
 ylabel('E_{3D} - E_{1D} (V/km)')
+legend('Diff Ex','Diff Ey');
 
 
 %% Figure 8: Map of Transmission Line Voltages (Difference between 3-D and 1-D)
@@ -297,6 +315,9 @@ plot_lim = [47.5 61 -120.5 -109];
 initialize_map(plot_lim,zn,provinces,states,800,true)
 textm(Clat*1.005,Clon,txt,'HorizontalAlignment','center')
 
+
+tidx = find(b(1).times==datetime('2017-09-08 14:02:00')); 
+subindx = tidx-tind(1)+1;
 %Set up manual colorbar limits
 tmp = dgic(subindx,:);
 colormanual(1,:) = [0 0 0.5];
@@ -307,12 +328,18 @@ colormanual(5,:) = [1 0 0];
 idx = discretize(tmp,[-100 -50 0 50 100 150]);
 idx(isnan(idx))=size(colormanual,1);
 
+firstpointlat = cellfun(@(x)x(1,1),lines);
+lastpointlat = cellfun(@(x)x(1,end),lines);
+firstpointlon = cellfun(@(x)x(2,1),lines);
+lastpointlon = cellfun(@(x)x(2,end),lines);
+
+plotm(firstpointlat,firstpointlon,'.k','MarkerSize',12)
+plotm(lastpointlat,lastpointlon,'.k','MarkerSize',12)
+
 %Loop over lines and plot with the manual color bar
 for i = 1:length(lines)
     lat = lines{i}(1,:);
     lon = lines{i}(2,:);
-    plotm(lat(1),lon(1),'.k','MarkerSize',12)
-    plotm(lat(end),lon(end),'.k','MarkerSize',12)
     plotm(lat,lon,'-','Color',colormanual(idx(i),:),'LineWidth',2)
 end
 
@@ -439,7 +466,7 @@ plot_lim = [47.5 61 -120.5 -109];
 initialize_map(plot_lim,zn,provinces,states,1,true)
 textm(Clat*1.005,Clon,txt,'HorizontalAlignment','center')
 
-tmp = log10([gic1d(subindx,:) gic3d(subindx,:)]);
+tmp = log10(abs([gic1d(subindx,:) gic3d(subindx,:)]));
 flr = log10(10);
 cel = log10(300);
 num = 15;
@@ -447,12 +474,19 @@ colormanual = jet(num);
 idx = discretize(tmp,flr:(abs(flr-cel)/num):cel);
 idx(isnan(idx))=num;
 
+firstpointlat = cellfun(@(x)x(1,1),lines);
+lastpointlat = cellfun(@(x)x(1,end),lines);
+firstpointlon = cellfun(@(x)x(2,1),lines);
+lastpointlon = cellfun(@(x)x(2,end),lines);
+
+plotm(firstpointlat,firstpointlon,'.k','MarkerSize',12)
+plotm(lastpointlat,lastpointlon,'.k','MarkerSize',12)
+
 for i = 1:length(lines)
     lat = lines{i}(1,:);
     lon = lines{i}(2,:);
-    plotm(lat(1),lon(1),'.k','MarkerSize',12)
-    plotm(lat(end),lon(end),'.k','MarkerSize',12)
     plotm(lat,lon,'-','Color',colormanual(idx(i),:),'LineWidth',2)
+    i
 end
 
 plotm(53.5461,-113.4938,'sk','MarkerFaceColor','b','MarkerSize',10) %edmonton
@@ -470,12 +504,19 @@ plot_lim = [47.5 61 -120.5 -109];
 initialize_map(plot_lim,zn,provinces,states,2,true)
 textm(Clat*1.005,Clon,txt,'HorizontalAlignment','center')
 
+firstpointlat = cellfun(@(x)x(1,1),lines);
+lastpointlat = cellfun(@(x)x(1,end),lines);
+firstpointlon = cellfun(@(x)x(2,1),lines);
+lastpointlon = cellfun(@(x)x(2,end),lines);
+
+plotm(firstpointlat,firstpointlon,'.k','MarkerSize',12)
+plotm(lastpointlat,lastpointlon,'.k','MarkerSize',12)
+
 for i = 1:length(lines)
     lat = lines{i}(1,:);
     lon = lines{i}(2,:);
-    plotm(lat(1),lon(1),'.k','MarkerSize',12)
-    plotm(lat(end),lon(end),'.k','MarkerSize',12)
     plotm(lat,lon,'-','Color',colormanual(idx(i+length(lines)),:),'LineWidth',2)
+    i
 end
 
 plotm(53.5461,-113.4938,'sk','MarkerFaceColor','b','MarkerSize',10) %edmonton
@@ -493,39 +534,12 @@ caxis([flr cel])
 % included here. The models and forward data are included in the forward model
 % file. It is relatively easy to load the model and plot slices. 
 
-%% Other Figures (Not In Paper): Line Voltage as a function of time for a particular line
-% Plot of line voltage as a function of time for a single line
 
-linid = 3;
-
-ccx= corrcoef(gic1d(:,linid),gic3d(:,linid));
-
-figure(1000);
-subplot(2,1,1);
-plot(b(1).times(tind)-hours(7),gic1d(:,linid),'-b'); hold on
-plot(b(1).times(tind)-hours(7),gic3d(:,linid),'-r');
-ylabel('Line Voltage (V)'); grid on
-title(['Line Voltage Time Series for Line #',num2str(linid+5),'. Correlation Coefficient = ',num2str(ccx(2))]);
-datetick('x','HH')
-xlabel('Time (MST)')
-set(gca,'XLim',[datetime(2012,03,09,0,0,0)-hours(7),datetime(2012,03,09,23,59,59)-hours(7)])
-plot([datetime(2012,03,09,2,25,0) datetime(2012,03,09,2,25,0)],[0 max(get(gca,'YLim'))],':k','LineWidth',2)
-plot([datetime(2012,03,09,2,25,0) datetime(2012,03,09,2,25,0)],[0 max(get(gca,'YLim'))],':k','LineWidth',2)
-manual_legend('1D','-b','3D','-r');
-
-subplot(2,1,2);
-plot(b(1).times(tind)-hours(7),(gic3d(:,linid)-gic1d(:,linid)),'-k'); hold on
-ylabel('3D - 1D Voltage (V)')
-grid on
-datetick('x','HH')
-xlabel('Time (MST)')
-set(gca,'XLim',[datetime(2012,03,09,0,0,0)-hours(7),datetime(2012,03,09,23,59,59)-hours(7)])
-
-
-%%
+%% RAW MAGNETOMETER SITES
 
 %Plot raw magnetometer sites
 plot_lim = [45 70 -142 -90];
+plot_lim = [40 85 -142 -50];
 initialize_map(plot_lim,zn,provinces,states,1,false)
 
 plotm([b(:).lat],[b(:).lon],'.k','MarkerSize',20)
@@ -536,13 +550,11 @@ for i = 1:length(b)
     textm(b(i).lat+scalelat(i),b(i).lon+scale(i),b(i).site,'HorizontalAlignment','center')
 end
 
+%% Plot magnetic field time series at a particular location
 
 
-
-% Plot magnetic field time series at a particular location
-
-tidx = 1:b(1).nt;
-bid = 10;
+bid = 7;
+tidx = 1:b(bid).nt;
 
 figure(700);
 plot(b(bid).times(tidx),b(bid).x(tidx)-nanmean(b(bid).x(tidx)),'-b'); hold on
@@ -551,22 +563,28 @@ ylabel('B (nT)'); grid on
 title(['B Time Series for ',b(bid).site])
 legend('Bx','By')
 
-%%
-% Plot raw transmission lines
+%% Plot raw transmission lines
 plot_lim = [47.5 61 -120.5 -109];
 
 %Supplementary Figure 7a: 1-D Impedance
 initialize_map(plot_lim,zn,provinces,states,1001,true)
 %textm(Clat*1.005,Clon,txt,'HorizontalAlignment','center')
 
+firstpointlat = cellfun(@(x)x(1,1),lines);
+lastpointlat = cellfun(@(x)x(1,end),lines);
+firstpointlon = cellfun(@(x)x(2,1),lines);
+lastpointlon = cellfun(@(x)x(2,end),lines);
+
+plotm(firstpointlat,firstpointlon,'.k','MarkerSize',12)
+plotm(lastpointlat,lastpointlon,'.k','MarkerSize',12)
+
 for i = 1:length(lines)
     lat = lines{i}(1,:);
     lon = lines{i}(2,:);
-    plotm(lat(1),lon(1),'.k','MarkerSize',12)
-    plotm(lat(end),lon(end),'.k','MarkerSize',12)
     plotm(lat,lon,'-k','LineWidth',2)
+    i
     
-    textm(mean(lat)*1.002,mean(lon),num2str(i),'HorizontalAlignment','center')
+    textm(lat(round(length(lat)/2))*1.0002,lon(round(length(lon)/2)),num2str(i),'HorizontalAlignment','center')
 end
 
 plotm(53.5461,-113.4938,'sk','MarkerFaceColor','b','MarkerSize',10) %edmonton
@@ -574,4 +592,86 @@ plotm(51.0477,-114.0719,'sk','MarkerFaceColor','b','MarkerSize',10) %calgary
 plotm(56.726, -111.379,'sk','MarkerFaceColor','b','MarkerSize',10); %fort mac
 plotm(56.234,-117.289,'sk','MarkerFaceColor','b','MarkerSize',10); %peace river
 
+%% PLOT MAGNETIC FIELD TIME DOMAIN
+
+tidx = find(b(1).times==datetime('2017-09-08 14:02:22')); %tidx = 28943
+
+tidx = find(b(1).times==datetime('1989-03-14 02:08:00')); 
+
+%Plot every 3rd interpolated grid point for visualization purposes
+spidx = 1:3:ygrid*xgrid;
+
+%Figure 5a: 1-D Impedance
+initialize_map(plot_lim,zn,provinces,states,501,false)
+%textm(Clat*1.005,Clon,txt,'HorizontalAlignment','center')
+
+refScale = mean(sqrt(bx_int_resh(:).^2+by_int_resh(:).^2)); %good scaling for figure at specified time step
+%refScale = 1000*mean([sqrt(real(ey3d(tidx,:)).^2+ real(ex3d(tidx,:)).^2) sqrt(real(ey1d(tidx,:)).^2+ real(ex1d(tidx,:)).^2)]);
+quivermc(LAT(spidx)',LON(spidx)',real(by_int_resh(spidx,tidx))',real(bx_int_resh(spidx,tidx))','color','r','reference',refScale,'arrowstyle','tail','linewidth',2);
+plotm(LAT(spidx),LON(spidx),'.k')
+
+quivermc(60.5,-118.5,5*refScale,0,'color','k','reference',refScale,'arrowstyle','tail','linewidth',3,'linestyle','filled');
+textm(60.8,-117.5,[num2str(5*refScale),' nT'],'HorizontalAlignment','center')
+title(['B Field (1-D) @ ',char(b(1).times(tidx))])
+
+%% Other Figures (Not In Paper): Line Voltage as a function of time for a particular line
+% Plot of line voltage as a function of time for a single line
+
+indmax = find(max(abs(gic3d))>100);
+
+linid = indmax(6);
+
+%[~,linid] = ind2sub(size(gic3d),find(abs(gic3d(:))==max(abs(gic3d(:))))); %find line with MAX GIC value
+%linid = 228;
+%linid=224;
+
+ccx= corrcoef(V1d(:,linid),V3d(:,linid));
+
+tind = 1:b(1).nt;
+
+dl = b(1).times(tind(1));
+dr = b(1).times(tind(end));
+
+figure(1000);
+subplot(2,1,1);
+plot(b(1).times(tind),V1d(:,linid),'-b'); hold on
+plot(b(1).times(tind),V3d(:,linid),'-r');
+ylabel('Line Voltage (V)'); grid on
+title(['Line Voltage Time Series for Line ',lineName{linid},'. Correlation Coefficient = ',num2str(ccx(2))],'Interpreter','none');
+datetick('x','HH:MM:ss')
+xlabel('Time (MST)')
+xlim([dl dr]);
+%set(gca,'XLim',[datetime(2012,03,09,0,0,0)-hours(7),datetime(2012,03,09,23,59,59)-hours(7)])
+plot([datetime(2012,03,09,2,25,0) datetime(2012,03,09,2,25,0)],[0 max(get(gca,'YLim'))],':k','LineWidth',2)
+plot([datetime(2012,03,09,2,25,0) datetime(2012,03,09,2,25,0)],[0 max(get(gca,'YLim'))],':k','LineWidth',2)
+manual_legend('1D','-b','3D','-r');
+
+subplot(2,1,2);
+plot(b(1).times(tind),(gic3d(:,linid)-gic1d(:,linid)),'-k'); hold on
+ylabel('|3D| - |1D| Voltage (V)')
+grid on
+datetick('x','HH:MM:ss')
+xlabel('Time (MST)')
+xlim([dl dr]);
+%set(gca,'XLim',[datetime(2012,03,09,0,0,0)-hours(7),datetime(2012,03,09,23,59,59)-hours(7)])
+
+
+%% Plot GIC in Amps along particular line
+
+indmax = find(max(abs(gic3d))>50);
+
+linid = indmax(13);
+linid = 220;
+
+dl = b(1).times(tind(1));
+dr = b(1).times(tind(end));
+
+figure(1007);
+plot(b(1).times(tind),TlineGIC(linid,tind),'-b'); hold on
+%plot(b(1).times(tind),V3d(:,linid),'-r');
+ylabel('GIC (Amps)'); grid on
+title(['GIC Time Series for Line ',lineName{linid}],'Interpreter','none');
+datetick('x','HH:MM:ss')
+xlabel('Time (MST)')
+xlim([dl dr]);
 

@@ -1,4 +1,4 @@
-function [b] = load_CARISMA_site(sites,magfile,times)
+function [b] = load_CARISMA_site(sites,magfile)
 % Input is name of CARISMA format geomagnetic field data
 % Output:
 %   B fields are in nT (Bx,By,Bz)
@@ -34,46 +34,41 @@ for i = 1:length(magfile)
         By = cell2mat(C(3));
         Bz = cell2mat(C(4));
 
+        %Very slow
+        %timetable = cell2table(C{1});
+        %times_all = datetime(timetable.Var1,'InputFormat','yyyyMMddHHmmss');
+        
+        %Faster but assumes no gaps...
+        t1 = datetime(C{1}(1),'InputFormat','yyyyMMddHHmmss');
+        t2 = datetime(C{1}(end),'InputFormat','yyyyMMddHHmmss');
+        times = t1:seconds:t2;
 
         N = 1:length(Bx);
+        
+        %Remove missing data. IAGA data seem to have missing data set with
+        %99999. 
+        Bx(Bx==99999)=NaN; %Set missing data to NaN
+        Bx = resample(Bx,N); %Remove missing data using linear interpolation
+        By(By==99999)=NaN;
+        By = resample(By,N);
+        Bz(Bz==99999)=NaN;
+        Bz = resample(Bz,N);
         
         Bx_all = [Bx_all; Bx];
         By_all = [By_all; By];
         Bz_all = [Bz_all; Bz];
-        times_all = [times_all; times];
+        times_all = [times_all times];
         
     end
 
 end
 
-%21601 = 6 am onwards;    
-tstart = 21601; tend = 86400;
-Bx_all = Bx_all(tstart:tend);
-By_all = By_all(tstart:tend);
-Bz_all = Bz_all(tstart:tend);
-
-times_all = times_all(tstart:tend);
-
-%Remove bad points and interpolate
-ind = unique([find(Bx_all>=99999.9); find(By_all>=99999.9); find(Bz_all>=99999.9)]);
-if ~isempty(ind)
-    disp([upper(sites),': despiked ',num2str(length(ind)),' bad points'])
-
-    Bx_all(ind) = NaN;
-    By_all(ind) = NaN;
-    Bz_all(ind) = NaN;
-    
-    %Interpolate NaNs
-    Bx_all = inpaint_nans(Bx_all);
-    By_all = inpaint_nans(By_all);
-    Bz_all = inpaint_nans(Bz_all);
-    
-end
+[times_all, indsort] = sort(times_all);
 
 %Set b structure
-b.x = Bx_all;
-b.y = By_all;
-b.z = Bz_all;
+b.x = Bx_all(indsort);
+b.y = By_all(indsort);
+b.z = Bz_all(indsort);
 b.times = times_all;
 b.lat = lat;
 b.lon = lon;

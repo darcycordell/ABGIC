@@ -2,7 +2,41 @@
 clc; clearvars;
 disp('***********************BEGIN GIC RUN********************************')
 full_time = tic;
+curdir = pwd;
 
+fs = 1/60; %Sample rate of mag data. Currently hard-coded here so you need to change it
+           %depending whether you use 1 min or 1 Hz data.
+
+manually_edit_bad_points = false; %If you are loading raw mag data, it might be good to look at it and edit it
+                            %to ensure that there aren't any bad spikes.
+                            %Unfortunately this is currenlty a manual
+                            %process.
+
+line_voltage_flag = true; %Compute line voltage. Set to false if you only want to look at geoelectric field
+
+shift_storm_spatial = true; %shift the storm in lat long space (e.g. move the March 1989 storm to be centered over AB)
+                            %This is currently hard-coded to shift 37° west
+                            %and 9° north which moves the 1989 storm to be
+                            %centered on Alberta.
+
+load_mat_file = false; %load mat file of B data isntead of raw B IAGA data
+                       %This is useful if you've loaded raw mag data,
+                       %edited it and want to save it for reproducibility.
+                       %You just have to edit once and then save the "b"
+                       %variable as a mat file and then reload as needed.
+
+%Mapping and Interpolation Limits: AB Only
+%lim = [47.5 61 -120.5 -109];
+% dlon = 0.5; % cell sizes in decimal degrees to interpolate
+% dlat = 0.5;
+
+%Mapping and Interpolation Limits: All of Canada
+lim = [35 85 -142 -50];
+dlon = 2;
+dlat = 2;
+
+%You shouldn't need to change anything past here**************************
+%*************************************************************************
 %---------PRIMARY USER INPUTS TO REPRODUCE FIGURES-------------------------
 %To produce Figure 1 (40 - 100 seconds):
 %       s.flag = true; %Use synthetic data = true; Use real data = false
@@ -16,12 +50,12 @@ full_time = tic;
 %       noifft.flag = true;
 %       noifft.freq = 0.01; %frequency in Hz to calculate E
 %
-%To produce Figure 3 through 8 (17 - 19 minutes):
+%To produce Figure 3 through 8:
       s.flag = false;
       s.rotmag = 0;
       noifft.flag = false; 
 %
-%To Figure 9 is a separate workflow. The models are included in the forward
+%Figure 9 is a separate workflow. The models are included in the forward
 %modelling folder, but the plotting routines are not included.
 
 
@@ -30,21 +64,17 @@ s.freq = 0.01; % Hz frequency of synthetic signal (0.01 Hz default)
 s.mag = 1000; % nT magnitude of synthetic sinusoidal signal (1000 nT default)
 s.len = 5000; % Length of synthetic signal (number of samples) (5000 default)
 
-%Mapping and Interpolation Limits
-%lim = [45 64 -136 -92]; % lat, lon limits to interpolate
-lim = [47.5 61 -120.5 -109];
-dlon = 0.5; % cell sizes in decimal degrees to interpolate
-dlat = 0.5;
-
 %Padding and sample rate for FFT and IFFT used throughout
 pad = 10000;
-fs = 1; 
+
+
+%---------------------------------END USER INPUTS--------------------------
 
 if length(s.rotmag)>1 %if you are doing rotations, do not do ifft! (too slow)
     noifft.flag = true;
 end
 
-%% Load Geographical Info
+% Load Geographical Info
 
 %Load Shape files with Provincial and State boundaries
 %   Located in 01_GEOGRAPHICAL_DATA folder
@@ -57,10 +87,14 @@ states = shaperead('usastatehi','UseGeoCoords',true);
 
 %>240 kV poswer line network
 %   Located in 03_POWERLINE_DATA folder
-lines = load_powerlines('Simplified_Network_36_Lines.kml');
+%lines = load_powerlines('Simplified_Network_36_Lines.kml');
 
 
-%% Load Time-Domain Mag Data b_s(t) and Convert to Frequency Domain B_s(omega)
+[lines, lineName, line_lengths, voltage, resistance] = post_process_lines;
+
+
+%
+% Load Time-Domain Mag Data b_s(t) and Convert to Frequency Domain B_s(omega)
 %
 % Magnetic Field is in nT
 %
@@ -69,31 +103,175 @@ lines = load_powerlines('Simplified_Network_36_Lines.kml');
 % case (e.g. b.x is the time-domain x-component) and frequency-domain
 % fields are upper case (e.g. b.X is the frequency-domain x-component).
 %
+%%
 disp('***************LOAD MAGNETIC OBSERVATORY TIME DOMAIN DATA*************')
-%Data located in 04_MAG_DATA folder
-[b] = load_mag_data(s);
+
+if load_mat_file
+    
+    [magfile, magpath]=uigetfile({'*.mat'},'Choose Mag MAT Files','MultiSelect','off');
+    cd(magpath);
+    load(magfile);
+    cd(curdir);
+    
+else
+    %Data located in 04_MAG_DATA folder
+    [b] = load_mag_data(s);
+    
+    %Delete duplicates
+    inddelb = find(cellfun(@isempty,({b(:).x})));
+    b(inddelb) = [];
+end
+
 
 %%
+%Clean mag data up (remove spikes)
+% for is = 1:length(b)
+%     [b(is).x,b(is).y,nrem] = clean_mag_data(b(is).x,b(is).y,fs);
+%     if nrem>0
+%         disp([upper(b(is).site),': despiked ',num2str(nrem),' bad points'])
+%     end
+% end
+
+%%
+%
+%
+%
 disp('...converting observatory data to frequency domain')
 ns = length(b);
 %Convert mag sites to the frequency domain.
 for i = 1:ns
-    [b(i).X,b(i).Y,b(i).f] = calc_fft(b(i).x,b(i).y,fs,pad);
+    [b(i).X,b(i).Y,b(i).f,fAxis] = calc_fft(b(i).x,b(i).y,fs,pad);
+
 end
 
 f = b(1).f;
+%%
+
+%
+if manually_edit_bad_points
+    % Check for "bad" points
+    winlength = 3600;
+    is = 1;tidx = 1:winlength;%length(b(is).times);
+    while 1
+        
+        %is = 11; %mag site index for Meanook
+        plot_mag_sites(b,tidx,is,0);
+        
+        mmenu = menu('','Edit Points','Next Window','Change Window Length','Next Site','Exit');
+        
+        if mmenu == 1
+        
+        [x,~,click] = ginput(2);
+
+        %if click~=3
+            ax = gca;
+            t1 = num2ruler(x(1),ax.XAxis);
+            t2 = num2ruler(x(2),ax.XAxis);
+
+            [~ ,id1] = min(abs(datenum(t1)-datenum(b(is).times)));
+            [~ ,id2] = min(abs(datenum(t2)-datenum(b(is).times)));
+
+            b(is).x(id1:id2) = linspace(b(is).x(id1-1),b(is).x(id2+1),length(id1:id2));
+            b(is).y(id1:id2) = linspace(b(is).y(id1-1),b(is).y(id2+1),length(id1:id2));
+            b(is).z(id1:id2) = linspace(b(is).z(id1-1),b(is).z(id2+1),length(id1:id2));
+
+            b(is).x = inpaint_nans(b(is).x);
+            b(is).y = inpaint_nans(b(is).y);
+            b(is).z = inpaint_nans(b(is).z);
+
+            [b(is).X,b(is).Y,b(is).f] = calc_fft(b(is).x,b(is).y,fs,pad);
+            
+            close(gcf);
 
 
-%% Interpolate b_s(t) to b_i(t)
+        elseif mmenu == 2
+            tidx = tidx+winlength;
+            
+            if tidx(end)>b(is).nt
+                tidx = b(is).nt-winlength:b(is).nt;
+            end
+            
+            if length(tidx)>b(is).nt
+                tidx = 1:b(is).nt;
+            end
+            
+            close(gcf);
+            
+        elseif mmenu == 3
+            
+            prompt = {'New Window Length'};
+            titles  = '';
+            def = {'3600'};
+            tmp = inputdlg(prompt,titles,1,def); 
+            winlength = str2double(tmp{1});
+            
+            tidx = tidx(1):tidx(1)+winlength;
+            
+            if tidx(end)>b(is).nt
+               tidx = tidx(1):b(is).nt;
+            end
+            
+            close(gcf);
+            
+        elseif mmenu == 4
+            is = is+1;
+            
+            tidx = 1:winlength;
+            
+            if is>length(b)
+                is = length(b);
+            end
+            
+            if tidx(end)>b(is).nt
+               tidx = tidx(1):b(is).nt;
+            end
+            
+            close(gcf);
+            
+        else
+            break
+        end
+
+%         if click(1) == 81 || click(1) == 113
+%             break
+%         end
+
+
+        
+
+
+        
+
+    end
+
+end
+%%
+% Interpolate b_s(t) to b_i(t)
 %Time for 1 day recording of 1 Hz data: ~1 minute
-disp('*********************INTERPOLATE b(t) SPATIALLY****************')
+disp('*********************INTERPOLATE b(t) SPATIALLY USING SECS METHOD****************')
 %Outputs bx_int and by_int(interpolated IAGA B fields)
 [bx_int,by_int,LON,LAT] = interpolate_t(b,lim,dlon,dlat);
+
+if shift_storm_spatial
+    LON = LON-37; LAT = LAT+9; %Shifts B-field from 1989 storm over Fort Mac
+end
+
+bx_int_resh = reshape(bx_int,size(bx_int,1)*size(bx_int,2),size(bx_int,3));
+by_int_resh = reshape(by_int,size(by_int,1)*size(by_int,2),size(by_int,3));
+
+%[bx_int,by_int,~,LON,LAT]=interpolate_secs(b,lim,dlon,dlat);
+%%
+% i = 36;
+% plot(bx_int(i,:)-nanmean(bx_int(i,:)),'-r'); hold on; grid on
+% plot(bx_int_old(i,:)-nanmean(bx_int_old(i,:)),'-b')
+
+%%
 xgrid = size(bx_int,1);
 ygrid = size(bx_int,2);
 
-for rotidx = 1:length(s.rotmag)
 
+for rotidx = 1:length(s.rotmag)
+%%
     if s.flag
 
         bmag = s.mag*[cos(s.rotmag(rotidx)); sin(s.rotmag(rotidx))]; %set magnitude based on rotation angle
@@ -113,7 +291,7 @@ for rotidx = 1:length(s.rotmag)
 
 
 
-    %% CALCULATE B(omega) using Fourier Transform of b_i(t)
+    % CALCULATE B(omega) using Fourier Transform of b_i(t)
     %Time for 672 grid points: ~10 seconds
     disp('******************CONVERT INTERPOLATED b(t) to FREQUENCY-DOMAIN****************')
     nf = b(1).nt+2*pad;
@@ -121,7 +299,7 @@ for rotidx = 1:length(s.rotmag)
     By_int = Bx_int;
     for i = 1:xgrid
         for j = 1:ygrid
-            [Bx_int(i,j,:),By_int(i,j,:),f] = calc_fft(squeeze(bx_int(i,j,:)),squeeze(by_int(i,j,:)),fs,pad);  
+            [Bx_int(i,j,:),By_int(i,j,:)] = calc_fft(squeeze(bx_int(i,j,:)),squeeze(by_int(i,j,:)),fs,pad);  
         end
         disp(['Grid Point: (',num2str(i),', ',num2str(j),')'])
     end
@@ -129,13 +307,12 @@ for rotidx = 1:length(s.rotmag)
     Bx_int = reshape(Bx_int,xgrid*ygrid,nf);
     By_int = reshape(By_int,xgrid*ygrid,nf);
 
-
-    %% Load 3-D MT data from Cedar and 1-D Synthetic Data from Trichtchenko et al. (2019)
+    % Load 3-D MT data from Cedar and 1-D Synthetic Data from Trichtchenko et al. (2019)
     %Takes no time (<0.5 seconds)
     disp('*****************LOAD 1-D AND 3-D MAGNETOTELLURIC IMPEDANCE DATA***************')
     
     %Data located in 05_MT_IMPEDANCE folder
-    [d,in,indzones] = load_assign_impedance(zn,'AB_BC_MT_DATA_512_sites.mat');
+    [d,in,indzones] = load_assign_impedance(zn,'AB_BC_MT_DATA_527_sites_230410.mat');
     d.Z(abs(real(d.Z(:)))>10^5)=NaN;
 
     [a,zn,fwd] = calc_Z_trich(d,zn,in);
@@ -155,12 +332,14 @@ for rotidx = 1:length(s.rotmag)
     disp(['Number of MT sites loaded: ',num2str(d.ns)])
     disp(['Representative sites: ',d.site{rep(1)},', ',d.site{rep(2)},', ',d.site{rep(3)}])
 
-    %% CALCULATE E(omega) using 1-D and 3-D methods
+    % CALCULATE E(omega) using 1-D and 3-D methods
     % Frequency domain electric field is in V/m
     disp('********************CALCULATING FREQUENCY-DOMAIN ELECTRIC FIELD****************')
     %This is the biggest calculation of the whole script
     % For the full frequency set and both 1-D and 3-D datasets, this takes
     % around 6 minutes using a parfor loop in calc_E (takes about 20 minutes in serial)
+    % Note that I updated calc_E using pagemtimes function and now it only
+    % takes 1 minute in serial
 
     if noifft.flag
         fidx = nearestpoint(noifft.freq,f); %You can do it for only 1 frequency to make
@@ -210,9 +389,10 @@ for rotidx = 1:length(s.rotmag)
     toc
 
 end
-%%
+
+
 if ~noifft.flag
-    %% CALCULATE e(t)
+    % CALCULATE e(t)
     %
     disp('******************CALCULATING TIME-DOMAIN ELECTRIC FIELD*****************')
     % Time domain electric field is in V/m
@@ -237,64 +417,98 @@ if ~noifft.flag
     mage1d = sqrt(real(ex1d).^2+real(ey1d).^2);
     mage3d = sqrt(real(ex3d).^2+real(ey3d).^2);
     toc
-
-    %% COMPUTE HYPOTHETICAL TRANSMISSION LINE INTEGRAL
-    % Get transmission line locations and discretize on a scale smaller than
-    % the MT site spacing to capture the geometry of the line if necessary.
-    % This will take a VERY long time if you are trying to do it for the entire
-    % time series. However, if you just look at a specific window of the time
-    % series where the geoelectric field is largest (in our case around 14:00
-    % UST), then it is quicker. It takes about 0.3 seconds for each time step
-    % so it would take about 7 hours to do all 86400 time steps...but it is
-    % only neccesary to do maybe 100 to 1000 time steps to find the peak GIC
-    %
-    %The max geoelectric field occurs throughout the province sometime between
-    %13:45 and 14:15 but the peak is spatially distributed e.g. the peak in
-    %southern Alberta occurs at a slightly different time than northern
-    %Alberta etc. Here, I sweep through the time indices from 28900:29100 and
-    %calculate the line integral along the tranmission lines at each time step.
-
-    disp('*******************CALCULATE LINE INTEGRAL VOLTAGE******************')
-    tic
-
-    tind = find(b(1).times==datetime('2012-03-09 00:00:00')):find(b(1).times==datetime('2012-03-09 23:59:59')); %13:45 to 14:15 is tind = 27901:29700;
     
-    %tind = find(b(1).times==datetime('2017-09-08 14:02:22')); %tind = 28943; %This is the maximum difference in GIC in restricted range
-                                                       %used in the paper
-    linid = 1:length(lines);
-    linid = 6:8;
-    linid = 32;
-                                                       
 
-    [gic1d,gic3d] = calc_line_integral({lines{linid}},tind,d,ex3d,ey3d,ex1d,ey1d,LAT,LON,'nearest');
-    toc
-    %%
-    %This results in GIC calculations which have "peak" values at different
-    %times depending on the transmission line. Choosing which time step to show
-    %is somewhat arbitrary. 
-    dgic = (gic3d-gic1d);
+    if line_voltage_flag
+        % COMPUTE HYPOTHETICAL TRANSMISSION LINE INTEGRAL
+        % Get transmission line locations and discretize on a scale smaller than
+        % the MT site spacing to capture the geometry of the line if necessary.
+        % This will take a VERY long time if you are trying to do it for the entire
+        % time series. However, if you just look at a specific window of the time
+        % series where the geoelectric field is largest (in our case around 14:00
+        % UST), then it is quicker. It takes about 0.3 seconds for each time step
+        % so it would take about 7 hours to do all 86400 time steps...but it is
+        % only neccesary to do maybe 100 to 1000 time steps to find the peak GIC
+        %
+        % Sept 28, 2022: Note that I removed griddata function and replaced
+        % with scatteredInterpolant where I only interpolate once at the
+        % beginning rather than every time step. This speeds things up
+        % *considerably* with a single timestep completed in about 0.009
+        % seconds. So in this case it would only take about 15 minutes for an
+        % entire day of time steps.
+        %
+        % Jan 19, 2023: Some additional massive speed-ups have been achieved.
+        % I've added an option to interpolate once and then perform a matrix
+        % multiplication on all time steps instead of in a loop. So now, I only
+        % have to loop over each transmission line (~200) vs time steps
+        % (~86000). Optimized for memory by processing the matrix
+        % multiplication in chunks so that the full matrix does not have to be
+        % stored in memory. I can now do a **full** day of 1 s data in about
+        % 110 seconds! That's a big speed up from 7 hours...
+        %
+        %The max geoelectric field occurs throughout the province sometime between
+        %13:45 and 14:15 but the peak is spatially distributed e.g. the peak in
+        %southern Alberta occurs at a slightly different time than northern
+        %Alberta etc. Here, I sweep through the time indices from 28900:29100 and
+        %calculate the line integral along the tranmission lines at each time step.
 
-    %Find percentage of time steps where 3-D method is larger than 1-D method
-    gtzero = sum(dgic>0,1)/length(tind);
+        disp('*******************CALCULATE LINE INTEGRAL VOLTAGE******************')
+        lineTic = tic;
 
-    % Peak Difference in GIC magnitude over **restricted interval** (near the
-    % peak magnitude)
-    [val, ~] = ind2sub(size(dgic(900:end-700,:)),find(dgic(900:end-700,:)==max(max(dgic(900:end-700,:)))));
-    subindx = val+900-1; %index for dgic matrix
-    tidx = tind(1)+subindx-1; %time index
-    b(1).times(tidx) 
+        tind = find(b(1).times==datetime('2012-03-09 10:30:00')):find(b(1).times==datetime('2012-03-09 13:30:00')); %13:45 to 14:15 is tind = 27901:29700;
 
-    tidx = 28943;
-    subindx = tidx+1-tind(1);
+        tind = find(b(1).times==datetime('2017-09-08 13:45:00')):find(b(1).times==datetime('2017-09-08 14:15:00')); 
 
-    %Supplementary Table 1
-    excel_table = [gic1d(subindx,:)' gic3d(subindx,:)' dgic(subindx,:)' dgic(subindx,:)'./gic1d(subindx,:)' gtzero'];
+        tind = find(b(1).times==datetime('1989-03-13 05:00:00')):find(b(1).times==datetime('1989-03-14 05:00:00')); %13:45 to 14:15 is tind = 27901:29700;
 
-    %%
-    for i = 1:length(lines)
-        indmax3d(i) = find(gic3d(:,i)==max(gic3d(:,i)));
-        indmax1d(i) = find(gic1d(:,i)==max(gic1d(:,i)));
-        maxdiffgic(i) = gic3d(indmax3d(i),i)-gic1d(indmax1d(i),i);
+        tind = 1:length(b(1).times);
+
+        %tind = 1;
+
+        %tind = find(b(1).times==datetime('2017-09-08 14:02:22')); %tind = 28943; %This is the maximum difference in GIC in restricted range
+                                                           %used in the paper
+        linid = 1:length(lines);
+
+        %tind = 3000:3500;
+        %linid = 6:8;
+        %linid = 32;
+        %linid = 7:8;
+
+
+        [V1d,V3d] = calc_line_integral({lines{linid}},tind,d,ex3d,ey3d,ex1d,ey1d,LAT,LON,'nearest');
+        toc(lineTic);
+        %
+        %This results in GIC calculations which have "peak" values at different
+        %times depending on the transmission line. Choosing which time step to show
+        %is somewhat arbitrary. 
+        gic3d = abs(V3d);
+        gic1d = abs(V1d);
+
+        dgic = (gic3d-gic1d);
+
+        %Find percentage of time steps where 3-D method is larger than 1-D method
+        gtzero = sum(dgic>0,1)/length(tind);
+
+        % Peak Difference in GIC magnitude over **restricted interval** (near the
+        % peak magnitude)
+        [val, ~] = ind2sub(size(dgic(:,:)),find(dgic(:,:)==max(max(dgic(:,:)))));
+        subindx = val; %index for dgic matrix
+        tidx = tind(1)+subindx-1; %time index
+        b(1).times(tidx)
+
+    %     tidx = 28943;
+    %     subindx = tidx+1-tind(1);
+
+        %Supplementary Table 1
+        excel_table = [gic1d(subindx,:)' gic3d(subindx,:)' dgic(subindx,:)' dgic(subindx,:)'./gic1d(subindx,:)' gtzero'];
+
+        %
+        for i = 1:length(lines)
+            indmax3d(i) = find(gic3d(:,i)==max(gic3d(:,i)));
+            indmax1d(i) = find(gic1d(:,i)==max(gic1d(:,i)));
+            maxdiffgic(i) = gic3d(indmax3d(i),i)-gic1d(indmax1d(i),i);
+        end
+    
     end
 
 end

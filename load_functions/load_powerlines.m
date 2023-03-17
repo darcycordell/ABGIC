@@ -46,7 +46,7 @@ end
 
 fclose(fid);
 
-segLength = 50; %For 2021 GIC paper, I use 5000 m.
+segLength = 1000; %For 2021 GIC paper, I use 5000 m.
 
 %Resample the transmission line segments into 5 km segments.
 for i = 1:length(line)
@@ -59,7 +59,15 @@ for i = 1:length(line)
     
     %Re-sample each segment into multiple segLength segments.
     lineseglength = cumsum(step);
-    Vq = linspace(0,lineseglength(end), round(lineseglength(end)/segLength));
+    
+    %If you only do linspace with the start and end points, then you end
+    %up with an empty vector if lineseglength < segLength
+    Vq = unique([0 linspace(0,lineseglength(end), floor(lineseglength(end)/segLength)) lineseglength(end)]);
+    
+    %Re-sample each segment into 100 equally spaced segments.
+    %Vq = linspace(0,lineseglength(end),100);
+    
+    
     interpline = interp1(lineseglength, path, Vq);
     
     %New line with vertices spaced every segLength meters.

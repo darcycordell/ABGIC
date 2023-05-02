@@ -67,28 +67,31 @@ for i = 1:length(ind)
      %plotm([Clat(id) d.loc(ind(i),1)],[Clon(id) d.loc(ind(i),2)],'-y','LineWidth',2) 
 end
 
-%There are some points for which this algorithm doesn't work. I could've
-%made it more sophisticated by using e.g. line segment calculations and
-%line intersections, but I just left it as is. There are 7 sites which are
-%assigned to the wrong zone. Here I assign the logical mask manually:
-in(ind(4),1) = false; in(ind(4),13) = true; %id = 21;
-            %in(ind(12),19) = false; in(ind(12),23) = true; %id = 23;
-            %in(ind(15),16) = false; in(ind(15),23) = true; %id = 23;
-in(ind(19),3) = false; in(ind(19),4) = true; %id = 11;
-in(ind(20),3) = false; in(ind(20),4) = true; %id = 11;
-in(ind(21),3) = false; in(ind(21),4) = true; %id = 11;
-in(ind(22),3) = false; in(ind(22),4) = true; %id = 11;
-
-
-%Site NAB875 is in the polygon labelled "Zone 2" but in the original
-%Trichtchenko report, this polygon is not given a zone # or resistivity
-%model.
-in(450,15) = false; in(450,7) = true; %513 Site Cedar data has NAB875 at index 451
+% %There are some points for which this algorithm doesn't work. I could've
+% %made it more sophisticated by using e.g. line segment calculations and
+% %line intersections, but I just left it as is. There are 7 sites which are
+% %assigned to the wrong zone. Here I assign the logical mask manually:
+% 
+% %Note that this *only* works for the 2021 paper dataset for reproducibility
+% %using AB_BC_MT_DATA_512_sites.mat
+% in(ind(4),1) = false; in(ind(4),13) = true; %id = 21;
+%             %in(ind(12),19) = false; in(ind(12),23) = true; %id = 23;
+%             %in(ind(15),16) = false; in(ind(15),23) = true; %id = 23;
+% in(ind(19),3) = false; in(ind(19),4) = true; %id = 11;
+% in(ind(20),3) = false; in(ind(20),4) = true; %id = 11;
+% in(ind(21),3) = false; in(ind(21),4) = true; %id = 11;
+% in(ind(22),3) = false; in(ind(22),4) = true; %id = 11;
+% 
+% 
+% %Site NAB875 is in the polygon labelled "Zone 2" but in the original
+% %Trichtchenko report, this polygon is not given a zone # or resistivity
+% %model.
+% in(450,15) = false; in(450,7) = true; %513 Site Cedar data has NAB875 at index 451
 
 %%
 %For debugging purposes, you can uncomment and check each zone to ensure
 %that points are in the right spots
-% zo = 24;
+% zo = 1;
 % plot_lim = [47.5 61 -125.5 -109];
 % provinces = shaperead('province.shp','UseGeoCoords',true);
 % states = shaperead('usastatehi','UseGeoCoords',true);

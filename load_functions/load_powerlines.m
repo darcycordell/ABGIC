@@ -46,7 +46,7 @@ end
 
 fclose(fid);
 
-segLength = 1000; %For 2021 GIC paper, I use 5000 m.
+segLength = 15000; %For 2021 GIC paper, I use 5000 m.
 
 %Resample the transmission line segments into 5 km segments.
 for i = 1:length(line)

@@ -4,7 +4,7 @@ disp('***********************BEGIN GIC RUN********************************')
 full_time = tic;
 curdir = pwd;
 
-fs = 1/60; %Sample rate of mag data. Currently hard-coded here so you need to change it
+fs = 1; %Sample rate of mag data. Currently hard-coded here so you need to change it
            %depending whether you use 1 min or 1 Hz data.
 
 manually_edit_bad_points = false; %If you are loading raw mag data, it might be good to look at it and edit it
@@ -14,26 +14,30 @@ manually_edit_bad_points = false; %If you are loading raw mag data, it might be 
 
 line_voltage_flag = true; %Compute line voltage. Set to false if you only want to look at geoelectric field
 
-shift_storm_spatial = true; %shift the storm in lat long space (e.g. move the March 1989 storm to be centered over AB)
+shift_storm_spatial = false; %shift the storm in lat long space (e.g. move the March 1989 storm to be centered over AB)
                             %This is currently hard-coded to shift 37° west
                             %and 9° north which moves the 1989 storm to be
                             %centered on Alberta.
 
-load_mat_file = false; %load mat file of B data isntead of raw B IAGA data
+load_mat_file = true; %load mat file of B data isntead of raw B IAGA data
                        %This is useful if you've loaded raw mag data,
                        %edited it and want to save it for reproducibility.
                        %You just have to edit once and then save the "b"
                        %variable as a mat file and then reload as needed.
 
+impedance_type = 'both'; %'3d' for MT impedance
+                       %'1d' for 1-D piecewise model
+                       %'both' to compute both
+
 %Mapping and Interpolation Limits: AB Only
-%lim = [47.5 61 -120.5 -109];
-% dlon = 0.5; % cell sizes in decimal degrees to interpolate
-% dlat = 0.5;
+lim = [47.5 61 -120.5 -109];
+dlon = 0.5; % cell sizes in decimal degrees to interpolate
+dlat = 0.5;
 
 %Mapping and Interpolation Limits: All of Canada
-lim = [35 85 -142 -50];
-dlon = 2;
-dlat = 2;
+% lim = [35 85 -142 -50];
+% dlon = 2;
+% dlat = 2;
 
 %You shouldn't need to change anything past here**************************
 %*************************************************************************
@@ -112,6 +116,15 @@ if load_mat_file
     cd(magpath);
     load(magfile);
     cd(curdir);
+
+%     for i = 1:length(b)
+%         b(i).times(1:60:end) = [];
+%         b(i).x(1:60:end) = [];
+%         b(i).y(1:60:end) = [];
+%         b(i).z(1:60:end) = [];
+% 
+%         b(i).nt = length(b(i).times);
+%     end
     
 else
     %Data located in 04_MAG_DATA folder
@@ -309,11 +322,13 @@ for rotidx = 1:length(s.rotmag)
 
     % Load 3-D MT data from Cedar and 1-D Synthetic Data from Trichtchenko et al. (2019)
     %Takes no time (<0.5 seconds)
-    disp('*****************LOAD 1-D AND 3-D MAGNETOTELLURIC IMPEDANCE DATA***************')
+    disp('*****************LOAD MAGNETOTELLURIC IMPEDANCE DATA***************')
     
     %Data located in 05_MT_IMPEDANCE folder
-    [d,in,indzones] = load_assign_impedance(zn,'AB_BC_MT_DATA_527_sites_230410.mat');
+    %[d,in,indzones] = load_assign_impedance(zn,'AB_BC_MT_DATA_526_sites_230321.mat');
+    [d,in,indzones] = load_assign_impedance(zn,'gic_fwd_run02.mat');
     d.Z(abs(real(d.Z(:)))>10^5)=NaN;
+    %d.Z = d.Z*100;
 
     [a,zn,fwd] = calc_Z_trich(d,zn,in);
 
@@ -328,6 +343,10 @@ for rotidx = 1:length(s.rotmag)
     %ABT175 = site index 261
     %SAB060 = site index 476
     %ABT272 = site index 323
+
+    if max(rep)>d.ns
+        rep = [1 2 3];
+    end
 
     disp(['Number of MT sites loaded: ',num2str(d.ns)])
     disp(['Representative sites: ',d.site{rep(1)},', ',d.site{rep(2)},', ',d.site{rep(3)}])
@@ -348,43 +367,50 @@ for rotidx = 1:length(s.rotmag)
         fidx = 1:nf;
     end
 
-    tic 
-    %Compute E-field using 3-D impedances
-    Ex3D = nan(length(fidx),d.ns)+1i*zeros(length(fidx),d.ns); Ey3D = nan(size(Ex3D));
-    for i = 1:d.ns
-        %Find index of nearest grid point to the site and use that mag field
-        %for the calculation
-        [~, indlatlon] = min(distance(d.loc(i,1),d.loc(i,2),LAT(:),LON(:)));    
-        Zint3D =  interpolate_Z(d.Z(:,:,i),d.f,f);
-        [Ex3D(:,i),Ey3D(:,i)] = calc_E(Bx_int(indlatlon,fidx),By_int(indlatlon,fidx),Zint3D(fidx,:));
-        disp(['E-field for MT Site #: ',num2str(i),' (Name: ',d.site{i},') completed'])
-    end
+    tic
 
-    if length(s.rotmag)<=1
-        %Compute E field using 1-D impedances
-        Ex1D = nan(length(fidx),xgrid*ygrid); Ey1D = nan(size(Ex1D));
-        for i = 1:xgrid*ygrid
-
-            %Find index of nearest site to the grid point and use that impedance
+    if strcmp(impedance_type,'3d') || strcmp(impedance_type,'both')
+        %Compute E-field using 3-D impedances
+        Ex3D = nan(length(fidx),d.ns)+1i*zeros(length(fidx),d.ns); Ey3D = nan(size(Ex3D));
+        for i = 1:d.ns
+            %Find index of nearest grid point to the site and use that mag field
             %for the calculation
-            [~,zone_idx] = min(distance(a.loc(:,1),a.loc(:,2),LAT(i),LON(i)));
-
-            [I,J] = ind2sub(size(LAT),i);
-
-            if ~isempty(zone_idx)      
-               Zint1D = interpolate_Z(a.Z(:,:,zone_idx),a.f,f);       
-               [Ex1D(:,i),Ey1D(:,i)] = calc_E(Bx_int(i,fidx),By_int(i,fidx),Zint1D(fidx,:));
-                disp(['E-field for Grid Point: (',num2str(I),', ',num2str(J),') completed'])       
-            end  
+            [~, indlatlon] = min(distance(d.loc(i,1),d.loc(i,2),LAT(:),LON(:)));    
+            Zint3D =  interpolate_Z(d.Z(:,:,i),d.f,f);
+            [Ex3D(:,i),Ey3D(:,i)] = calc_E(Bx_int(indlatlon,fidx),By_int(indlatlon,fidx),Zint3D(fidx,:));
+            disp(['E-field for MT Site #: ',num2str(i),' (Name: ',d.site{i},') completed'])
         end
-    end
     
-    if length(s.rotmag)>1
-        ExR3D(rotidx,:) = Ex3D;
-        EyR3D(rotidx,:) = Ey3D;
+        if length(s.rotmag)>1
+            ExR3D(rotidx,:) = Ex3D;
+            EyR3D(rotidx,:) = Ey3D;
+        end
+
+        clear Zint3D
     end
 
-    clear Zint3D Zint1D
+    if strcmp(impedance_type,'1d') || strcmp(impedance_type,'both')
+        if length(s.rotmag)<=1
+            %Compute E field using 1-D impedances
+            Ex1D = nan(length(fidx),xgrid*ygrid); Ey1D = nan(size(Ex1D));
+            for i = 1:xgrid*ygrid
+    
+                %Find index of nearest site to the grid point and use that impedance
+                %for the calculation
+                [~,zone_idx] = min(distance(a.loc(:,1),a.loc(:,2),LAT(i),LON(i)));
+    
+                [I,J] = ind2sub(size(LAT),i);
+    
+                if ~isempty(zone_idx)      
+                   Zint1D = interpolate_Z(a.Z(:,:,zone_idx),a.f,f);       
+                   [Ex1D(:,i),Ey1D(:,i)] = calc_E(Bx_int(i,fidx),By_int(i,fidx),Zint1D(fidx,:));
+                    disp(['E-field for Grid Point: (',num2str(I),', ',num2str(J),') completed'])       
+                end  
+            end
+        end
+
+        clear Zint1D
+    end
 
     toc
 
@@ -404,18 +430,25 @@ if ~noifft.flag
     ey1d = zeros(size(ex1d));
     ex3d = zeros(b(1).nt,d.ns);
     ey3d = zeros(size(ex3d));
-    for i = 1:xgrid*ygrid
-        [ex1d(:,i),ey1d(:,i)] = calc_ifft(Ex1D(:,i),Ey1D(:,i),pad);
-        disp(['1-D Impedance E-field for grid point: ',num2str(i)])
+    if strcmp(impedance_type,'1d') || strcmp(impedance_type,'both')
+        for i = 1:xgrid*ygrid
+            [ex1d(:,i),ey1d(:,i)] = calc_ifft(Ex1D(:,i),Ey1D(:,i),pad);
+            disp(['1-D Impedance E-field for grid point: ',num2str(i)])
+        end
+        mage1d = sqrt(real(ex1d).^2+real(ey1d).^2);
+        the1d = (180/pi)*mod(atan2(ey1d,ex1d),2*pi);
     end
 
-    for i = 1:d.ns
-        [ex3d(:,i),ey3d(:,i)] = calc_ifft(Ex3D(:,i),Ey3D(:,i),pad);
-        disp(['3-D Impedance E-field for MT site: ', num2str(i)])
+    if strcmp(impedance_type,'3d') || strcmp(impedance_type,'both')
+
+        for i = 1:d.ns
+            [ex3d(:,i),ey3d(:,i)] = calc_ifft(Ex3D(:,i),Ey3D(:,i),pad);
+            disp(['3-D Impedance E-field for MT site: ', num2str(i)])
+        end
+        mage3d = sqrt(real(ex3d).^2+real(ey3d).^2);
+        the3d = (180/pi)*mod(atan2(ey3d,ex3d),2*pi);
     end
 
-    mage1d = sqrt(real(ex1d).^2+real(ey1d).^2);
-    mage3d = sqrt(real(ex3d).^2+real(ey3d).^2);
     toc
     
 
@@ -473,9 +506,9 @@ if ~noifft.flag
         %linid = 6:8;
         %linid = 32;
         %linid = 7:8;
+        compute_coupling = 0;
 
-
-        [V1d,V3d] = calc_line_integral({lines{linid}},tind,d,ex3d,ey3d,ex1d,ey1d,LAT,LON,'nearest');
+        [V1d,V3d] = calc_line_integral({lines{linid}},tind,d,ex3d,ey3d,ex1d,ey1d,LAT,LON,'natural',compute_coupling);
         toc(lineTic);
         %
         %This results in GIC calculations which have "peak" values at different
@@ -503,10 +536,12 @@ if ~noifft.flag
         excel_table = [gic1d(subindx,:)' gic3d(subindx,:)' dgic(subindx,:)' dgic(subindx,:)'./gic1d(subindx,:)' gtzero'];
 
         %
-        for i = 1:length(lines)
-            indmax3d(i) = find(gic3d(:,i)==max(gic3d(:,i)));
-            indmax1d(i) = find(gic1d(:,i)==max(gic1d(:,i)));
-            maxdiffgic(i) = gic3d(indmax3d(i),i)-gic1d(indmax1d(i),i);
+        if strcmp(impedance_type,'both')
+            for i = 1:length(lines)
+                indmax3d(i) = find(gic3d(:,i)==max(gic3d(:,i)));
+                indmax1d(i) = find(gic1d(:,i)==max(gic1d(:,i)));
+                maxdiffgic(i) = gic3d(indmax3d(i),i)-gic1d(indmax1d(i),i);
+            end
         end
     
     end

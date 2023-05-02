@@ -1,4 +1,4 @@
-function [gic1d,gic3d] = calc_line_integral(lines,tind,d,ex3d,ey3d,ex1d,ey1d,LAT,LON,method)
+function [gic1d,gic3d,avg_strike,avg_r,std_strike,emag,simple_LV] = calc_line_integral(lines,tind,d,ex3d,ey3d,ex1d,ey1d,LAT,LON,method,compute_coupling)
 %Calculate line integral along transmission line paths given a start point
 %and end point of the transmission lines
 %
@@ -60,6 +60,20 @@ warning('off');
 %Initialize large matrices
 gic1d = zeros(length(tind),length(lines)); gic3d = zeros(size(gic1d));
 
+if compute_coupling == 1 || compute_coupling == 3
+    avg_strike = zeros(size(gic1d));
+    avg_r = zeros(size(gic1d));
+    std_strike = zeros(size(gic1d));
+    emag = zeros(size(gic1d));
+    simple_LV = zeros(size(gic1d));
+else
+    avg_strike = NaN;
+    avg_r = NaN;
+    std_strike = NaN;
+    emag = NaN;
+    simple_LV = NaN;
+end
+
 %The origin of the survey used for lat-long to UTM conversions
 origlon =(max(d.loc(:,2))-min(d.loc(:,2)))/2+min(d.loc(:,2));
 origlat = (max(d.loc(:,1))-min(d.loc(:,1)))/2+min(d.loc(:,1));
@@ -85,6 +99,7 @@ Fey3d = scatteredInterpolant(d.loc(:,1),d.loc(:,2),ey3d(tind(1),:).',method);
 
 Fex1d = scatteredInterpolant(LAT(:),LON(:),ex1d(tind(1),:).',method);
 Fey1d = scatteredInterpolant(LAT(:),LON(:),ey1d(tind(1),:).',method);
+
 
 
 if speedup_option == 1 %"faster" option
@@ -125,8 +140,12 @@ if speedup_option == 1 %"faster" option
 
             s = indLines{sidx};
 
+            indslice = su_ind(su)+1:su_ind(su+1);
+
             dx = diff(x(s));
             dy = diff(y(s));
+
+            d = distance(rx(s(1)),ry(s(1)),rx(s(end)),ry(s(end)),referenceEllipsoid('WGS84'));
 
             dex3 = (exnn3d(s(1:end-1),:)+exnn3d(s(2:end),:))/2;
             dey3 = (eynn3d(s(1:end-1),:)+eynn3d(s(2:end),:))/2;
@@ -135,9 +154,21 @@ if speedup_option == 1 %"faster" option
             dey1 = (eynn1d(s(1:end-1),:)+eynn1d(s(2:end),:))/2;
 
             if length(s)>1
-                gic3d(su_ind(su)+1:su_ind(su+1),sidx) = nansum(repmat(dx,size(dex3,2),1).*dex3.'+repmat(dy,size(dey3,2),1).*dey3.',2);
-                gic1d(su_ind(su)+1:su_ind(su+1),sidx) = nansum(repmat(dx,size(dex1,2),1).*dex1.'+repmat(dy,size(dey1,2),1).*dey1.',2);
+                gic3d(indslice,sidx) = nansum(repmat(dx,size(dex3,2),1).*dex3.'+repmat(dy,size(dey3,2),1).*dey3.',2);
+                gic1d(indslice,sidx) = nansum(repmat(dx,size(dex1,2),1).*dex1.'+repmat(dy,size(dey1,2),1).*dey1.',2);
             end
+
+            if compute_coupling == 3 %3D
+                [avg_strike(indslice,sidx),avg_r(indslice,sidx),std_strike(indslice,sidx),...
+                    emag(indslice,sidx),simple_LV(indslice,sidx)] ...
+                    = efield_transmissionLine_coupling(exnn3d(s(1:end-1),:),eynn3d(s(1:end-1),:),dx,dy,d);
+       
+            elseif compute_coupling == 1 %1D 
+                [avg_strike(indslice,sidx),avg_r(indslice,sidx),std_strike(indslice,sidx), ...
+                    emag(indslice,sidx),simple_LV(indslice,sidx)] ...
+                    = efield_transmissionLine_coupling(exnn1d(s(1:end-1),:),eynn1d(s(1:end-1),:),dx,dy,d);
+            end
+
 
         end
         %disp(['GIC for Transmission Line #',num2str(sidx),' of ',num2str(nlines),' Completed...........................'])

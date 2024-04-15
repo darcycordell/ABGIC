@@ -68,6 +68,7 @@ fwd.phi=(180./pi).*atan2(imag(Zxy),real(Zxy));
 fwd.Z = Zxy;
 fwd.Zerr = abs(Zxy).*err;
 fwd.C = C;
+fwd.freq_array = freq_array;
 
 end
 

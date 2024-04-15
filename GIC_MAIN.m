@@ -44,8 +44,8 @@ dlat = 0.5;
 %---------PRIMARY USER INPUTS TO REPRODUCE FIGURES-------------------------
 %To produce Figure 1 (40 - 100 seconds):
 %       s.flag = true; %Use synthetic data = true; Use real data = false
-%       s.rotmag = 0; %Angle (CW from north) for synthetic B signal (radians)
-%       noifft.flag = true; %set as true to *not* perform ifft and only calculate E at a single frequency
+%       s.rotmag = 45*pi/180; %Angle (CW from north) for synthetic B signal (radians)
+%       noifft.flag = false; %set as true to *not* perform ifft and only calculate E at a single frequency
 %       noifft.freq = 0.001; %frequency in Hz to calculate E
 %       
 %To produce Figure 2 (~30 minutes):
@@ -162,6 +162,7 @@ f = b(1).f;
 
 %
 if manually_edit_bad_points
+    %%
     % Check for "bad" points
     winlength = 3600;
     is = 1;tidx = 1:winlength;%length(b(is).times);
@@ -284,7 +285,7 @@ ygrid = size(bx_int,2);
 
 
 for rotidx = 1:length(s.rotmag)
-%%
+%
     if s.flag
 
         bmag = s.mag*[cos(s.rotmag(rotidx)); sin(s.rotmag(rotidx))]; %set magnitude based on rotation angle
@@ -325,8 +326,8 @@ for rotidx = 1:length(s.rotmag)
     disp('*****************LOAD MAGNETOTELLURIC IMPEDANCE DATA***************')
     
     %Data located in 05_MT_IMPEDANCE folder
-    %[d,in,indzones] = load_assign_impedance(zn,'AB_BC_MT_DATA_526_sites_230321.mat');
-    [d,in,indzones] = load_assign_impedance(zn,'gic_fwd_run02.mat');
+    [d,in,indzones] = load_assign_impedance(zn,'AB_BC_MT_DATA_526_sites_230321.mat');
+    %[d,in,indzones] = load_assign_impedance(zn,'gic_fwd_run04.mat');
     d.Z(abs(real(d.Z(:)))>10^5)=NaN;
     %d.Z = d.Z*100;
 
@@ -495,6 +496,7 @@ if ~noifft.flag
         tind = find(b(1).times==datetime('1989-03-13 05:00:00')):find(b(1).times==datetime('1989-03-14 05:00:00')); %13:45 to 14:15 is tind = 27901:29700;
 
         tind = 1:length(b(1).times);
+        tind = 1:5000;
 
         %tind = 1;
 

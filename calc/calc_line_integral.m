@@ -55,6 +55,7 @@ else
     speedup_option = 0;
 end
 
+
 warning('off');
 
 %Initialize large matrices
@@ -186,13 +187,17 @@ else %Original option using nested for loops
         g3d = zeros(length(tind),1);
         g1d = zeros(length(tind),1);
 
-        %Line vertices in longitute (rx) and latitude (ry)
+        %Line vertices in latitude (rx) and longitude (ry)
         rx = lines{sidx}(1,:);
         ry = lines{sidx}(2,:);
+
+        centlat = mean(rx);
+        centlon = mean(ry);
+
         %Convert lat long to metres (UTM). Note: y = easting; x = northing 
         % Two methods: Tested both and it doesn't change the results at all.
-        %[y,x] = geo2utm(ry,rx,ry(round(length(ry)/2)),rx(round(length(rx)/2))); convert using the transmission line segment midpoint as a reference
-        [y,x] = geo2utm(ry,rx,origlon,origlat); %convert using the full dataset midpoint as an origin (x = northing, y = easting)
+        [y,x] = geo2utm(ry,rx,ry(round(length(ry)/2)),rx(round(length(rx)/2))); %convert using the transmission line segment midpoint as a reference
+        %[y,x] = geo2utm(ry,rx,origlon,origlat); %convert using the full dataset midpoint as an origin (x = northing, y = easting)
         tic
 
         %Interpolate transmission line values and convert to V/m

@@ -178,6 +178,12 @@ for i = 1:nb
     zn(i).depth = zn(i).depth(1:end-1);
 end
 
+% for i = 1:nb
+%     zn(i).rho = [100 100];
+%     zn(i).thick = [10000];
+%     zn(i).depth = [0 cumsum(zn(i).thick)];
+% end
+
 
 % Compute 1-D MT curves for each 1-D Zone Model and assign this data to a 1-D data structure
 for i = 1:nb

@@ -25,12 +25,13 @@ for i = 1:nb
     end
 end
 ind = ind(1:14);
+ind = indzones;
 
 %refScale = 3000; %good scaling for 0.1 Hz
 refScale = 2000; %good scaling for figure at 0.01 Hz
 %refScale = 700; %good scaling for figure at 0.001 Hz
-%refScale = 0.5;
-%quivermc(Clat(indzones)',Clon(indzones)',1000*real(Ey1D(fidx,ind))',1000*real(Ex1D(fidx,ind))','color','r','reference',refScale,'arrowstyle','tail','linewidth',2);
+
+quivermc(Clat(indzones)',Clon(indzones)',1000*real(Ey1D(fidx,ind))',1000*real(Ex1D(fidx,ind))','color','r','reference',refScale,'arrowstyle','tail','linewidth',2);
 
 quivermc(60.5,-118.5,5*refScale,0,'color','k','reference',refScale,'arrowstyle','tail','linewidth',3,'linestyle','filled');
 textm(60.8,-117.5,[num2str(5*refScale),' V/km'],'HorizontalAlignment','center')
@@ -182,6 +183,7 @@ clf
 set(fig,'Position',[104 463 1536 369])
 for i = 1:length(rep)
     is = rep(i);
+    is = 167;
     
     %Find nearest interpolated grid point to the reference sites
     [~, indlatlon] = min(distance(d.loc(is,1),d.loc(is,2),LAT(:),LON(:)));
@@ -191,9 +193,9 @@ for i = 1:length(rep)
     th1d = (180/pi)*mod(atan2(real(Ey1D(:,indlatlon)),real(Ex1D(:,indlatlon))),2*pi);
 
     subplot(1,3,i)
-    h(1) = histogram(th1d,36,'FaceColor','g'); hold on
-    h(2) = histogram(th3d,36,'FaceColor','m','FaceAlpha',0.3);
-    axis([0 360 0 7500])
+    h(1) = histogram(th1d,360,'FaceColor','g'); hold on
+    h(2) = histogram(th3d,360,'FaceColor','m','FaceAlpha',0.3);
+    axis([0 360 0 37500])
     legend('1D','3D')
     title(['Frequency domain Angle for Site: ',d.site{is}])
     xlabel('Angle (degrees)')
@@ -209,6 +211,7 @@ end
 
 
 tidx = find(b(1).times==datetime('2017-09-08 14:02:22')); %tidx = 28943
+tidx = find(b(1).times==datetime('2017-09-08 14:03:12')); %tidx = 28943
 
 %tidx = find(b(1).times==datetime('1989-03-14 01:18:00')); 
 
@@ -251,6 +254,7 @@ clf
 %set(fig,'Position',[104 463 1536 369])
 for i = 2%:length(rep)
     is = rep(i);
+    %is = 183;
     
     %Find nearest interpolated grid point to MT sites
     [~, indlatlon] = min(distance(d.loc(is,1),d.loc(is,2),LAT(:),LON(:)));
@@ -260,8 +264,8 @@ for i = 2%:length(rep)
     th1d = (180/pi)*mod(atan2(real(ey1d(:,indlatlon)),real(ex1d(:,indlatlon))),2*pi);
 
     %subplot(1,3,i)
-    h(1) = histogram(th1d,36,'FaceColor','g'); hold on
-    h(2) = histogram(th3d,36,'FaceColor','m','FaceAlpha',0.3);
+    h(1) = histogram(th1d,360,'FaceColor','g'); hold on
+    h(2) = histogram(th3d,360,'FaceColor','m','FaceAlpha',0.3);
     axis([0 360 0 13000])
     legend('1D','3D')
     title(['Time Domain domain Angle for Site: ',d.site{is}])
@@ -273,7 +277,7 @@ end
 % This can be used to plot the geoelectric time series for any site by
 % changing the "is" variable
 is = rep(3); %Use rep(1) for ABT175, rep(2) for SAB060, and rep(3) for ABT272
-%is = 119;
+is = 183;
 
 maxe3d = max(sqrt(ex3d.^2+ey3d.^2),[],1)*1000;
 
@@ -625,11 +629,12 @@ title(['B Field (1-D) @ ',char(b(1).times(tidx))])
 %% Other Figures (Not In Paper): Line Voltage as a function of time for a particular line
 % Plot of line voltage as a function of time for a single line
 
-indmax = find(max(abs(gic3d))>100);
+indmax = find(max(abs(gic1d))>100);
 
 linid = indmax(6);
 
-linid = 219;
+%linid = 219;
+linid = 138;
 
 %[~,linid] = ind2sub(size(gic3d),find(abs(gic3d(:))==max(abs(gic3d(:))))); %find line with MAX GIC value
 %linid = 228;
@@ -876,9 +881,9 @@ linid = 143; %928L (Benalto-Sarcee)
 %linid = 51; %9L15 (Brintnell-Wesley Creek)
 
 tind = 1:length(b(1).times);
-compute_coupling = 3;
+compute_coupling = 1;
 
-for linid = 51%1:length(lineName)
+for linid = 59%1:length(lineName)
     [~,~,avg_strike,avg_r,std_strike,emag,simple_LV] ...
         = calc_line_integral({lines{linid}},tind,d,ex3d,ey3d,ex1d,ey1d,LAT,LON,'natural',compute_coupling);
     
@@ -1009,7 +1014,7 @@ end
 %% Plot average E-field along transmission line as a function of time
 
 linid = ind(end);
-linid = 143;
+linid = 221;
 
 [~,~,~,~,~,emag1] = calc_line_integral({lines{linid}},tind,d,ex3d,ey3d,ex1d,ey1d,LAT,LON,'natural',1);
 [~,~,~,~,~,emag3] = calc_line_integral({lines{linid}},tind,d,ex3d,ey3d,ex1d,ey1d,LAT,LON,'natural',3);
@@ -1031,10 +1036,10 @@ datetick('x','HH:MM:ss')
 xlabel('Time (MST)')
 xlim([dl dr]);
 %set(gca,'XLim',[datetime(2012,03,09,0,0,0)-hours(7),datetime(2012,03,09,23,59,59)-hours(7)])
-plot([datetime(2012,03,09,2,25,0) datetime(2012,03,09,2,25,0)],[0 max(get(gca,'YLim'))],':k','LineWidth',2)
-plot([datetime(2012,03,09,2,25,0) datetime(2012,03,09,2,25,0)],[0 max(get(gca,'YLim'))],':k','LineWidth',2)
+%plot([datetime(2012,03,09,2,25,0) datetime(2012,03,09,2,25,0)],[0 max(get(gca,'YLim'))],':k','LineWidth',2)
+%plot([datetime(2012,03,09,2,25,0) datetime(2012,03,09,2,25,0)],[0 max(get(gca,'YLim'))],':k','LineWidth',2)
 manual_legend('1D','-b','3D','-r');
-xlim([datetime('2017-09-08 12:00:00'),datetime('2017-09-08 15:00:00')])
+%xlim([datetime('2017-09-08 12:00:00'),datetime('2017-09-08 15:00:00')])
 %% Plot comparison of 1-D vs 3-D Voltages on cross-plot
 
 loglog(maxvolt1d,maxvolt3d,'.k'); hold on; loglog([0.1 1000],[0.1 1000],'--k');

@@ -12,6 +12,10 @@ function [lines, line_name, line_lengths, voltage, resistance] = post_process_li
 
 [lines,line_name] = load_powerlines('AESO_240kV.kml');
 
+%Add line 1114L to connect Bennett to Langdon
+lines{end+1} = [50.957935 50.957133 50.956425; -113.716334 -113.719203 -113.719192];
+line_name{end+1} = '1114L';
+
 voltage = 240*ones(length(lines),1);
 
 [lines500,line_name500] = load_powerlines('AESO_500kV.kml');
@@ -41,6 +45,20 @@ lines = [lines lines500];
 line_name = [line_name line_name500];
 
 voltage = [voltage; 500*ones(length(lines500),1)];
+
+%% Need to sort lines so that each line starts from the north and goes to the south
+
+for i = 1:length(lines)
+    firstlat = lines{i}(1,1);
+    lastlat = lines{i}(1,end);
+
+    if firstlat < lastlat
+        lines{i}(1,:) = lines{i}(1,end:-1:1);
+        lines{i}(2,:) = lines{i}(2,end:-1:1);
+    end
+
+
+end
 
 %% Get Line lengths
 line_lengths = nan(length(lines),1); resistance = nan(length(lines),1);

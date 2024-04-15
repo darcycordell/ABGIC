@@ -29,6 +29,22 @@ Y = fft(yt); % fft By
 df = fs/L;
 fAxis = (0:df:(fs-df)) - (fs-mod(L,2)*df)/2;
 
+fAxis(abs(fAxis)<df/1000000) = 0;
+
+%Identical to fAxis for even length signal
+%fAxis2 = -fs/2:df:fs/2-df;
+
+%Different from fAxis, includes double 0 which I think is wrong
+%fAxis3 = horzcat(-linspace(0,L/2,L/2)*fs/L,linspace(L/2,0,L/2)*fs/L);
+
+%Shifted from fAxis by 1 sample
+%fAxis4 = fs/L*[(0:L/2) -1*((L/2-1):-1:1)];
+
+%Identical to fAxis for both odd and even length signals
+% fAxis5 = 0 : df : df*(L-1);
+% fAxis5 = fftshift(fAxis5);
+% ind = fAxis5>=fs/2-eps(fs/2);
+% fAxis5(ind) = fAxis5(ind)-fs;
 
 %f = linspace(0,fs,L/2)-(fs/2);
 

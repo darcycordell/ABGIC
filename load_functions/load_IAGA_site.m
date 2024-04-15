@@ -28,8 +28,15 @@ for i = 1:length(magfile)
         site = t{4}; %Site name
         t = strsplit(fgetl(fid));
         lat = str2num(t{4}); %Site latitude
+        if isempty(lat)
+            lat = str2num(t{3}); 
+        end
         t = strsplit(fgetl(fid));
         lon = str2num(t{4}); %Site longitude
+        if isempty(lon)
+            lon = str2num(t{3});
+        end
+
         if lon>180
             lon = lon-360; %Note: IAGA longitude is 0>x>360 rather than -180>x>180
         end

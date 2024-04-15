@@ -17,7 +17,18 @@ for i = 1:length(magfile)
     if strcmp(magfile{i}(9:12),sites)
         fid = fopen(magfile{i},'r');
 
-        t = strsplit(fgetl(fid));
+        if fid==-1
+            b = [];
+            return
+        end
+        line = fgetl(fid);
+
+        if line == -1
+            b = [];
+            return
+        end
+
+        t = strsplit(line);
         
         lat = str2double(t{2}); %Site latitude
         lon = str2double(t{3}); %Site longitude

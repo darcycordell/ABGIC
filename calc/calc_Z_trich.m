@@ -171,9 +171,17 @@ zn(24).rho = [100 25 75 150 110 115 150 210 50 20 5.62 1.58 0.89];
 % % Zone SBZb
 % zn(34).thick = [75 1300 11200 22500 10000 55000 150000 160000 110000 150000 230000 100000];
 % zn(34).rho = [25 5 500 100 100 80 55 29 8 2.4 1.12 0.48];
+check_menu = menu('Which 1-D Model?','Piecewise 1-D Trichtchencko 2019 (default)','1-D Nikitina 2016');
 
 nb = length(zn);
 for i = 1:nb
+
+    if check_menu ==2
+        %Meanook Model from Nikitina et al. (2016) supplement
+        zn(i).thick = [2200 13000 30000 55000 150000 160000 110000 150000 230000 100000 1000000];
+        zn(i).rho = 1./[0.033 0.0026 0.0004 0.00044 0.0018 0.025 0.12 0.42 1.1 2.1 1];
+    end
+
     zn(i).depth = [0 cumsum(zn(i).thick)];
     zn(i).depth = zn(i).depth(1:end-1);
 end
@@ -205,10 +213,10 @@ end
 
 [a.rho,a.pha,a.rhoerr,a.phaerr] = calc_rho_pha(a.Z,a.Zerr,a.T);
 
-ind = isnan(d.Z);
-a.Z(ind) = NaN+1i*NaN;
-a.rho(ind) = NaN;
-a.pha(ind) = NaN;
-a.Zerr(ind) = NaN+1i*NaN;
-a.rhoerr(ind) = NaN;
-a.phaerr(ind) = NaN;
+% ind = isnan(d.Z);
+% a.Z(ind) = NaN+1i*NaN;
+% a.rho(ind) = NaN;
+% a.pha(ind) = NaN;
+% a.Zerr(ind) = NaN+1i*NaN;
+% a.rhoerr(ind) = NaN;
+% a.phaerr(ind) = NaN;

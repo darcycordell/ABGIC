@@ -203,7 +203,7 @@ tgic = tgic_orig - seconds(tshift);
 if strcmp(GIC_Hall.Properties.VariableNames{halltrans},'x89S_T1') || ...
     strcmp(GIC_Hall.Properties.VariableNames{halltrans},'x89S_T2')
     hall = (-(GIC_Hall{:,2}+GIC_Hall{:,3}))-mean(-(GIC_Hall{:,2}+GIC_Hall{:,3}));
-    %hall = -GIC_Hall{:,2}-mean(-GIC_Hall{:,2});
+    hall = -GIC_Hall{:,2}-mean(-GIC_Hall{:,2});
     
 
 elseif strcmp(GIC_Hall.Properties.VariableNames{halltrans},'x12S_T1')
@@ -484,10 +484,10 @@ text(ax4,0.8,-0.25,['UT ',datestr(ax4.XTick(end),'mmm dd, yyyy')],'FontSize',18,
 
 linkaxes([ax1 ax2 ax3 ax4],'x')
 %% SAVE AUTOMATICALLY FIGURES
-% folder = '/Users/darcycordell/Library/CloudStorage/GoogleDrive-dcordell@ualberta.ca/My Drive/Work/Projects/GIC/Network_Model_Scripts/Results/20230423/Revision';
-% filename = ['SFig02_',strrep(S(isub).Name,' ','_'),'_MT_ModEM_noDiff'];
-% printfile=[folder,'/',filename];
-% print('-depsc','-painters',[printfile,'.eps'])
+folder = '/Users/darcycordell/Library/CloudStorage/GoogleDrive-dcordell@ualberta.ca/My Drive/Work/Projects/GIC/Network_Model_Scripts/Results/20230423/Revision';
+filename = ['SFig02_',strrep(S(isub).Name,' ','_'),'_MT_ModEM_noDiff'];
+printfile=[folder,'/',filename];
+print('-depsc','-painters',[printfile,'.eps'])
 
 %% SUPPLEMENTARY FIGURE 8: CROSS PLOTS
 
@@ -702,7 +702,7 @@ for iplot = 1:2
     plotm(51.0477,-114.0719,'sk','MarkerFaceColor','b','MarkerSize',10) %calgary
     plotm(56.726, -111.379,'sk','MarkerFaceColor','b','MarkerSize',10); %fort mac
 end
-    
+    %%
 indsub = find(contains({S(:).Name},'ELLERSLIE'),1,'first');
 [~,indg] = max(GIC_Subs(indsub,:));
 indg = find(GIC_Times=='2023-04-24 07:26:46');
@@ -767,8 +767,25 @@ close(vidFile);
 
 
 
+%%
+polar(eTheta(:,269)*pi/180,1000*eMag(:,269),'.k')
+set(gca,'View',[90 -90])
 
 
+
+
+
+
+
+
+
+%% Maps of Geoelectric Time Series and Magnetic Time Series at Each Site
+cd(runPath);
+folder = 'sites';
+if exist(['./',folder],'dir')~=7
+    mkdir(folder);
+end
+cd(folder)
 
 %%
 f = figure(1);

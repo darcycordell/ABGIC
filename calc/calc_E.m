@@ -24,12 +24,6 @@ B = permute(B,[1,3,2]); %Add 2nd dimension for pagemtimes
 %pagemtimes is a very clever way to do the multiplication that avoids a for
 %loop. 10000 times faster.
 
-ZxxBx = (1/mu)*squeeze(Z(1,1,:).*B(1,:,:));
-ZxyBy = (1/mu)*squeeze(Z(1,2,:).*B(2,:,:));
-ZyxBx = (1/mu)*squeeze(Z(2,1,:).*B(1,:,:));
-ZyyBy = (1/mu)*squeeze(Z(2,2,:).*B(2,:,:));
-
-%E = (1/mu)*(pagemtimes(real(Z),real(B))+1i*pagemtimes(imag(Z),imag(B)));
 E = (1/mu)*pagemtimes(Z,B);
 E = permute(E,[1,3,2]);
 
@@ -40,6 +34,11 @@ E = permute(E,[1,3,2]);
 %     E(:,i) = (1/mu)*(real(Z(:,:,i))*real(B(:,i))+1i*imag(Z(:,:,i))*imag(B(:,i)));
 %     
 % end
+
+%ZxxBx = (1/mu)*squeeze(Z(1,1,:).*B(1,:,:));
+%ZxyBy = (1/mu)*squeeze(Z(1,2,:).*B(2,:,:));
+%ZyxBx = (1/mu)*squeeze(Z(2,1,:).*B(1,:,:));
+%ZyyBy = (1/mu)*squeeze(Z(2,2,:).*B(2,:,:));
     
 
 Ex = E(1,:);

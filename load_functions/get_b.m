@@ -40,3 +40,4 @@ end
 
 
 disp(['...completed B(omega) in ',num2str(toc(ttic)),' seconds'])
+

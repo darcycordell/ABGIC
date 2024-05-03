@@ -3,6 +3,12 @@ function [GIC_Hall,t] = get_hall_data
 
 get_files;
 
+if strcmp(hallFile,'none')
+    GIC_Hall = 0;
+    t = 0;
+    return
+end
+
 curdir = pwd;
 cd(hallFilePath)
 %GIC_Hall = readtable('AltaLink_GIC_230322_25_merge.xlsx');

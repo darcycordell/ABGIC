@@ -18,6 +18,7 @@ fullTic = tic;
 % resistance, W2 (LV or Common) winding resistance, HV type, LV type, and
 % from bus and to bus indices
 [L,S,T] = get_network;
+%[L,S,T] = modify_network(L,S,T);
 subLoc = reshape([S(:).Loc],2,length(S))';
 nLines = length(L);
 nSubs = length(S);
@@ -69,7 +70,6 @@ latQuery = subLoc(:,1); lonQuery = subLoc(:,2);
 [exSub,eySub] = get_e(d.Z(:,:,indMT),d.f,BxSub,BySub,b);
 
 
-%t1 = find(b(1).times==datetime('2021-10-12 10:54:00'));
 [maxe, maxeIndices] = max(sqrt(ex.^2+ey.^2));
 [maxeCounts, maxeGroups] = groupcounts(maxeIndices');
 tind = maxeGroups(find(maxeCounts==max(maxeCounts)));
@@ -83,8 +83,8 @@ t2 = datetime('2023-04-24 10:00:00');
 %t1 = datetime('2023-03-23 04:00:00');
 %t2 = datetime('2023-03-23 18:00:00');
 
-% t1 = datetime('2023-04-24 2:00:00');
-% t2 = datetime('2023-04-24 3:00:00');
+%t1 = datetime('2023-04-24 7:15:00');
+%t2 = datetime('2023-04-24 7:30:00');
 
 
 tind = isbetween(b(1).times,t1,t2);
@@ -106,7 +106,7 @@ nTimes = size(V,1);
 GIC_Times = b(1).times(tind);
 GIC_Times_orig = GIC_Times;
 
-%%
+
 nBus = max([[T.W1Bus] [T.W2Bus] [L.fromBus] [L.toBus]]);
 
 %End Lines and Subs--------------------------------------------------------

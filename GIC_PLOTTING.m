@@ -793,10 +793,10 @@ for i = 1%:d.ns
     set(gca,'FontSize',16);
     legend('B_x','B_y');
 
-    if plot_fig
-        exportgraphics(f,['site',sprintf('%03d',i),'_',d.site{i},'.png'],'Resolution',100)
-        clf(f);
-    end
+%     if plot_fig
+%         exportgraphics(f,['site',sprintf('%03d',i),'_',d.site{i},'.png'],'Resolution',100)
+%         clf(f);
+%     end
     
     
 

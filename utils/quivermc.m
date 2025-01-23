@@ -340,28 +340,64 @@ switch arrowStyle
         ystart=y-scale*v;
         yend=y;
 end
-        
+        %%
 
-% Get x coordinates of each vector plotted
-lx = [xstart; x; ...
-  xstart+(1-arrow/3)*(xend-xstart); ...
-  xend-arrow*(scale*u+arrow*(scale*v)); ...
-  xend; ...
-  xend-arrow*(scale*u-arrow*(scale*v)); ...
-  xstart+(1-arrow/3)*(xend-xstart); ...
-  NaN(size(x))];
+% % Get x coordinates of each vector plotted
+% lx = [xstart; ...
+%   xstart+(1-arrow/3)*(xend-xstart); ...
+%   xend-arrow*(scale*u+arrow*(scale*v)); ...
+%   xend; ...
+%   xend-arrow*(scale*u-arrow*(scale*v)); ...
+%   xstart+(1-arrow/3)*(xend-xstart); ...
+%   NaN(size(xstart))];
+% 
+% % Get y coordinates of each vector plotted
+% ly = [ystart; ...
+%   ystart+(1-arrow/3)*(yend-ystart); ...
+%   yend-arrow*(scale*v-arrow*(scale*u)); ...
+%   yend; ...
+%   yend-arrow*(scale*v+arrow*(scale*u)); ...
+%   ystart+(1-arrow/3)*(yend-ystart); ...
+%   NaN(size(ystart))];
 
-% Get y coordinates of each vector plotted
-ly = [ystart; y; ...
-  ystart+(1-arrow/3)*(yend-ystart); ...
-  yend-arrow*(scale*v-arrow*(scale*u)); ...
-  yend; ...
-  yend-arrow*(scale*v+arrow*(scale*u)); ...
-  ystart+(1-arrow/3)*(yend-ystart); ...
-  NaN(size(y))];
+%plot(lx(1:3,1:4),ly(1:3,1:4),'.-k'); hold on; axis equal
+%plot(lx(3:4,1:4),ly(3:4,1:4),'.-r');
+%%
+
+alpha = 10000;
+d = (2/3)*alpha;
+
+magx = sqrt((xend-xstart).^2+(yend-ystart).^2);
+x1 = xend-alpha*(xend-xstart)./magx;
+y1 = yend-alpha*(yend-ystart)./magx;
+
+vx = xend-x1;
+vy = yend-y1;
+magv = sqrt(vx.^2+vy.^2);
+
+x2 = x1+d*(-vy)./magv;
+y2 = y1+d*vx./magv;
+
+x3 = x1+d*vy./magv;
+y3 = y1+d*(-vx)./magv;
+
+n = 500;
+lx = [xstart; xend];
+ly = [ystart;yend];
+%plot([xstart(1:n); xend(1:n)],[ystart(1:n); yend(1:n)],'.-k'); hold on; axis equal
+%plot(x1(1:n),y1(1:n),'.r')
+%plot(x2(1:n),y2(1:n),'.b')
+%plot(x3(1:n),y3(1:n),'.g')
+
+
+
+
+
+%%
 
 % Plot the vectors
 hvectors = line(lx,ly,'Color',veccol);
+patch([xend; x2; x3],[yend; y2; y3],'k')
 
 %% Color vectors with cmap if requested by user: 
 

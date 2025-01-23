@@ -26,7 +26,7 @@ Yn = Yn + diag(diagYn);
 
 %Construct earthing admittance matrix
 diagYe = zeros(length(diagYn),1);
-diagYe(unique(neutralNodes))=(1./[S(~isnan([S(:).Resistance])).Resistance])/3; %divide *admittance* by 3 for 3 phase power
+diagYe(unique(neutralNodes))=(1./[S(:).Resistance])/3; %divide *admittance* by 3 for 3 phase power
                                        %This is the same as multiplying the
                                        %resistance by 3 (pers. comm. David
                                        %Boteler, Jan 4, 2024)
@@ -35,6 +35,9 @@ Ye = diag(diagYe);
 
 %Option to include effects of nearby substations to earthing matrix
 %Does not make any noticeable difference
+%
+% Pirjola, R. (2008). Study of effects of changes of earthing resistances on geomagnetically induced currents in an electric power transmission system. Radio Science, 43(01), 1–13. https://doi.org/10.1029/2007RS003704
+
 % subLoc = reshape([S(:).Loc],2,length(S))';
 % Lij = [];
 % for i = 1:length(S)
@@ -53,9 +56,13 @@ Ye = diag(diagYe);
 %         if i~=j
 % 
 %             Z = ((1/Ye(i+k,i+k)+1/Ye(j+k,j+k))/4)*(Ls/Lij(i,j));
+% 
+%             if Z>Ye(i+k,i+k) || Z>Ye(j+k,j+k)
+%                 Z = min([Ye(i+k,i+k) Ye(j+k,j+k)]);
+%             end
 %             Ye(i+k,j+k) = Z;
 %         end
 %     end
 % end
-% 
-% 
+
+

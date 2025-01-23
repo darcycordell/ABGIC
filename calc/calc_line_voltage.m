@@ -45,6 +45,7 @@ else
     speedup_option = 0;
 end
 
+speedup_option = 1;
 
 %Initialize large matrices
 V = zeros(nTimes,nLines);

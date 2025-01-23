@@ -98,7 +98,15 @@ for i = 1:length(magfile)
         end
 
         if length(Bx)~=17280
-            tcheck = datetime(C{1},'InputFormat','yyyyMMddHHmmss');
+            da = char(C{1});
+            year1 = str2num(da(:,1:4));
+            month1 = str2num(da(:,5:6));
+            day1 = str2num(da(:,7:8));
+            hour1 = str2num(da(:,9:10));
+            min1 = str2num(da(:,11:12));
+            sec1 = str2num(da(:,13:14));
+
+            tcheck = datetime(year1,month1,day1,hour1,min1,sec1);
 
             [tcheck,ind] = unique(tcheck);
 

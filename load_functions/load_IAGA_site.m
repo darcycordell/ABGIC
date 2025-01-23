@@ -42,8 +42,14 @@ for i = 1:length(magfile)
         end
 
         %Load Data
+        formatFlag = 0;
         while 1   
             t = fgetl(fid);
+            tstrspl = strsplit(t);
+            if strcmp(tstrspl{3},'HDZF')
+                formatFlag = 1;
+            end
+
             if strcmp(t(1:4),'DATE')
                 break
             end
@@ -75,15 +81,22 @@ for i = 1:length(magfile)
         end
 
         N = 1:length(Bx);
+
+
         
         %Remove missing data. IAGA data seem to have missing data set with
         %99999. 
+
         Bx(Bx==99999)=NaN; %Set missing data to NaN
-        Bx = resample(Bx,N); %Remove missing data using linear interpolation
         By(By==99999)=NaN;
-        By = resample(By,N);
         Bz(Bz==99999)=NaN;
-        Bz = resample(Bz,N);
+
+
+        if ~all(isnan(Bx))
+            Bx = resample(Bx,N); %Remove missing data using linear interpolation
+            By = resample(By,N);         
+            Bz = resample(Bz,N);
+        end
         
         Bx_all = [Bx_all; Bx];
         By_all = [By_all; By];
@@ -94,10 +107,17 @@ for i = 1:length(magfile)
 
 end
 
-
 %Set b structure
-b.x = Bx_all;
-b.y = By_all;
+
+if formatFlag
+    %Convert from HDZF to XYZ if necessary
+    b.x = Bx_all.*cos(By_all*pi/(60*180));
+    b.y = Bx_all.*sin(By_all*pi/(60*180));
+else
+    b.x = Bx_all;
+    b.y = By_all;
+end
+
 b.z = Bz_all;
 b.times = times_all;
 b.lat = lat;

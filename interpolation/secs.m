@@ -1,4 +1,4 @@
-function [BXpred,BYpred,BZpred]=secs(Blat,Blon,BX,BY,BZ,SECSlat,SECSlon,qlat,qlon)
+function [BXpred,BYpred,BZpred,JXext,JYext]=secs(Blat,Blon,BX,BY,BZ,SECSlat,SECSlon,qlat,qlon)
 % This code is a slightly modified version of a script from:
 % Vanhamaki, H., Juusola, L. (2020). Introduction to spherical
 % elementary current systems, in: Dunlop, M., Luhr, H. (eds),
@@ -184,19 +184,19 @@ Idf = sub_inv_SVD(matB,epsSVD) * Bvecs;
 
 %Calculate Jeq at the output grid and save also the SECS scaling factors
 %external part
-% [MJtheta,MJphi] = sub_SECS_2D_DivFree_vector((90-qlat(:))/180*pi,qlon(:)/180*pi,(90-SECSlat(:))/180*pi,SECSlon(:)/180*pi,Rext,0);
-% Iext = Idf(1:Npole,:);
-% JXext = -(MJtheta*Iext)';  %northward component
-% JYext = (MJphi*Iext)';     %eastward component
-% if separaatio
-%   %internal part
-%   [MJtheta,MJphi] = sub_SECS_2D_DivFree_vector((90-qlat(:))/180*pi,qlon(:)/180*pi,(90-SECSlat(:))/180*pi,SECSlon(:)/180*pi,Rint,0);
-%   Iint = Idf(1+Npole:end,:);
-%   JXint = -(MJtheta*Iint)';
-%   JYint = (MJphi*Iint)';
-% else
-%   Iint=[];  JXint=[];  JYint=[];
-% end
+[MJtheta,MJphi] = sub_SECS_2D_DivFree_vector((90-qlat(:))/180*pi,qlon(:)/180*pi,(90-SECSlat(:))/180*pi,SECSlon(:)/180*pi,Rext,0);
+Iext = Idf(1:Npole,:);
+JXext = -(MJtheta*Iext)';  %northward component
+JYext = (MJphi*Iext)';     %eastward component
+if separaatio
+  %internal part
+  [MJtheta,MJphi] = sub_SECS_2D_DivFree_vector((90-qlat(:))/180*pi,qlon(:)/180*pi,(90-SECSlat(:))/180*pi,SECSlon(:)/180*pi,Rint,0);
+  Iint = Idf(1+Npole:end,:);
+  JXint = -(MJtheta*Iint)';
+  JYint = (MJphi*Iint)';
+else
+  Iint=[];  JXint=[];  JYint=[];
+end
 
 %Save the data to a matlab binary file
 %Jfile='SECS_theory_example.mat';
@@ -385,77 +385,77 @@ end
 %############################################## END OF FUNCTION sub_SECS_2D_DivFree_magnetic
 
 
-% function [matVtheta,matVphi]=sub_SECS_2D_DivFree_vector(thetaV,phiV,thetaSECS,phiSECS,radius,LimitAngle)
-% %
-% %Matlab function for calculating matrices matVtheta and matVphi which give the theta- and
-% %phi-components of a vector field from the scaling factors of div-free spherical elementary
-% %current systems (DF SECS),
-% %  Vtheta = matVtheta * Idf, where
-% %  Vtheta = [Vtheta(1) Vtheta(2) ...]'  vector of theta-components
-% %  Idf = [Idf(1') Idf(2') ...]' vector of scaling factors
-% %
-% %
-% %  INPUT
-% %        thetaV,phiV : Co-latitude and longitude of points where the vector field is to be calculated,
-% %                       [radian], Nv-dimensional vectors
-% %  thetaSECS,phiSECS : Co-latitude and longitude of the DF SECS, [radian], Nsecs-dimensional vectors
-% %             radius : Radius of the sphere where the calculation takes place, [km], scalar
-% %         LimitAngle : Half-width of the uniformly distributed SECS, [radian], scalar or Nsecs-dimensional vector
-% %
-% %  OUTPUT
-% %  matVtheta,matVphi : (Nv,Nsecs)-matrices that relate SECS scaling factors to the vector field
-% %
-% %
-% %  NOTE: Each individual SECS is assumed to be uniformly distributed inside a spherical cap with
-% %        half angle 'LimitAngle'. This removes the singularity at the pole of the SECS. Outside the
-% %        cap this kin of SECS has exactly the same field as the traditional singular SECS defined
-% %        by Amm (1998).
-% %
-% %
-% %Heikki V, March 2010, matlab 7.8.0.347 (R2009a)
-% 
-% 
-% %theta- and phi-directions are badly defined at the poles of the spherical coordinate
-% %system, but no check is done here...
-% 
-% 
-% %number of points where V is calculated and scaling factors are given
-% Nv=length(thetaV(:));
-% Nsecs=length(thetaSECS(:));
-% matVtheta=NaN(Nv,Nsecs);
-% matVphi=NaN(Nv,Nsecs);
-% 
-% %if LimitAngle is scalar, use it for every SECS
-% if length(LimitAngle(:))==1
-%   LimitAngle=LimitAngle+zeros(size(thetaSECS));
-% end;
-% 
-% %This is a common factor in all components
-% CommonFactor=1/(4*pi*radius);
-% 
-% %loop over vector field positions
-% for n=1:Nv
-%   %cosine of co-latitude in the SECS-centered system
-%   %See Eq. (A5) and Fig. 14 of Vanhamaki et al.(2003)
-%   CosThetaPrime=cos(thetaV(n))*cos(thetaSECS) + sin(thetaV(n))*sin(thetaSECS).*cos(phiSECS-phiV(n));
-% 
-%   %sin and cos of angle C, multiplied by sin(theta').
-%   %See Eqs. (A2)-(A5) and Fig. 14 of Vanhamaki et al.(2003)
-%   SinC = sin(thetaSECS).*sin(phiSECS-phiV(n));
-%   CosC = (cos(thetaSECS) - cos(thetaV(n))*CosThetaPrime) / sin(thetaV(n));
-% 
-%   %Find those SECS poles that are far away from the calculation point
-%   distant=(CosThetaPrime < cos(LimitAngle));
-% 
-%   %vector field proportional to cot(0.5*CosThetaPrime), see Eq. (2) of Vanhamaki et al.(2003)
-%   dummy = CommonFactor ./ (1-CosThetaPrime(distant));
-%   matVtheta(n,distant) = dummy .* SinC(distant);
-%   matVphi(n,distant) = dummy .* CosC(distant);
-% 
-%   %Assume that the curl of a DF SECS is uniformly distributed inside LimitAngle
-%   % --> field proportional to a*tan(0.5*CosThetaPrime), where a=cot(0.5*LimitAngle)^2
-%   dummy = CommonFactor * cot(0.5*LimitAngle(~distant)).^2 ./ (1+CosThetaPrime(~distant));
-%   matVtheta(n,~distant) = dummy .* SinC(~distant);
-%   matVphi(n,~distant) = dummy .* CosC(~distant);
-% end;
+function [matVtheta,matVphi]=sub_SECS_2D_DivFree_vector(thetaV,phiV,thetaSECS,phiSECS,radius,LimitAngle)
+%
+%Matlab function for calculating matrices matVtheta and matVphi which give the theta- and
+%phi-components of a vector field from the scaling factors of div-free spherical elementary
+%current systems (DF SECS),
+%  Vtheta = matVtheta * Idf, where
+%  Vtheta = [Vtheta(1) Vtheta(2) ...]'  vector of theta-components
+%  Idf = [Idf(1') Idf(2') ...]' vector of scaling factors
+%
+%
+%  INPUT
+%        thetaV,phiV : Co-latitude and longitude of points where the vector field is to be calculated,
+%                       [radian], Nv-dimensional vectors
+%  thetaSECS,phiSECS : Co-latitude and longitude of the DF SECS, [radian], Nsecs-dimensional vectors
+%             radius : Radius of the sphere where the calculation takes place, [km], scalar
+%         LimitAngle : Half-width of the uniformly distributed SECS, [radian], scalar or Nsecs-dimensional vector
+%
+%  OUTPUT
+%  matVtheta,matVphi : (Nv,Nsecs)-matrices that relate SECS scaling factors to the vector field
+%
+%
+%  NOTE: Each individual SECS is assumed to be uniformly distributed inside a spherical cap with
+%        half angle 'LimitAngle'. This removes the singularity at the pole of the SECS. Outside the
+%        cap this kin of SECS has exactly the same field as the traditional singular SECS defined
+%        by Amm (1998).
+%
+%
+%Heikki V, March 2010, matlab 7.8.0.347 (R2009a)
+
+
+%theta- and phi-directions are badly defined at the poles of the spherical coordinate
+%system, but no check is done here...
+
+
+%number of points where V is calculated and scaling factors are given
+Nv=length(thetaV(:));
+Nsecs=length(thetaSECS(:));
+matVtheta=NaN(Nv,Nsecs);
+matVphi=NaN(Nv,Nsecs);
+
+%if LimitAngle is scalar, use it for every SECS
+if length(LimitAngle(:))==1
+  LimitAngle=LimitAngle+zeros(size(thetaSECS));
+end;
+
+%This is a common factor in all components
+CommonFactor=1/(4*pi*radius);
+
+%loop over vector field positions
+for n=1:Nv
+  %cosine of co-latitude in the SECS-centered system
+  %See Eq. (A5) and Fig. 14 of Vanhamaki et al.(2003)
+  CosThetaPrime=cos(thetaV(n))*cos(thetaSECS) + sin(thetaV(n))*sin(thetaSECS).*cos(phiSECS-phiV(n));
+
+  %sin and cos of angle C, multiplied by sin(theta').
+  %See Eqs. (A2)-(A5) and Fig. 14 of Vanhamaki et al.(2003)
+  SinC = sin(thetaSECS).*sin(phiSECS-phiV(n));
+  CosC = (cos(thetaSECS) - cos(thetaV(n))*CosThetaPrime) / sin(thetaV(n));
+
+  %Find those SECS poles that are far away from the calculation point
+  distant=(CosThetaPrime < cos(LimitAngle));
+
+  %vector field proportional to cot(0.5*CosThetaPrime), see Eq. (2) of Vanhamaki et al.(2003)
+  dummy = CommonFactor ./ (1-CosThetaPrime(distant));
+  matVtheta(n,distant) = dummy .* SinC(distant);
+  matVphi(n,distant) = dummy .* CosC(distant);
+
+  %Assume that the curl of a DF SECS is uniformly distributed inside LimitAngle
+  % --> field proportional to a*tan(0.5*CosThetaPrime), where a=cot(0.5*LimitAngle)^2
+  dummy = CommonFactor * cot(0.5*LimitAngle(~distant)).^2 ./ (1+CosThetaPrime(~distant));
+  matVtheta(n,~distant) = dummy .* SinC(~distant);
+  matVphi(n,~distant) = dummy .* CosC(~distant);
+end;
 

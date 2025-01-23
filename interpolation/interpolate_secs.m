@@ -1,4 +1,4 @@
-function [predX,predY,predZ,LON,LAT]=interpolate_secs(b,lim,dlon,dlat)
+function [predX,predY,predZ,LON,LAT,JX,JY]=interpolate_secs(b,lim,dlon,dlat)
 % Option to set lim = NaN and interpolate on the (dlat,dlon) points instead
 tic
 obsX = [b(:).x];
@@ -22,13 +22,15 @@ if ~isnan(lim)
 else
     qLAT = dlat;
     qLON = dlon;
-    [SECSlat,SECSlon] = meshgrid(linspace(dlat-10,dlat+10,50),linspace(dlon-10,dlon+10,50));
+    [SECSlat,SECSlon] = meshgrid(linspace(min(dlat)-10,max(dlat)+10,50),linspace(min(dlon)-10,max(dlon)+10,50));
 
 end
 
-[predX,predY,predZ] = secs(obsLat,obsLon,obsX-baselineX,obsY-baselineY,obsZ-baselineZ,SECSlat(:),SECSlon(:),qLAT(:),qLON(:));
-
 LAT = qLAT';
 LON = qLON';
+
+[predX,predY,predZ,JX,JY] = secs(obsLat,obsLon,obsX-baselineX,obsY-baselineY,obsZ-baselineZ,SECSlat(:),SECSlon(:),LAT(:),LON(:));
+
+
 
 toc

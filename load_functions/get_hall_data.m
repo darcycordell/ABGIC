@@ -43,8 +43,8 @@ t = (firstTime:seconds(2):lastTime)';
 
 
 if length(t) ~= length(tgic)
-
-    error('Your Hall probe data does not have equally spaced data!!')
+    t = (firstTime:seconds(2):lastTime-1)';
+    warning('Your Hall probe data does not have equally spaced data!!')
 end
 
 else

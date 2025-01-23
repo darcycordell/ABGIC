@@ -19,6 +19,10 @@ neutralNodes = tLoc'+nBus;
 autoind = find(strcmp({T(:).HV_Type},'auto'));
 autoPairs = [[T(autoind).W1Bus]; [T(autoind).W2Bus]]';
 
+if isempty(autoPairs)
+    autoPairs = zeros(0,2);
+end
+
 
 %The autotransformer has confused me at various times. My understanding is
 %that the transformer is wired together as this:

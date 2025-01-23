@@ -1,16 +1,29 @@
-function [bx,by,Bx,By,b] = get_b(latq,lonq)
+function [b] = get_b(flag)
 curdir = pwd; 
 
 get_files;
 
 
 disp('*********************LOAD OBSERVARTORY DATA************************')
-cd(bFilePath)
-load(bFile);
-cd(curdir)
+
+if strcmp(flag,'mat')
+    cd(bFilePath)
+    load(bFile);
+    cd(curdir)
+elseif strcmp(flag,'raw')
+    b = load_mag_data;
+end
+
 disp(['Done loading magnetic observatory data from file: ',bFile])
 
-b(1).fs = 1;
+freq_menu = menu('Sample rate:','1 Hz','1 min')
+
+if freq_menu == 2
+    b(1).fs = 1/60;
+else
+    b(1).fs = 1;
+end
+
 b(1).pad = 10000;
 
 
@@ -23,21 +36,6 @@ for i = 1:ns
 
 end
 
-nf = length(b(1).fAxis);
-
-disp('Interpolating b(t) Spatially...')
-
-[bx,by] = interpolate_b(b,latq,lonq);
-disp('...done interpolation')
-disp('...converting interpolated b to frequency domain ...')
-
-ttic = tic;
-Bx = zeros(length(latq),nf); Bx = Bx+1i*Bx;
-By = Bx;
-for i = 1:size(bx,1)
-    [Bx(i,:),By(i,:)] = calc_fft(bx(i,:)',by(i,:)',b(1).fs,b(1).pad); 
-end
 
 
-disp(['...completed B(omega) in ',num2str(toc(ttic)),' seconds'])
 

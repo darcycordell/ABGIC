@@ -28,9 +28,9 @@ for ir = 1:4 %Loop through all 4 components
 
     %Option #1: Interpolate onto real and imaginary (original way of doing
     %it)
-    %Zqr = interp1(freq,real(Z(:,ir)),f,'linear')';
-    %Zqi = interp1(freq,imag(Z(:,ir)),f,'linear')';
-    %Zq(:,ir) = Zqr + 1i.*Zqi;
+%     Zqr = interp1(freq,real(Z(:,ir)),abs(fAxis(fAxis<0)),'linear')';
+%     Zqi = interp1(freq,imag(Z(:,ir)),abs(fAxis(fAxis<0)),'linear')';
+%     Zq(:,ir) = Zqr + 1i.*Zqi;
     
     % make values at negative frequencies the complex conjugate
     % identical results even if Z(Nyq) = 0 
@@ -41,8 +41,18 @@ for ir = 1:4 %Loop through all 4 components
     %that you can interpolate logarithmically on mags and linearly on
     %phases. Much less error in this case.
     % This also has the benefit of resulting in a perfect extrapolation for a halfspace.
+    % Option to extrapolate as: ... 'linear','extrap');
+    %       However, serious danger when extrapolating to long periods
+    %       because you can get some really wild extrapolations if your
+    %       longer periods are a bit noisy.
     Zqmag = interp1(log10(freq),log10(abs(Z(:,ir))),log10(abs(fAxis(fAxis<0))),'linear')';
-    Zqpha = interp1(freq,angle(Z(:,ir)),abs(fAxis(fAxis<0)),'linear')';
+    
+    logrho = interp1(log10(freq),log10((1./(2*pi*freq*4*pi*10^-7)).*abs(Z(:,ir)).^2),log10(abs(fAxis(fAxis<0))),'linear')';
+    rho = 10.^logrho;
+    Zqmag = log10(sqrt(rho.*2*pi.*abs(fAxis(fAxis<0))'*4*pi*10^-7));
+
+    Zqpha = interp1(freq,angle(Z(:,ir)),abs(fAxis(fAxis<0)),'linear')';    
+    
     Zq(:,ir) = 10.^(Zqmag).*exp(1i*Zqpha);
 
     if mod(length(fAxis),2)==0
@@ -51,6 +61,8 @@ for ir = 1:4 %Loop through all 4 components
         Zconj(:,ir) = fftshift(cat(1,conj(Zq(:,ir)),0,flip(Zq(:,ir))));  
     end
 end
+
+
 
 
 

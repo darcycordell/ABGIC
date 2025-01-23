@@ -19,7 +19,6 @@ function [d,in,indzones] = load_assign_impedance(zn,mtfile)
 %       indzones: the index of the first site in each zone
 %
 
-[zn, Clat, Clon, txt, nb] = load_trich_zones;
 val = load(mtfile);
 d = val.d;
 
@@ -29,6 +28,7 @@ d = val.d;
 % initialize_map(plot_lim,zn,provinces,states,101,true)
 % textm(Clat*1.005,Clon,txt,'HorizontalAlignment','center')
 
+%plotm(d.loc(:,1),d.loc(:,2),'ok','MarkerFaceColor','k')
 
 %Find which sites are in each zone polygon
 nb = length(zn);
@@ -44,6 +44,8 @@ end
 %There are some MT sites in the survey which are NOT inside any polygons
 %(e.g. a couple American sites and a couple Sask sites)
 ind = find(all(in==0,2)); %This finds the site indices which are not in a polygon
+
+%plotm(d.loc(ind,1),d.loc(ind,2),'vk','MarkerFaceColor','w')
 
 %Loop through the sites that aren't in a polygon and assign them to a
 %polygon based on the nearest polygon

@@ -56,3 +56,12 @@ else
     
     end
 end
+
+if isfield(L,'Bundle')
+
+    for i = 1:nLines
+        L(i).ResKm = L(i).ResKm/L(i).Bundle;
+        L(i).Resistance = L(i).Resistance/L(i).Bundle;
+    end
+
+end

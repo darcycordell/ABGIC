@@ -1,4 +1,4 @@
-function [Ex,Ey,ZxxBx,ZxyBy,ZyxBx,ZyyBy] = calc_E(Bx,By,Z)
+function [Ex,Ey,ZxxBx,ZxyBy,ZyxBx,ZyyBy] = calc_E(Bx,By,Z,f)
 % Function to calculate the E-field vector given B-field vector and 2x2
 % impedance in frequency domain
 %
@@ -43,3 +43,8 @@ E = permute(E,[1,3,2]);
 
 Ex = E(1,:);
 Ey = E(2,:);
+
+%%
+% loglog(1./flip(f(f>0)),squeeze(abs(Z(1,2,f>0)))); hold on;
+% loglog(1./flip(f(f>0)),abs(By(f>0))*10^-9)
+% loglog(1./flip(f(f>0)),abs(Ex(f>0)))

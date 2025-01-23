@@ -62,6 +62,16 @@ stats.L2norm = nansum(((dobs-dpred)./err).^2);
 stats.rms = sqrt((1/stats.N)*nansum(((dobs-dpred)./err).^2));
 
 stats.chisquare = nansum(((dobs-dpred)./err).^2);
+
+cc = corrcoef(dobs,dpred);
+stats.cc = cc(2);
+
+% Compute the mean of your data
+yhat = mean(dobs);
+xhat = mean(dpred);
+% Compute regression coefficients in the least-square sense
+stats.beta = (dpred' - xhat)*(dobs - yhat)/sum((dpred - xhat).^2); % Regression coefficient
+
 %An optional way of computing chi-square (or rms) can be done using linear
 %algebra
 %       chisquare = (dobs - dpred).'*diag(1./err.^2)*(dobs - dpred)
